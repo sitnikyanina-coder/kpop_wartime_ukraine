@@ -20,11 +20,18 @@
   .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; overflow: hidden; }
   .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,91,187,0.35) 0%, transparent 65%), radial-gradient(ellipse 60% 40% at 80% 80%, rgba(255,215,0,0.12) 0%, transparent 60%), radial-gradient(ellipse 40% 50% at 10% 60%, rgba(0,58,122,0.3) 0%, transparent 60%), var(--night); z-index: 0; }
   .glyph { position: absolute; font-family: 'Noto Serif KR', serif; color: rgba(255,215,0,0.06); pointer-events: none; user-select: none; animation: floatUp linear infinite; }
-  .glyph:nth-child(1) { font-size: 8rem; left: 5%; top: 10%; animation-duration: 18s; animation-delay: -3s; }
-  .glyph:nth-child(2) { font-size: 5rem; left: 20%; top: 70%; animation-duration: 22s; animation-delay: -8s; }
-  .glyph:nth-child(3) { font-size: 11rem; right: 8%; top: 5%; animation-duration: 25s; animation-delay: -12s; }
-  .glyph:nth-child(4) { font-size: 6rem; right: 25%; top: 60%; animation-duration: 20s; animation-delay: -5s; }
-  .glyph:nth-child(5) { font-size: 9rem; left: 40%; top: 80%; animation-duration: 28s; animation-delay: -15s; }
+  .glyph:nth-child(1)  { font-size: 8rem;  left: 5%;   top: 10%; animation-duration: 18s; animation-delay: -3s; }
+  .glyph:nth-child(2)  { font-size: 5rem;  left: 20%;  top: 70%; animation-duration: 22s; animation-delay: -8s; }
+  .glyph:nth-child(3)  { font-size: 11rem; right: 8%;  top: 5%;  animation-duration: 25s; animation-delay: -12s; }
+  .glyph:nth-child(4)  { font-size: 6rem;  right: 25%; top: 60%; animation-duration: 20s; animation-delay: -5s; }
+  .glyph:nth-child(5)  { font-size: 9rem;  left: 40%;  top: 80%; animation-duration: 28s; animation-delay: -15s; }
+  .glyph:nth-child(6)  { font-size: 7rem;  left: 75%;  top: 25%; animation-duration: 21s; animation-delay: -7s; }
+  .glyph:nth-child(7)  { font-size: 4rem;  left: 55%;  top: 55%; animation-duration: 19s; animation-delay: -10s; }
+  .glyph:nth-child(8)  { font-size: 6rem;  left: 12%;  top: 45%; animation-duration: 24s; animation-delay: -2s; }
+  .glyph:nth-child(9)  { font-size: 3.5rem;right: 15%; top: 75%; animation-duration: 17s; animation-delay: -14s; }
+  .glyph:nth-child(10) { font-size: 5.5rem;left: 65%;  top: 90%; animation-duration: 26s; animation-delay: -6s; }
+  .glyph:nth-child(11) { font-size: 8rem;  left: 30%;  top: 15%; animation-duration: 23s; animation-delay: -9s; }
+  .glyph:nth-child(12) { font-size: 4.5rem;right: 40%; top: 40%; animation-duration: 20s; animation-delay: -16s; }
   @keyframes floatUp { 0% { transform: translateY(0) rotate(0deg); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-120vh) rotate(15deg); opacity: 0; } }
   .stars { position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,0.4) 0%, transparent 100%), radial-gradient(1px 1px at 35% 45%, rgba(255,215,0,0.5) 0%, transparent 100%), radial-gradient(1px 1px at 55% 15%, rgba(255,255,255,0.3) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 45% 55%, rgba(255,215,0,0.6) 0%, transparent 100%); }
   .hero-content { position: relative; z-index: 2; max-width: 860px; }
@@ -140,7 +147,26 @@
   .about-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: center; }
   .about-visual { position: relative; aspect-ratio: 1; max-width: 380px; }
   .about-circle { width: 100%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 40% 40%, rgba(0,91,187,0.3), transparent 60%), radial-gradient(circle at 70% 70%, rgba(255,215,0,0.15), transparent 50%), rgba(255,255,255,0.02); border: 1px solid rgba(255,215,0,0.12); display: flex; align-items: center; justify-content: center; position: relative; }
-  .about-circle-text { font-family: 'Noto Serif KR', serif; font-size: clamp(3rem, 8vw, 5rem); color: rgba(255,215,0,0.2); user-select: none; }
+  .about-circle-text { position: relative; width: 100%; height: 100%; min-height: 200px; overflow: hidden; border-radius: 50%; }
+  .cloud-word {
+    position: absolute;
+    font-family: 'Noto Serif KR', serif;
+    color: var(--gold);
+    user-select: none;
+    opacity: 0;
+    white-space: nowrap;
+    pointer-events: none;
+    animation: cloudFloat var(--float-dur, 6s) ease-in-out infinite;
+    animation-delay: var(--float-delay, 0s);
+  }
+  @keyframes cloudFloat {
+    0%   { transform: translate(-50%, -50%); }
+    25%  { transform: translate(calc(-50% + var(--dx, 3px)), calc(-50% - var(--dy, 4px))); }
+    50%  { transform: translate(calc(-50% + var(--dx2, -3px)), calc(-50% + var(--dy2, 3px))); }
+    75%  { transform: translate(calc(-50% - var(--dx, 3px)), calc(-50% + var(--dy, 2px))); }
+    100% { transform: translate(-50%, -50%); }
+  }
+  .cloud-word.visible { opacity: 1; }
   .about-circle-badge { position: absolute; bottom: 10%; right: 0; background: linear-gradient(135deg, var(--gold), var(--warm-gold)); color: var(--night); font-family: 'Unbounded', sans-serif; font-size: 0.65rem; font-weight: 700; padding: 0.6rem 1rem; border-radius: 2rem; white-space: nowrap; box-shadow: 0 8px 25px rgba(255,215,0,0.4); }
   .about-text p { color: var(--muted); line-height: 1.85; margin-bottom: 1.2rem; font-size: 0.95rem; }
   .about-text p strong { color: var(--text); }
@@ -170,7 +196,7 @@
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="stars"></div>
-  <div class="glyph">한</div><div class="glyph">음</div><div class="glyph">악</div><div class="glyph">사</div><div class="glyph">랑</div>
+  <div class="glyph">음악</div><div class="glyph">노래</div><div class="glyph">희망</div><div class="glyph">빛</div><div class="glyph">마음</div><div class="glyph">꿈</div><div class="glyph">함께</div><div class="glyph">아이돌</div><div class="glyph">자유</div><div class="glyph">평화</div><div class="glyph">팬</div><div class="glyph">우크라이나</div>
   <div class="hero-content">
     <div class="hero-tag">MAY Project × K-Culture × Ukraine 🇺🇦</div>
     <div class="hero-korean" id="heroKorean"></div>
@@ -178,7 +204,7 @@
     <p class="hero-subtitle" id="heroSubtitle"></p>
     <div class="hero-cta-group">
       <a href="#stats" class="btn-primary">Переглянути результати</a>
-      <a href="#join" class="btn-ghost" id="heroFormBtn">Долучитись до проєкту</a>
+      <a href="https://forms.gle/LKH1KDufX22okPin7" class="btn-ghost" id="heroFormBtn" target="_blank">Долучитись до проєкту</a>
     </div>
   </div>
   <div class="scroll-hint">SCROLL</div>
@@ -189,7 +215,7 @@
     <div class="about-grid">
       <div class="about-visual">
         <div class="about-circle">
-          <div class="about-circle-text">K문화</div>
+          <div class="about-circle-text" id="wordCloud"></div>
           <div class="about-circle-badge" id="badgeText">MAY × K-pop</div>
         </div>
       </div>
@@ -286,14 +312,73 @@
 </footer>
 
 <script>
+// ========== ВСІ ДАНІ САЙТУ — РЕДАГУЙ ТУТ ==========
+const SITE_DATA = {
+  project: {
+    name: "MAY · Media About You",
+    tagline: "K-Pop as a Safe Space in Wartime Ukraine",
+    tagline_korean: "안전한 공간 · Безпечний простір",
+    description_uk: "Культурний проєкт, що досліджує, як K-pop став інструментом виживання, «безпечним місцем» та підтримкою ментального здоров'я для українців під час повномасштабної війни.",
+    instagram: "https://instagram.com/mediaboutyou",
+    instagram_handle: "@mediaboutyou",
+    email: "hello@mediaboutyou.com",
+    google_form_url: "https://forms.gle/LKH1KDufX22okPin7",
+    year: "2026"
+  },
+  stats: [
+    { icon: "💬", number: "247", animated: true,  label: "учасників поділились своєю історією" },
+    { icon: "🌍", number: "18",  animated: true,  label: "областей України представлено" },
+    { icon: "💛", number: "91%", animated: false, label: "відзначили позитивний вплив на ментальне здоров'я" },
+    { icon: "🎵", number: "78%", animated: false, label: "слухають K-pop як основний механізм подолання стресу" }
+  ],
+  charts: {
+    how_kpop_helps: {
+      title: "Як K-pop допомагає (топ-відповіді)",
+      bars: [
+        { label: "Відволікає від тривоги",   percent: 89 },
+        { label: "Дає відчуття спільноти",   percent: 76 },
+        { label: "Джерело натхнення",        percent: 68 },
+        { label: "Допомагає засипати",       percent: 54 },
+        { label: "Навчання корейської",      percent: 42 }
+      ]
+    },
+    top_fandoms: {
+      title: "Топ фандоми серед учасників",
+      bars: [
+        { label: "BTS / ARMY",         percent: 82 },
+        { label: "BLACKPINK / BLINK",  percent: 61 },
+        { label: "SEVENTEEN / CARATs", percent: 48 },
+        { label: "aespa / MY",         percent: 35 },
+        { label: "Stray Kids / STAY",  percent: 31 }
+      ]
+    }
+  },
+  stories: [
+    { id:1, text: "Коли в нас знову не було світла, я вмикала навушники і слухала BTS. Це була єдина година на добу, коли я забувала про все. Музика стала моїм особистим бункером.", name: "Анастасія", age: 23, city: "Харків", fandom: "ARMY 💜", initials: "А" },
+    { id:2, text: "Я познайомилась з дівчатами з фандому в Telegram. Ми з різних міст, але стали справжніми подругами. Фандом — це не просто музика, це люди, які тебе розуміють.", name: "Марія", age: 19, city: "Київ", fandom: "BLINK 🖤", initials: "М" },
+    { id:3, text: "Почала вивчати корейську мову — спершу заради пісень, потім зрозуміла, що це мета, яка тримає мене у реальності. Зараз я вже читаю корейські книжки.", name: "Катерина", age: 26, city: "Львів", fandom: "Carats 🎸", initials: "К" },
+    { id:4, text: "Хлопці зі SEVENTEEN у своїх відео часто говорять про надію і стійкість. Для мене це не просто слова — це те, за що я тримаюсь кожного дня.", name: "Діана", age: 21, city: "Запоріжжя", fandom: "Carats ✨", initials: "Д" },
+    { id:5, text: "Я перечекала перші ракетні удари в підвалі з телефоном, де грав плейлист aespa. Зараз, коли чую цей плейлист — відчуваю, що вижила. І що вижию ще.", name: "Оксана", age: 30, city: "Одеса", fandom: "MY 🖤🦋", initials: "О" },
+    { id:6, text: "Коли евакуювалась із сином, взяла тільки найнеобхідніше. І навушники. Бо без музики — не змогла б. K-pop дав мені сили зробити перший крок до безпеки.", name: "Наталія", age: 34, city: "Маріуполь → Дніпро", fandom: "ARMY 💜", initials: "Н" }
+  ],
+  artists: [
+    "Girls' Generation", "BIGBANG", "EXO", "SHINee", "2NE1", "f(x)",
+    "Super Junior", "BTS", "BLACKPINK", "TWICE", "Red Velvet", "SEVENTEEN",
+    "GOT7", "MONSTA X", "Stray Kids", "ATEEZ", "ENHYPEN", "TXT",
+    "ITZY", "IVE", "NewJeans", "LE SSERAFIM", "aespa"
+  ]
+};
+
+// Пріоритетні гурти — більший розмір у хмарі
+const PRIORITY = ["BTS", "ENHYPEN", "ATEEZ", "Stray Kids"];
+
 async function loadData() {
   try {
     const res = await fetch('data.json');
     if (!res.ok) throw new Error('no data.json');
     return await res.json();
   } catch(e) {
-    console.warn('data.json not found, using defaults');
-    return null;
+    return SITE_DATA;
   }
 }
 
@@ -301,7 +386,7 @@ function renderStats(stats) {
   document.getElementById('statsGrid').innerHTML = stats.map(s => `
     <div class="stat-card">
       <div class="stat-icon">${s.icon}</div>
-      <div class="stat-number" ${s.animate ? `data-target="${s.number}"` : ''}>${s.animate ? '0' : s.number}</div>
+      <div class="stat-number" ${s.animated ? `data-target="${parseInt(s.number)}"` : ''}>${s.animated ? '0' : s.number}</div>
       <div class="stat-label">${s.label}</div>
     </div>`).join('');
 }
@@ -311,28 +396,26 @@ function renderChart(containerId, titleId, chart) {
   document.getElementById(containerId).innerHTML = chart.bars.map(b => `
     <div class="bar-item">
       <span class="bar-label">${b.label}</span>
-      <div class="bar-track"><div class="bar-fill" style="width:${b.value}%"></div></div>
-      <span class="bar-pct">${b.value}%</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${b.percent}%"></div></div>
+      <span class="bar-pct">${b.percent}%</span>
     </div>`).join('');
 }
 
 function renderStories(stories) {
-  document.getElementById('storiesGrid').innerHTML = stories
-    .filter(s => s.published)
-    .map(s => `
-      <div class="story-card">
-        <div class="story-quote-mark">"</div>
-        <p class="story-text">${s.text}</p>
-        <div class="story-meta">
-          <div class="story-avatar">${s.avatar_letter}</div>
-          <div class="story-author"><strong>${s.name}, ${s.age}</strong>${s.city}</div>
-          <div class="fandom-tag">${s.fandom}</div>
-        </div>
-      </div>`).join('');
+  document.getElementById('storiesGrid').innerHTML = stories.map(s => `
+    <div class="story-card">
+      <div class="story-quote-mark">"</div>
+      <p class="story-text">${s.text}</p>
+      <div class="story-meta">
+        <div class="story-avatar">${s.initials}</div>
+        <div class="story-author"><strong>${s.name}, ${s.age}</strong>${s.city}</div>
+        <div class="fandom-tag">${s.fandom}</div>
+      </div>
+    </div>`).join('');
 }
 
 function renderArtists(artists) {
-  const pills = [...artists, ...artists].map(a => `<span class="artist-pill">${a.name_uk} ${a.name_kr}</span>`).join('');
+  const pills = [...artists, ...artists].map(a => `<span class="artist-pill">${a}</span>`).join('');
   document.getElementById('artistsMarquee').innerHTML = pills;
 }
 
@@ -346,8 +429,8 @@ function renderContact(p) {
 function renderFooter(p) {
   document.getElementById('footerCopy').innerHTML = `Культурний проєкт <span class="ua-flag"></span> України · ${p.year}<br>Instagram: <a href="${p.instagram}" style="color:var(--gold);text-decoration:none">${p.instagram_handle}</a> · Інтерв'ю публікуються з дозволу учасників`;
   document.getElementById('badgeText').textContent = `MAY × K-pop ${p.year}`;
-  document.getElementById('heroKorean').textContent = p.tagline_korean;
-  document.getElementById('heroSubtitle').textContent = p.description_uk;
+  if (document.getElementById('heroKorean')) document.getElementById('heroKorean').textContent = p.tagline_korean;
+  if (document.getElementById('heroSubtitle')) document.getElementById('heroSubtitle').textContent = p.description_uk;
   document.getElementById('heroFormBtn').href = p.google_form_url;
 }
 
@@ -359,7 +442,97 @@ function animateCount(el) {
   const step = Math.ceil(target / 60);
   const t = setInterval(() => { cur = Math.min(cur + step, target); el.textContent = cur; if (cur >= target) clearInterval(t); }, 25);
 }
-const obs = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.querySelectorAll('[data-target]').forEach(animateCount); obs.unobserve(e.target); } }), { threshold: 0.3 });
+const obs = new IntersectionObserver(entries => entries.forEach(e => {
+  if (e.isIntersecting) { e.target.querySelectorAll('[data-target]').forEach(animateCount); obs.unobserve(e.target); }
+}), { threshold: 0.3 });
+
+// ========== WORD CLOUD ==========
+function initWordCloud(artists) {
+  const container = document.getElementById('wordCloud');
+  if (!container) return;
+  container.innerHTML = '';
+
+  // Wait for container to be painted and have real dimensions
+  requestAnimationFrame(() => {
+    const size = container.offsetWidth || 320;
+    const cx = size / 2;
+    const cy = size / 2;
+
+    // Build word list with sizes
+    const words = artists.map(name => ({
+      text: name,
+      size: PRIORITY.includes(name) ? (0.95 + Math.random() * 0.4) : (0.62 + Math.random() * 0.35)
+    }));
+
+    // Shuffle so priority words are distributed, not all at start
+    words.sort(() => Math.random() - 0.5);
+    // Bring priority words to varied positions
+    const priorityWords = words.filter(w => PRIORITY.includes(w.text));
+    const rest = words.filter(w => !PRIORITY.includes(w.text));
+    const arranged = [];
+    rest.forEach((w, i) => {
+      arranged.push(w);
+      if (i % 4 === 1 && priorityWords.length) arranged.push(priorityWords.shift());
+    });
+    priorityWords.forEach(w => arranged.push(w));
+
+    arranged.forEach((w, i) => {
+      const span = document.createElement('span');
+      span.className = 'cloud-word';
+      span.textContent = w.text;
+      span.style.fontSize = w.size + 'rem';
+
+      // Fibonacci sunflower spiral placement — fills circle evenly
+      const golden = Math.PI * (3 - Math.sqrt(5));
+      const r = Math.sqrt((i + 0.5) / arranged.length) * (size * 0.44);
+      const theta = i * golden;
+      const x = cx + r * Math.cos(theta);
+      const y = cy + r * Math.sin(theta);
+
+      span.style.left = x + 'px';
+      span.style.top = y + 'px';
+      span.style.transform = 'translate(-50%, -50%)';
+
+      // unique floating motion per word
+      const dx  = (2 + Math.random() * 5).toFixed(1) + 'px';
+      const dy  = (2 + Math.random() * 5).toFixed(1) + 'px';
+      const dx2 = (2 + Math.random() * 4).toFixed(1) + 'px';
+      const dy2 = (2 + Math.random() * 4).toFixed(1) + 'px';
+      const dur = (5 + Math.random() * 5).toFixed(1) + 's';
+      const delay = (Math.random() * -6).toFixed(1) + 's';
+      span.style.setProperty('--dx',  dx);
+      span.style.setProperty('--dy',  dy);
+      span.style.setProperty('--dx2', dx2);
+      span.style.setProperty('--dy2', dy2);
+      span.style.setProperty('--float-dur',   dur);
+      span.style.setProperty('--float-delay', delay);
+
+      const alpha = PRIORITY.includes(w.text) ? (0.7 + Math.random() * 0.3) : (0.2 + Math.random() * 0.5);
+      span.style.color = `rgba(255, 215, 0, ${alpha})`;
+
+      container.appendChild(span);
+      // staggered fade in
+      setTimeout(() => { span.style.transition = 'opacity 0.8s ease'; span.style.opacity = '1'; }, 80 + i * 60);
+    });
+
+    // Pulse: highlight random word every 2800ms — slow and smooth
+    setInterval(() => {
+      const spans = Array.from(container.querySelectorAll('.cloud-word'));
+      if (!spans.length) return;
+      const usePriority = Math.random() < 0.4;
+      const pool = usePriority
+        ? spans.filter(s => PRIORITY.includes(s.textContent))
+        : spans;
+      const pick = (pool.length ? pool : spans)[Math.floor(Math.random() * (pool.length || spans.length))];
+      pick.style.transition = 'color 0.6s ease';
+      pick.style.color = 'rgba(255,255,255,1)';
+      setTimeout(() => {
+        const alpha = PRIORITY.includes(pick.textContent) ? 0.85 : (0.2 + Math.random() * 0.5);
+        pick.style.color = `rgba(255, 215, 0, ${alpha})`;
+      }, 1200);
+    }, 2800);
+  });
+}
 
 async function init() {
   const data = await loadData();
@@ -372,6 +545,7 @@ async function init() {
   renderContact(data.project);
   renderFooter(data.project);
   document.querySelectorAll('.stats-grid').forEach(el => obs.observe(el));
+  initWordCloud(data.artists);
 }
 
 init();
