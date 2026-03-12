@@ -431,7 +431,7 @@ function renderFooter(p) {
   document.getElementById('badgeText').textContent = `MAY × K-pop ${p.year}`;
   if (document.getElementById('heroKorean')) document.getElementById('heroKorean').textContent = p.tagline_korean;
   if (document.getElementById('heroSubtitle')) document.getElementById('heroSubtitle').textContent = p.description_uk;
-  document.getElementById('heroFormBtn').href = p.google_form_url;
+  // heroFormBtn href is set directly in HTML
 }
 
 // Counter animation
