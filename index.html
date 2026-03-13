@@ -216,7 +216,7 @@
       <div class="about-visual">
         <div class="about-circle">
           <div class="about-circle-text" id="wordCloud"></div>
-          <div class="about-circle-badge" id="badgeText">MAY × K-pop</div>
+          <div class="about-circle-badge" id="badgeText">MAY × K-pop 2026</div>
         </div>
       </div>
       <div class="about-text">
@@ -308,7 +308,7 @@
 <footer>
   <div class="footer-logo">MAY ✦ Media About You</div>
   <div class="footer-tagline">미디어 어바웃 유 · K-Pop as a Safe Space</div>
-  <div class="footer-copy" id="footerCopy"></div>
+  <div class="footer-copy" id="footerCopy">Культурний проєкт <span class="ua-flag"></span> України · 2026<br>Instagram: <a href="https://instagram.com/mediaboutyou" style="color:var(--gold);text-decoration:none">@mediaboutyou</a> · Інтерв'ю публікуються з дозволу учасників</div>
 </footer>
 
 <script>
@@ -427,8 +427,7 @@ function renderContact(p) {
 }
 
 function renderFooter(p) {
-  document.getElementById('footerCopy').innerHTML = `Культурний проєкт <span class="ua-flag"></span> України · ${p.year}<br>Instagram: <a href="${p.instagram}" style="color:var(--gold);text-decoration:none">${p.instagram_handle}</a> · Інтерв'ю публікуються з дозволу учасників`;
-  document.getElementById('badgeText').textContent = `MAY × K-pop ${p.year}`;
+  // badge and footer are set directly in HTML
   if (document.getElementById('heroKorean')) document.getElementById('heroKorean').textContent = p.tagline_korean;
   if (document.getElementById('heroSubtitle')) document.getElementById('heroSubtitle').textContent = p.description_uk;
   // heroFormBtn href is set directly in HTML
