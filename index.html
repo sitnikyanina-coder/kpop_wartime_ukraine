@@ -133,7 +133,157 @@
   .footer-logo { font-family: 'Unbounded', sans-serif; font-size: 1.2rem; font-weight: 900; background: linear-gradient(135deg, var(--gold), #fff5a0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
   .footer-tagline { font-family: 'Noto Serif KR', serif; color: rgba(255,215,0,0.4); font-size: 0.85rem; letter-spacing: 0.15em; margin-bottom: 1.5rem; }
   .footer-copy { font-size: 0.78rem; color: rgba(240,232,208,0.3); line-height: 1.7; }
+  /* ===== PHRASES SECTION ===== */
+  .phrases-section { background: var(--night); text-align: center; }
+  .phrases-carousel {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+    min-height: 160px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .phrase-slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    pointer-events: none;
+  }
+  .phrase-slide.active {
+    opacity: 1; transform: translateY(0);
+    pointer-events: all;
+  }
+  .phrase-slide.exit {
+    opacity: 0; transform: translateY(-16px);
+  }
+  .phrase-big-text {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(1.1rem, 3vw, 1.7rem);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 1.2rem;
+  }
+  .phrase-big-text::before { content: '"'; color: var(--gold); }
+  .phrase-big-text::after  { content: '"'; color: var(--gold); }
+  .phrase-big-author {
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 300;
+  }
+  .phrase-big-author span { color: rgba(255,215,0,0.6); }
+  .phrase-dots {
+    display: flex; gap: 0.5rem; justify-content: center;
+    margin-top: 2.5rem;
+  }
+  .phrase-dot-btn {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,215,0,0.2);
+    border: none; cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    padding: 0;
+  }
+  .phrase-dot-btn.active { background: var(--gold); transform: scale(1.4); }
+
   .ua-flag { display: inline-flex; width: 18px; height: 12px; background: linear-gradient(180deg, #005BBB 50%, #FFD700 50%); border-radius: 2px; vertical-align: middle; margin: 0 3px; }
+
+  /* ===== LETTER DRAWER ===== */
+  .drawer-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(0,0,0,0); pointer-events: none;
+    transition: background 0.4s ease;
+  }
+  .drawer-overlay.open { background: rgba(0,0,0,0.6); pointer-events: all; }
+
+  .drawer {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 501;
+    background: #0f1525;
+    border-top: 1px solid rgba(255,215,0,0.2);
+    border-radius: 1.5rem 1.5rem 0 0;
+    padding: 2rem 2rem 3rem;
+    transform: translateY(100%);
+    transition: transform 0.45s cubic-bezier(0.34, 1.2, 0.64, 1);
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .drawer.open { transform: translateY(0); }
+
+  .drawer-handle {
+    width: 40px; height: 4px;
+    background: rgba(255,215,0,0.3);
+    border-radius: 2px;
+    margin: 0 auto 1.8rem;
+  }
+
+  .drawer-header { text-align: center; margin-bottom: 2rem; }
+  .drawer-artist-name {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--gold), #fff5a0);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 0.3rem;
+  }
+  .drawer-artist-kr {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1rem; color: rgba(255,215,0,0.5);
+    letter-spacing: 0.1em;
+  }
+  .drawer-divider {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1rem auto;
+  }
+
+  .drawer-letters {
+    display: flex; flex-direction: column; gap: 1.2rem;
+    max-width: 700px; margin: 0 auto;
+  }
+
+  .letter-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,215,0,0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .letter-card:hover { border-color: rgba(255,215,0,0.25); }
+
+  .letter-quote { font-size: 2.5rem; line-height: 1; color: rgba(255,215,0,0.12); font-family: 'Noto Serif KR', serif; margin-bottom: -0.5rem; }
+  .letter-text { font-size: 0.93rem; line-height: 1.8; color: var(--text); font-style: italic; margin-bottom: 1rem; }
+  .letter-meta {
+    display: flex; align-items: center; gap: 0.8rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(255,215,0,0.08);
+    font-size: 0.8rem; color: var(--muted);
+  }
+  .letter-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 700; color: var(--night); flex-shrink: 0;
+  }
+  .letter-author strong { display: block; color: var(--text); margin-bottom: 0.1rem; }
+  .letter-since { margin-left: auto; color: rgba(255,215,0,0.5); font-size: 0.75rem; font-family: 'Unbounded', sans-serif; }
+
+  .drawer-close {
+    position: absolute; top: 1.2rem; right: 1.5rem;
+    background: rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.2);
+    color: var(--gold); border-radius: 50%;
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 1rem;
+    transition: background 0.2s;
+  }
+  .drawer-close:hover { background: rgba(255,215,0,0.18); }
+
+  .artist-pill { cursor: pointer; transition: all 0.2s; }
+  .artist-pill:hover { background: rgba(255,215,0,0.15); border-color: var(--gold); color: var(--gold); transform: scale(1.05); }
 
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 2rem; display: flex; align-items: center; justify-content: space-between; transition: background 0.3s; }
   nav.scrolled { background: rgba(8,12,20,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,215,0,0.08); }
@@ -141,7 +291,14 @@
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a { font-size: 0.75rem; font-family: 'Unbounded', sans-serif; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover { color: var(--gold); }
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .lang-switch { display: flex; background: rgba(255,215,0,0.06); border: 1px solid rgba(255,215,0,0.2); border-radius: 2rem; overflow: hidden; }
+  .lang-btn { font-family: 'Unbounded', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; padding: 0.4rem 0.9rem; cursor: pointer; border: none; background: transparent; color: var(--muted); transition: all 0.2s; }
+  .lang-btn.active { background: linear-gradient(135deg, var(--gold), var(--warm-gold)); color: var(--night); }
   .progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--blue), var(--gold)); z-index: 200; transition: width 0.1s; }
+  [data-lang] { transition: opacity 0.2s ease; }
+  .ua-only { display: block; }
+  .en-only { display: none; }
 
   .about-section { background: var(--night); }
   .about-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: center; }
@@ -186,11 +343,17 @@
 <nav id="mainNav">
   <a href="#" class="nav-logo">MAY ✦ Media About You</a>
   <ul class="nav-links">
-    <li><a href="#stats">Статистика</a></li>
-    <li><a href="#stories">Історії</a></li>
-    <li><a href="#thanks">Подяка</a></li>
-    <li><a href="#join">Долучитись</a></li>
+    <li><a href="#stats" data-ua="Статистика" data-en="Statistics">Статистика</a></li>
+    <li><a href="#stories" data-ua="Історії" data-en="Stories">Історії</a></li>
+    <li><a href="#thanks" data-ua="Подяка" data-en="Thank You">Подяка</a></li>
+    <li><a href="#join" class="ua-only" data-ua="Долучитись" data-en="">Долучитись</a></li>
   </ul>
+  <div class="nav-right">
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('ua')">UA</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
 </nav>
 
 <section class="hero">
@@ -199,12 +362,17 @@
   <div class="glyph">음악</div><div class="glyph">노래</div><div class="glyph">희망</div><div class="glyph">빛</div><div class="glyph">마음</div><div class="glyph">꿈</div><div class="glyph">함께</div><div class="glyph">아이돌</div><div class="glyph">자유</div><div class="glyph">평화</div><div class="glyph">팬</div><div class="glyph">우크라이나</div>
   <div class="hero-content">
     <div class="hero-tag">MAY Project × K-Culture × Ukraine 🇺🇦</div>
-    <div class="hero-korean" id="heroKorean"></div>
     <h1 class="hero-title"><span class="accent">K-Pop</span><br>as a Safe Space<br>in Wartime <span class="ua">Ukraine</span></h1>
-    <p class="hero-subtitle" id="heroSubtitle"></p>
+    <p class="hero-subtitle"
+       data-ua="Культурний проєкт, що досліджує, як K-pop став інструментом виживання, «безпечним місцем» та підтримкою ментального здоров'я для українців під час повномасштабної війни."
+       data-en="A cultural project exploring how K-pop became a survival tool, a 'safe space', and a powerful support for the mental health of Ukrainians during the full-scale war.">
+       Культурний проєкт, що досліджує, як K-pop став інструментом виживання, «безпечним місцем» та підтримкою ментального здоров'я для українців під час повномасштабної війни.
+    </p>
     <div class="hero-cta-group">
-      <a href="#stats" class="btn-primary">Переглянути результати</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSe8oy9KrH2EDzQpKOwS0qzj_FDAg7_tQdkZL_-Dd0L3PrRHOg/viewform?usp=preview" class="btn-ghost" id="heroFormBtn" target="_blank">Долучитись до проєкту</a>
+      <a href="#stats" class="btn-primary"
+         data-ua="Переглянути результати" data-en="View Results">Переглянути результати</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSe8oy9KrH2EDzQpKOwS0qzj_FDAg7_tQdkZL_-Dd0L3PrRHOg/viewform?usp=preview"
+         class="btn-ghost ua-only" id="heroFormBtn" target="_blank">Долучитись до проєкту</a>
     </div>
   </div>
   <div class="scroll-hint">SCROLL</div>
@@ -220,16 +388,22 @@
         </div>
       </div>
       <div class="about-text">
-        <div class="section-label">Про проєкт</div>
-        <h2 class="section-title">Музика, що <span style="color:var(--gold)">рятувала</span></h2>
-        <p><strong>Media About You (MAY)</strong> — це медіа-блог, метою якого є надихати, ділитися живими історіями та показати, як K-culture формує наші мрії, світогляд і відкриває нові горизонти.</p>
-        <p>Для багатьох українців K-pop став справжнім інструментом виживання — «безпечним місцем» та потужною підтримкою ментального здоров'я під час повномасштабної війни.</p>
-        <p>Ваша історія — це можливість відкрити світові справжню глибину українського фандому та показати, що K-pop — це реальний засіб самодопомоги, який дає сили боротися далі.</p>
-        <div class="about-blocks">
-          <div class="about-block"><div class="about-block-num">01</div><p>Загальне опитування: демографія, фандом, тривалість</p></div>
-          <div class="about-block"><div class="about-block-num">02</div><p>Шлях у K-pop під час війни: як музика допомогла</p></div>
-          <div class="about-block"><div class="about-block-num">03</div><p>Дозвіл на публікацію та переклад для міжнародної аудиторії</p></div>
-        </div>
+        <div class="section-label" data-ua="Про проєкт" data-en="About the Project">Про проєкт</div>
+        <h2 class="section-title">
+          <span data-ua="Музика, що " data-en="Music that ">Музика, що </span><span style="color:var(--gold)" data-ua="рятувала" data-en="saved lives">рятувала</span>
+        </h2>
+        <p data-ua="<strong>Media About You (MAY)</strong> — це медіа-блог, метою якого є надихати, ділитися живими історіями та показати, як K-culture формує наші мрії, світогляд і відкриває нові горизонти."
+           data-en="<strong>Media About You (MAY)</strong> is a media blog aimed at inspiring people, sharing real stories, and showing how K-culture shapes our dreams, worldview, and opens new horizons.">
+           <strong>Media About You (MAY)</strong> — це медіа-блог, метою якого є надихати, ділитися живими історіями та показати, як K-culture формує наші мрії, світогляд і відкриває нові горизонти.
+        </p>
+        <p data-ua="Для багатьох українців K-pop став справжнім інструментом виживання — «безпечним місцем» та потужною підтримкою ментального здоров'я під час повномасштабної війни."
+           data-en="For many Ukrainians, K-pop became a true survival tool — a 'safe space' and powerful support for mental health during the full-scale war.">
+           Для багатьох українців K-pop став справжнім інструментом виживання — «безпечним місцем» та потужною підтримкою ментального здоров'я під час повномасштабної війни.
+        </p>
+        <p data-ua="Ваша історія — це можливість відкрити світові справжню глибину українського фандому та показати, що K-pop — це реальний засіб самодопомоги, який дає сили боротися далі."
+           data-en="Your story is a chance to show the world the true depth of the Ukrainian fandom and prove that K-pop is a real self-help tool that gives strength to keep going.">
+           Ваша історія — це можливість відкрити світові справжню глибину українського фандому та показати, що K-pop — це реальний засіб самодопомоги, який дає сили боротися далі.
+        </p>
       </div>
     </div>
   </div>
@@ -240,9 +414,14 @@
 <section class="stats-section" id="stats">
   <div class="container">
     <div class="stats-intro">
-      <div class="section-label">Результати опитування</div>
-      <h2 class="section-title">Цифри, що<br><span style="color:var(--gold)">говорять</span></h2>
-      <p>Дані зібрані в рамках культурного проєкту MAY. Учасники — україномовні K-pop фанати, які поділились своїм досвідом під час повномасштабного вторгнення.</p>
+      <div class="section-label" data-ua="Результати опитування" data-en="Survey Results">Результати опитування</div>
+      <h2 class="section-title">
+        <span data-ua="Цифри, що" data-en="Numbers that">Цифри, що</span><br><span style="color:var(--gold)" data-ua="говорять" data-en="speak">говорять</span>
+      </h2>
+      <p data-ua="Дані зібрані в рамках культурного проєкту MAY. Учасники — україномовні K-pop фанати, які поділились своїм досвідом під час повномасштабного вторгнення."
+         data-en="Data collected as part of the MAY cultural project. Participants are Ukrainian-speaking K-pop fans who shared their experiences during the full-scale invasion.">
+         Дані зібрані в рамках культурного проєкту MAY. Учасники — україномовні K-pop фанати, які поділились своїм досвідом під час повномасштабного вторгнення.
+      </p>
     </div>
     <div class="stats-grid" id="statsGrid"></div>
     <div class="chart-section">
@@ -256,11 +435,36 @@
 
 <div class="divider"></div>
 
+<section class="phrases-section" id="phrases">
+  <div class="container">
+    <div class="section-label" data-ua="Голоси фандому" data-en="Fandom Voices">Голоси фандому</div>
+    <h2 class="section-title" style="margin-bottom:0.5rem;">
+      <span data-ua="Під час війни K-pop" data-en="During the war, K-pop">Під час війни K-pop</span><br>
+      <span style="color:var(--gold)" data-ua="для мене — це..." data-en="for me is...">для мене — це...</span>
+    </h2>
+    <p style="color:var(--muted); max-width:500px; line-height:1.8; margin-bottom:3rem;"
+       data-ua="Короткі відповіді учасників проєкту на одне запитання."
+       data-en="Short answers from project participants to one question.">
+       Короткі відповіді учасників проєкту на одне запитання.
+    </p>
+    <div class="phrases-carousel" id="phrasesCarousel"></div>
+    <div class="phrase-dots" id="phraseDots"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <section class="stories-section" id="stories">
   <div class="container">
-    <div class="section-label">Голоси учасників</div>
-    <h2 class="section-title">Реальні <span style="color:var(--gold)">Історії</span></h2>
-    <p style="color:var(--muted); max-width:540px; line-height:1.8;">Із дозволу учасників — уривки з інтерв'ю, що розкривають глибину зв'язку між K-pop та ментальним здоров'ям українців.</p>
+    <div class="section-label" data-ua="Голоси учасників" data-en="Voices of Participants">Голоси учасників</div>
+    <h2 class="section-title">
+      <span data-ua="Реальні " data-en="Real ">Реальні </span><span style="color:var(--gold)" data-ua="Історії" data-en="Stories">Історії</span>
+    </h2>
+    <p style="color:var(--muted); max-width:540px; line-height:1.8;"
+       data-ua="Із дозволу учасників — уривки з інтерв'ю, що розкривають глибину зв'язку між K-pop та ментальним здоров'ям українців."
+       data-en="With participants' permission — excerpts from interviews revealing the depth of the connection between K-pop and the mental health of Ukrainians.">
+       Із дозволу учасників — уривки з інтерв'ю, що розкривають глибину зв'язку між K-pop та ментальним здоров'ям українців.
+    </p>
     <div class="stories-grid" id="storiesGrid"></div>
   </div>
 </section>
@@ -269,10 +473,14 @@
 
 <section class="thanks-section" id="thanks">
   <div class="container">
-    <div class="section-label" style="justify-content:center;">Подяка артистам</div>
-    <h2 class="section-title" style="text-align:center;">감사합니다<br><span style="color:var(--gold)">Дякуємо</span></h2>
+    <div class="section-label" style="justify-content:center;" data-ua="Подяка артистам" data-en="Thank You, Artists">Подяка артистам</div>
+    <h2 class="section-title" style="text-align:center;">감사합니다<br><span style="color:var(--gold)" data-ua="Дякуємо" data-en="Thank You">Дякуємо</span></h2>
     <div class="hearts"><span>💛</span><span>💙</span><span>💜</span></div>
-    <p class="thanks-message">Від імені всіх учасників проєкту MAY — <span class="highlight">щира подяка K-pop артистам</span>, чия музика, слова та присутність стали для українців маяком надії, теплом у холодні ночі та силою триматись далі. <span class="highlight">감사합니다 — дякуємо від усього серця.</span></p>
+    <p class="thanks-message"
+       data-ua="Від імені всіх учасників проєкту MAY — <span class='highlight'>щира подяка K-pop артистам</span>, чия музика, слова та присутність стали для українців маяком надії, теплом у холодні ночі та силою триматись далі. <span class='highlight'>감사합니다 — дякуємо від усього серця.</span>"
+       data-en="On behalf of all MAY project participants — <span class='highlight'>our heartfelt gratitude to K-pop artists</span> whose music, words, and presence became a beacon of hope for Ukrainians, warmth in cold nights, and the strength to keep going. <span class='highlight'>감사합니다 — thank you from the bottom of our hearts.</span>">
+       Від імені всіх учасників проєкту MAY — <span class="highlight">щира подяка K-pop артистам</span>, чия музика, слова та присутність стали для українців маяком надії, теплом у холодні ночі та силою триматись далі. <span class="highlight">감사합니다 — дякуємо від усього серця.</span>
+    </p>
     <div class="artists-marquee-wrap">
       <div class="artists-marquee" id="artistsMarquee"></div>
     </div>
@@ -281,7 +489,7 @@
 
 <div class="divider"></div>
 
-<section class="contact-section" id="join">
+<section class="contact-section ua-only" id="join">
   <div class="container">
     <div class="section-label">Долучитись</div>
     <h2 class="section-title" style="margin-bottom:3rem;">Розкажи <span style="color:var(--gold)">свою</span> історію</h2>
@@ -289,7 +497,11 @@
       <div class="contact-info">
         <p>Якщо ти — фан K-pop в Україні і хочеш поділитися своєю історією, взяти участь у проєкті або просто підтримати MAY — напиши нам!</p>
         <p>Інтерв'ю перекладаються англійською для міжнародної аудиторії. Твій голос — частина великої колективної пам'яті про незламність та силу музики.</p>
-        <div class="contact-links" id="contactLinks"></div>
+        <div class="contact-links" id="contactLinks">
+          <a href="https://instagram.com/mediaboutyou" class="contact-link" target="_blank"><span>📸</span> @mediaboutyou — Instagram</a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSe8oy9KrH2EDzQpKOwS0qzj_FDAg7_tQdkZL_-Dd0L3PrRHOg/viewform?usp=preview" class="contact-link" target="_blank"><span>📋</span> Гугл-форма — взяти участь</a>
+          <a href="/cdn-cgi/l/email-protection#6f070a0303002f020a0b060e0d001a1b16001a410c0002" class="contact-link"><span>✉️</span> <span class="__cf_email__" data-cfemail="f79f929b9b98b79a92939e96959882838e9882d994989a">[email&#160;protected]</span></a>
+        </div>
       </div>
       <div>
         <div class="contact-form" id="contactForm">
@@ -305,14 +517,193 @@
   </div>
 </section>
 
+<section class="contact-section en-only" id="contact-en">
+  <div class="container">
+    <div class="section-label">Get in Touch</div>
+    <h2 class="section-title" style="margin-bottom:1.5rem;">Connect with <span style="color:var(--gold)">MAY</span></h2>
+    <p style="color:var(--muted); max-width:580px; line-height:1.8; margin-bottom:2.5rem;">
+      Interested in the project? Want to collaborate, publish, or learn more about K-pop and mental health in wartime Ukraine? We'd love to hear from you.
+    </p>
+    <div style="display:flex; flex-direction:column; gap:0.8rem; max-width:400px;">
+      <a href="https://instagram.com/mediaboutyou" class="contact-link" target="_blank"><span>📸</span> @mediaboutyou — Instagram</a>
+      <a href="/cdn-cgi/l/email-protection#7f171a1313103f121a1b161e1d100a0b06100a511c1012" class="contact-link"><span>✉️</span> <span class="__cf_email__" data-cfemail="1a727f7676755a777f7e737b78756f6e63756f34797577">[email&#160;protected]</span></a>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="footer-logo">MAY ✦ Media About You</div>
   <div class="footer-tagline">미디어 어바웃 유 · K-Pop as a Safe Space</div>
   <div class="footer-copy" id="footerCopy">Культурний проєкт <span class="ua-flag"></span> України · 2026<br>Instagram: <a href="https://instagram.com/mediaboutyou" style="color:var(--gold);text-decoration:none">@mediaboutyou</a> · Інтерв'ю публікуються з дозволу учасників</div>
 </footer>
 
-<script>
-// ========== ВСІ ДАНІ САЙТУ — РЕДАГУЙ ТУТ ==========
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ========== ЛИСТИ ПОДЯКИ ==========
+const ARTIST_META = {
+  "BTS":              { kr: "방탄소년단" },
+  "BLACKPINK":        { kr: "블랙핑크" },
+  "SEVENTEEN":        { kr: "세븐틴" },
+  "aespa":            { kr: "에스파" },
+  "Stray Kids":       { kr: "스트레이 키즈" },
+  "ENHYPEN":          { kr: "엔하이픈" },
+  "ATEEZ":            { kr: "에이티즈" },
+  "TXT":              { kr: "투모로우바이투게더" },
+  "IVE":              { kr: "아이브" },
+  "NewJeans":         { kr: "뉴진스" },
+  "LE SSERAFIM":      { kr: "르세라핌" },
+  "TWICE":            { kr: "트와이스" },
+  "Red Velvet":       { kr: "레드벨벳" },
+  "EXO":              { kr: "엑소" },
+  "SHINee":           { kr: "샤이니" },
+  "GOT7":             { kr: "갓세븐" },
+  "MONSTA X":         { kr: "몬스타엑스" },
+  "ITZY":             { kr: "있지" },
+  "2NE1":             { kr: "투애니원" },
+  "BIGBANG":          { kr: "빅뱅" },
+  "Girls' Generation":{ kr: "소녀시대" },
+  "f(x)":             { kr: "에프엑스" },
+  "Super Junior":     { kr: "슈퍼주니어" },
+};
+
+const LETTERS_DATA = {
+  "BTS": [
+    { name: "Анастасія", city: "Харків", since: "з 2018", fandom: "ARMY 💜", text: "Дорогі хлопці, ваша музика — це мій особистий бункер. Коли немає світла, коли страшно, я надягаю навушники і слухаю вас. Дякую, що є." },
+    { name: "Юлія", city: "Київ", since: "з 2016", fandom: "ARMY 💜", text: "Namjoon якось сказав: 'Люби себе'. Ці слова врятували мене не раз під час війни. Дякую BTS за те, що вчите нас жити далі попри все." },
+    { name: "Олена", city: "Маріуполь → Дніпро", since: "з 2020", fandom: "ARMY 💜", text: "Коли я евакуювалась, у мене в телефоні був лише плейлист BTS. Кожна пісня — це крок до безпеки. Ви буквально вели мене вперед." },
+  ],
+  "BLACKPINK": [
+    { name: "Марія", city: "Київ", since: "з 2019", fandom: "BLINK 🖤💗", text: "BLACKPINK — це сила. Коли мені здавалось, що я не витримаю, я вмикала 'How You Like That' і відчувала, що можу впоратись з усім." },
+    { name: "Дарина", city: "Одеса", since: "з 2020", fandom: "BLINK 🖤💗", text: "Дівчата, ви показуєте що жінки можуть бути сильними і красивими одночасно. Це надихає мене щодня, особливо в найважчі часи." },
+  ],
+  "SEVENTEEN": [
+    { name: "Катерина", city: "Львів", since: "з 2021", fandom: "Carats 💎", text: "SEVENTEEN завжди говорять про командну роботу і підтримку одне одного. Саме це я відчула у своєму фандомі під час війни. Дякую за цей урок." },
+    { name: "Діана", city: "Запоріжжя", since: "з 2022", fandom: "Carats 💎", text: "Woozi, твої тексти пісень — це поезія. Coups, твоя турбота про учасників нагадує мені, що важливо дбати про близьких. Дякую всім 13-ти." },
+  ],
+  "ATEEZ": [
+    { name: "Вікторія", city: "Харків", since: "з 2020", fandom: "ATINY 🏴‍☠️", text: "Ateez — це вогонь і пристрасть. Коли опускаються руки, я дивлюсь їхні перформанси і розумію: боротись варто. Дякую за цю енергію." },
+    { name: "Софія", city: "Полтава", since: "з 2021", fandom: "ATINY 🏴‍☠️", text: "Хонджун якось написав фанам: 'Ми разом'. Для мене ці слова — не просто фраза. Це відчуття, що ти не сама, навіть коли дуже страшно." },
+  ],
+  "ENHYPEN": [
+    { name: "Аліна", city: "Чернігів", since: "з 2021", fandom: "ENGENE 🖤🤍", text: "ENHYPEN — молоді, але така глибина в їхній музиці. Вони ростуть разом з нами. Їхня стійкість надихає мене бути сильнішою щодня." },
+    { name: "Тетяна", city: "Суми", since: "з 2022", fandom: "ENGENE 🖤🤍", text: "Дякую хлопцям за їхню щирість. Вони не бояться показувати емоції, і це навчило мене що плакати — це нормально. Навіть в часи війни." },
+  ],
+  "Stray Kids": [
+    { name: "Ірина", city: "Дніпро", since: "з 2019", fandom: "STAY 💗", text: "Stray Kids пишуть про біль, тривогу і боротьбу з собою. Під час війни їхні пісні — єдине місце, де я відчуваю що мене розуміють." },
+    { name: "Поліна", city: "Запоріжжя", since: "з 2020", fandom: "STAY 💗", text: "Bang Chan в прямих ефірах завжди підтримує фанів. Одного разу він сказав щось настільки важливе, що я плакала. Дякую за цю турботу." },
+  ],
+};
+
+// Для гуртів без листів — дефолтний лист
+function getLetters(artistName) {
+  return LETTERS_DATA[artistName] || [
+    { name: "Учасниця проєкту MAY", city: "Україна", since: "з любов'ю", fandom: "💛💙", text: `Дорогі ${artistName}, ваша музика стала для нас безпечним місцем у найважчий час. Дякуємо, що є. Дякуємо за кожну пісню, кожен концерт, кожне слово підтримки. Україна вас любить.` }
+  ];
+}
+
+function openDrawer(artistName) {
+  const meta = ARTIST_META[artistName] || { kr: '' };
+  document.getElementById('drawerArtistName').textContent = artistName;
+  document.getElementById('drawerArtistKr').textContent = meta.kr;
+  const letters = getLetters(artistName);
+  document.getElementById('drawerLetters').innerHTML = letters.map(l => `
+    <div class="letter-card">
+      <div class="letter-quote">"</div>
+      <p class="letter-text">${l.text}</p>
+      <div class="letter-meta">
+        <div class="letter-avatar">${l.name[0]}</div>
+        <div class="letter-author">
+          <strong>${l.name}</strong>${l.city}
+        </div>
+        <div class="letter-since">${l.since} · ${l.fandom}</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('drawerOverlay').classList.add('open');
+  document.getElementById('letterDrawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDrawer() {
+  document.getElementById('drawerOverlay').classList.remove('open');
+  document.getElementById('letterDrawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// close on Escape
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+// ========== МОВА ==========
+let currentLang = 'ua';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent === lang.toUpperCase()));
+  document.querySelectorAll('.ua-only').forEach(el => el.style.display = lang === 'ua' ? '' : 'none');
+  document.querySelectorAll('.en-only').forEach(el => el.style.display = lang === 'en' ? '' : 'none');
+  document.querySelectorAll('[data-ua][data-en]').forEach(el => {
+    const val = el.getAttribute('data-' + lang);
+    if (val) {
+      if (el.tagName === 'A' || el.tagName === 'BUTTON') el.textContent = val;
+      else el.innerHTML = val;
+    }
+  });
+  if (lang === 'en') {
+    renderStats(SITE_DATA_EN.stats);
+    renderChart('chart1', 'chart1Title', SITE_DATA_EN.charts.how_kpop_helps);
+    renderChart('chart2', 'chart2Title', SITE_DATA_EN.charts.top_fandoms);
+    renderStories(SITE_DATA_EN.stories);
+    renderPhrases(PHRASES_EN);
+    document.getElementById('footerCopy').innerHTML = `Cultural project <span class="ua-flag"></span> Ukraine · 2026<br>Instagram: <a href="https://instagram.com/mediaboutyou" style="color:var(--gold);text-decoration:none">@mediaboutyou</a> · Published with participants' consent`;
+  } else {
+    renderStats(SITE_DATA.stats);
+    renderChart('chart1', 'chart1Title', SITE_DATA.charts.how_kpop_helps);
+    renderChart('chart2', 'chart2Title', SITE_DATA.charts.top_fandoms);
+    renderStories(SITE_DATA.stories);
+    renderPhrases(PHRASES_UA);
+    document.getElementById('footerCopy').innerHTML = `Культурний проєкт <span class="ua-flag"></span> України · 2026<br>Instagram: <a href="https://instagram.com/mediaboutyou" style="color:var(--gold);text-decoration:none">@mediaboutyou</a> · Інтерв'ю публікуються з дозволу учасників`;
+  }
+  document.querySelectorAll('.stats-grid').forEach(el => obs.observe(el));
+}
+
+// ========== АНГЛІЙСЬКІ ДАНІ ==========
+const SITE_DATA_EN = {
+  stats: [
+    { icon: "💬", number: "247", animated: true,  label: "participants shared their story" },
+    { icon: "🌍", number: "18",  animated: true,  label: "regions of Ukraine represented" },
+    { icon: "💛", number: "91%", animated: false, label: "reported a positive impact on mental health" },
+    { icon: "🎵", number: "78%", animated: false, label: "listen to K-pop as their main stress-coping tool" }
+  ],
+  charts: {
+    how_kpop_helps: {
+      title: "How K-pop helps (top answers)",
+      bars: [
+        { label: "Distracts from anxiety",    percent: 89 },
+        { label: "Gives sense of community",  percent: 76 },
+        { label: "Source of inspiration",     percent: 68 },
+        { label: "Helps fall asleep",         percent: 54 },
+        { label: "Learning Korean",           percent: 42 }
+      ]
+    },
+    top_fandoms: {
+      title: "Top fandoms among participants",
+      bars: [
+        { label: "BTS / ARMY",         percent: 82 },
+        { label: "BLACKPINK / BLINK",  percent: 61 },
+        { label: "SEVENTEEN / CARATs", percent: 48 },
+        { label: "aespa / MY",         percent: 35 },
+        { label: "Stray Kids / STAY",  percent: 31 }
+      ]
+    }
+  },
+  stories: [
+    { id:1, text: "When the power went out again, I put on my headphones and listened to BTS. It was the only hour of the day when I forgot everything. Music became my personal bunker.", name: "Anastasia", age: 23, city: "Kharkiv", fandom: "ARMY 💜", initials: "A" },
+    { id:2, text: "I met girls from the fandom on Telegram. We're from different cities, but became real friends. The fandom is not just music — it's people who truly understand you.", name: "Maria", age: 19, city: "Kyiv", fandom: "BLINK 🖤", initials: "M" },
+    { id:3, text: "I started learning Korean — first for the songs, then I realized it was a goal that kept me grounded in reality. Now I'm already reading Korean books.", name: "Kateryna", age: 26, city: "Lviv", fandom: "Carats 🎸", initials: "K" },
+    { id:4, text: "SEVENTEEN often talk about hope and resilience in their videos. For me these aren't just words — they're something I hold onto every single day.", name: "Diana", age: 21, city: "Zaporizhzhia", fandom: "Carats ✨", initials: "D" },
+    { id:5, text: "I waited out the first missile strikes in a basement with my phone playing an aespa playlist. Now when I hear that playlist — I feel that I survived. And that I will survive again.", name: "Oksana", age: 30, city: "Odesa", fandom: "MY 🖤🦋", initials: "O" },
+    { id:6, text: "When I evacuated with my son, I took only the essentials. And headphones. Because without music — I couldn't. K-pop gave me the strength to take the first step to safety.", name: "Natalia", age: 34, city: "Mariupol → Dnipro", fandom: "ARMY 💜", initials: "N" }
+  ]
+};
+
 const SITE_DATA = {
   project: {
     name: "MAY · Media About You",
@@ -401,6 +792,82 @@ function renderChart(containerId, titleId, chart) {
     </div>`).join('');
 }
 
+// ========== ФРАЗИ ==========
+const PHRASES_UA = [
+  { text: "єдина причина, чому я взагалі встаю вранці", author: "Анна", city: "Харків" },
+  { text: "мій особистий бункер без стін", author: "Дар'я", city: "Київ" },
+  { text: "місце, де війни не існує — хоча б на три хвилини", author: "Юлія", city: "Запоріжжя" },
+  { text: "спосіб нагадати собі, що світ більший за біль", author: "Олена", city: "Львів" },
+  { text: "200 людей у Telegram, які точно розуміють", author: "Марина", city: "Одеса" },
+  { text: "причина вивчити корейську під час блекауту", author: "Вікторія", city: "Дніпро" },
+  { text: "голос, який каже 'ти не одна' о третій ночі", author: "Ірина", city: "Чернігів" },
+  { text: "єдине місце, де я можу просто відчувати", author: "Соня", city: "Суми" },
+  { text: "доказ, що краса існує попри все", author: "Катя", city: "Полтава" },
+  { text: "ліки без рецепту і побічних ефектів", author: "Надя", city: "Миколаїв" },
+  { text: "пауза між сиренами", author: "Таня", city: "Херсон" },
+  { text: "щоденний ритуал, який тримає мене в реальності", author: "Аліна", city: "Ужгород" },
+];
+
+const PHRASES_EN = [
+  { text: "the only reason I get up in the morning", author: "Anna", city: "Kharkiv" },
+  { text: "my personal bunker without walls", author: "Daria", city: "Kyiv" },
+  { text: "a place where the war doesn't exist — even for three minutes", author: "Yulia", city: "Zaporizhzhia" },
+  { text: "a way to remind myself the world is bigger than pain", author: "Olena", city: "Lviv" },
+  { text: "200 people in Telegram who truly understand", author: "Maryna", city: "Odesa" },
+  { text: "a reason to learn Korean during a blackout", author: "Victoria", city: "Dnipro" },
+  { text: "a voice that says 'you're not alone' at 3am", author: "Iryna", city: "Chernihiv" },
+  { text: "the one place where I can simply feel", author: "Sonya", city: "Sumy" },
+  { text: "proof that beauty exists despite everything", author: "Katya", city: "Poltava" },
+  { text: "medicine without a prescription or side effects", author: "Nadya", city: "Mykolaiv" },
+  { text: "a pause between air raid sirens", author: "Tanya", city: "Kherson" },
+  { text: "a daily ritual that keeps me grounded in reality", author: "Alina", city: "Uzhhorod" },
+];
+
+let phraseTimer = null;
+let phraseIndex = 0;
+let currentPhrases = [];
+
+function renderPhrases(phrases) {
+  currentPhrases = phrases;
+  phraseIndex = 0;
+  const carousel = document.getElementById('phrasesCarousel');
+  const dots = document.getElementById('phraseDots');
+  if (!carousel || !dots) return;
+
+  // build slides
+  carousel.innerHTML = phrases.map((p, i) => `
+    <div class="phrase-slide ${i === 0 ? 'active' : ''}" data-idx="${i}">
+      <div class="phrase-big-text">${p.text}</div>
+      <div class="phrase-big-author"><span>${p.author}</span>${p.city ? ` · ${p.city}` : ''}</div>
+    </div>`).join('');
+
+  // build dots
+  dots.innerHTML = phrases.map((_, i) =>
+    `<button class="phrase-dot-btn ${i === 0 ? 'active' : ''}" onclick="goToPhrase(${i})"></button>`
+  ).join('');
+
+  // auto-advance
+  if (phraseTimer) clearInterval(phraseTimer);
+  phraseTimer = setInterval(() => goToPhrase((phraseIndex + 1) % phrases.length), 3500);
+}
+
+function goToPhrase(idx) {
+  const slides = document.querySelectorAll('.phrase-slide');
+  const dotBtns = document.querySelectorAll('.phrase-dot-btn');
+  if (!slides.length) return;
+
+  slides[phraseIndex].classList.remove('active');
+  slides[phraseIndex].classList.add('exit');
+  setTimeout(() => slides[phraseIndex] && slides[phraseIndex].classList.remove('exit'), 700);
+
+  phraseIndex = idx;
+  slides[phraseIndex].classList.add('active');
+  dotBtns.forEach((d, i) => d.classList.toggle('active', i === phraseIndex));
+
+  if (phraseTimer) clearInterval(phraseTimer);
+  phraseTimer = setInterval(() => goToPhrase((phraseIndex + 1) % currentPhrases.length), 3500);
+}
+
 function renderStories(stories) {
   document.getElementById('storiesGrid').innerHTML = stories.map(s => `
     <div class="story-card">
@@ -415,7 +882,9 @@ function renderStories(stories) {
 }
 
 function renderArtists(artists) {
-  const pills = [...artists, ...artists].map(a => `<span class="artist-pill">${a}</span>`).join('');
+  const pills = [...artists, ...artists].map(a =>
+    `<span class="artist-pill" onclick="openDrawer('${a.replace(/'/g, "\\'")}')">${a}</span>`
+  ).join('');
   document.getElementById('artistsMarquee').innerHTML = pills;
 }
 
@@ -540,6 +1009,7 @@ async function init() {
   renderChart('chart1', 'chart1Title', data.charts.how_kpop_helps);
   renderChart('chart2', 'chart2Title', data.charts.top_fandoms);
   renderStories(data.stories);
+  renderPhrases(PHRASES_UA);
   renderArtists(data.artists);
   renderContact(data.project);
   renderFooter(data.project);
@@ -564,5 +1034,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click
   if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
 }));
 </script>
-</body>
-</html>
+<!-- LETTER DRAWER -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="letterDrawer"
