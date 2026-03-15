@@ -1038,4 +1038,16 @@ document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click
 </script>
 <!-- LETTER DRAWER -->
 <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
-<div class="drawer" id="letterDrawer"
+<div class="drawer" id="letterDrawer">
+  <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  <div class="drawer-handle"></div>
+  <div class="drawer-header">
+    <div class="drawer-artist-name" id="drawerArtistName"></div>
+    <div class="drawer-artist-kr" id="drawerArtistKr"></div>
+    <div class="drawer-divider"></div>
+  </div>
+  <div class="drawer-letters" id="drawerLetters"></div>
+</div>
+
+</body>
+</html>
