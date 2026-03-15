@@ -285,13 +285,13 @@
   .artist-pill { cursor: pointer; transition: all 0.2s; }
   .artist-pill:hover { background: rgba(255,215,0,0.15); border-color: var(--gold); color: var(--gold); transform: scale(1.05); }
 
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 2rem; display: flex; align-items: center; justify-content: space-between; transition: background 0.3s; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; transition: background 0.3s; gap: 1rem; }
   nav.scrolled { background: rgba(8,12,20,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,215,0,0.08); }
-  .nav-logo { font-family: 'Unbounded', sans-serif; font-size: 0.9rem; font-weight: 900; color: var(--gold); text-decoration: none; }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-size: 0.75rem; font-family: 'Unbounded', sans-serif; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-logo { font-family: 'Unbounded', sans-serif; font-size: 0.85rem; font-weight: 900; color: var(--gold); text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+  .nav-links { display: flex; gap: 1.2rem; list-style: none; flex: 1; justify-content: center; }
+  .nav-links a { font-size: 0.68rem; font-family: 'Unbounded', sans-serif; font-weight: 300; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; white-space: nowrap; }
   .nav-links a:hover { color: var(--gold); }
-  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .nav-right { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
   .lang-switch { display: flex; background: rgba(255,215,0,0.06); border: 1px solid rgba(255,215,0,0.2); border-radius: 2rem; overflow: hidden; }
   .lang-btn { font-family: 'Unbounded', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; padding: 0.4rem 0.9rem; cursor: pointer; border: none; background: transparent; color: var(--muted); transition: all 0.2s; }
   .lang-btn.active { background: linear-gradient(135deg, var(--gold), var(--warm-gold)); color: var(--night); }
@@ -299,6 +299,8 @@
   [data-lang] { transition: opacity 0.2s ease; }
   .ua-only { display: block; }
   .en-only { display: none; }
+  @media (max-width: 900px) { .nav-links { display: none; } }
+  @media (max-width: 600px) { .stories-grid { grid-template-columns: 1fr; } nav { padding: 0.9rem 1.2rem; } .nav-logo { font-size: 0.75rem; } }
 
   .about-section { background: var(--night); }
   .about-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: center; }
@@ -883,9 +885,15 @@ function renderStories(stories) {
 
 function renderArtists(artists) {
   const pills = [...artists, ...artists].map(a =>
-    `<span class="artist-pill" onclick="openDrawer('${a.replace(/'/g, "\\'")}')">${a}</span>`
+    `<span class="artist-pill" data-artist="${a.replace(/"/g, '&quot;')}">${a}</span>`
   ).join('');
   document.getElementById('artistsMarquee').innerHTML = pills;
+
+  // delegate click to parent to avoid issues with moving marquee
+  document.getElementById('artistsMarquee').onclick = function(e) {
+    const pill = e.target.closest('.artist-pill');
+    if (pill) openDrawer(pill.dataset.artist);
+  };
 }
 
 function renderContact(p) {
