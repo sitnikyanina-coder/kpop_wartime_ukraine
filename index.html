@@ -766,13 +766,7 @@ const SITE_DATA = {
 const PRIORITY = ["BTS", "ENHYPEN", "ATEEZ", "Stray Kids"];
 
 async function loadData() {
-  try {
-    const res = await fetch('data.json');
-    if (!res.ok) throw new Error('no data.json');
-    return await res.json();
-  } catch(e) {
-    return SITE_DATA;
-  }
+  return SITE_DATA;
 }
 
 function renderStats(stats) {
@@ -1018,7 +1012,7 @@ async function init() {
   renderChart('chart2', 'chart2Title', data.charts.top_fandoms);
   renderStories(data.stories);
   renderPhrases(PHRASES_UA);
-  renderArtists(data.artists);
+  renderArtists(SITE_DATA.artists);
   renderContact(data.project);
   renderFooter(data.project);
   document.querySelectorAll('.stats-grid').forEach(el => obs.observe(el));
