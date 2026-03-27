@@ -17,7 +17,7 @@
   body { font-family: 'Inter', sans-serif; background: var(--night); color: var(--text); overflow-x: hidden; min-height: 100vh; }
   body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
 
-  .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; overflow: hidden; }
+  .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 6rem 2rem 2rem; overflow: hidden; }
   .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,91,187,0.35) 0%, transparent 65%), radial-gradient(ellipse 60% 40% at 80% 80%, rgba(255,215,0,0.12) 0%, transparent 60%), radial-gradient(ellipse 40% 50% at 10% 60%, rgba(0,58,122,0.3) 0%, transparent 60%), var(--night); z-index: 0; }
   .glyph { position: absolute; font-family: 'Noto Serif KR', serif; color: rgba(255,215,0,0.06); pointer-events: none; user-select: none; animation: floatUp linear infinite; }
   .glyph:nth-child(1)  { font-size: 8rem;  left: 5%;   top: 10%; animation-duration: 18s; animation-delay: -3s; }
@@ -288,7 +288,7 @@
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; transition: background 0.3s; gap: 1rem; }
   nav.scrolled { background: rgba(8,12,20,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,215,0,0.08); }
   .nav-logo { font-family: 'Unbounded', sans-serif; font-size: 0.85rem; font-weight: 900; color: var(--gold); text-decoration: none; white-space: nowrap; flex-shrink: 0; }
-  .nav-links { display: flex; gap: 1.2rem; list-style: none; flex: 1; justify-content: center; }
+  .nav-links { display: flex; gap: 1.2rem; list-style: none; margin-left: auto; }
   .nav-links a { font-size: 0.68rem; font-family: 'Unbounded', sans-serif; font-weight: 300; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; white-space: nowrap; }
   .nav-links a:hover { color: var(--gold); }
   .nav-right { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
@@ -348,7 +348,7 @@
     <li><a href="#stats" data-ua="Статистика" data-en="Statistics">Статистика</a></li>
     <li><a href="#stories" data-ua="Історії" data-en="Stories">Історії</a></li>
     <li><a href="#thanks" data-ua="Подяка" data-en="Thank You">Подяка</a></li>
-    <li><a href="#join" class="ua-only" data-ua="Долучитись" data-en="">Долучитись</a></li>
+    <li id="navJoinItem"><a href="#join" data-ua="Долучитись" data-en="">Долучитись</a></li>
   </ul>
   <div class="nav-right">
     <div class="lang-switch">
@@ -444,11 +444,7 @@
       <span data-ua="Під час війни K-pop" data-en="During the war, K-pop">Під час війни K-pop</span><br>
       <span style="color:var(--gold)" data-ua="для мене — це..." data-en="for me is...">для мене — це...</span>
     </h2>
-    <p style="color:var(--muted); max-width:500px; line-height:1.8; margin-bottom:3rem;"
-       data-ua="Короткі відповіді учасників проєкту на одне запитання."
-       data-en="Short answers from project participants to one question.">
-       Короткі відповіді учасників проєкту на одне запитання.
-    </p>
+
     <div class="phrases-carousel" id="phrasesCarousel"></div>
     <div class="phrase-dots" id="phraseDots"></div>
   </div>
@@ -569,29 +565,52 @@ const ARTIST_META = {
 
 const LETTERS_DATA = {
   "BTS": [
-    { name: "Анастасія", city: "Харків", since: "з 2018", fandom: "ARMY 💜", text: "Дорогі хлопці, ваша музика — це мій особистий бункер. Коли немає світла, коли страшно, я надягаю навушники і слухаю вас. Дякую, що є." },
-    { name: "Юлія", city: "Київ", since: "з 2016", fandom: "ARMY 💜", text: "Namjoon якось сказав: 'Люби себе'. Ці слова врятували мене не раз під час війни. Дякую BTS за те, що вчите нас жити далі попри все." },
-    { name: "Олена", city: "Маріуполь → Дніпро", since: "з 2020", fandom: "ARMY 💜", text: "Коли я евакуювалась, у мене в телефоні був лише плейлист BTS. Кожна пісня — це крок до безпеки. Ви буквально вели мене вперед." },
+    { name: "Марта", city: "", since: "Full-stack розробниця", fandom: "ARMY 💜", text: "Якби я могла сказати вам це особисто, я б просто подивилася вам в очі і сказала: дякую за те, що стали моїм домом і врятували мене, навіть не підозрюючи про це. Коли мій реальний світ руйнувався, а я ховалася в укритті, ваша музика обіймала мене." },
+    { name: "Юлія", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую БТС, що ви прийшли в моє життя, наповнили його сенсом, мріями і жагою до життя!" },
+    { name: "Ksen.i710", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую, що стали для мене прикладом не зламатись, а рухатись вперед." },
+    { name: "Марі", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Ваші пісні — то сонце, що світить з темряви." },
+    { name: "Вікторія", city: "", since: "Вчитель", fandom: "ARMY 💜", text: "Дякую за те, що з'явилися в моєму житті тоді, коли здавалося, що мій мозок і психіка не витримають більше; за мотиваційні слова і за те, що ви є такі, які є." },
+    { name: "Врина", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую за твої пісні, вони мені дають сили жити." },
   ],
   "BLACKPINK": [
-    { name: "Марія", city: "Київ", since: "з 2019", fandom: "BLINK 🖤💗", text: "BLACKPINK — це сила. Коли мені здавалось, що я не витримаю, я вмикала 'How You Like That' і відчувала, що можу впоратись з усім." },
-    { name: "Дарина", city: "Одеса", since: "з 2020", fandom: "BLINK 🖤💗", text: "Дівчата, ви показуєте що жінки можуть бути сильними і красивими одночасно. Це надихає мене щодня, особливо в найважчі часи." },
+    { name: "Степан", city: "", since: "з любов'ю", fandom: "BLINK 🖤💗", text: "Побажав би успіхів та натхнення." },
+    { name: "Еліна", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую всім, хто небайдужий — це цінно! А інші — відкрийте очі, будь ласка..." },
   ],
   "SEVENTEEN": [
-    { name: "Катерина", city: "Львів", since: "з 2021", fandom: "Carats 💎", text: "SEVENTEEN завжди говорять про командну роботу і підтримку одне одного. Саме це я відчула у своєму фандомі під час війни. Дякую за цей урок." },
-    { name: "Діана", city: "Запоріжжя", since: "з 2022", fandom: "Carats 💎", text: "Woozi, твої тексти пісень — це поезія. Coups, твоя турбота про учасників нагадує мені, що важливо дбати про близьких. Дякую всім 13-ти." },
-  ],
-  "ATEEZ": [
-    { name: "Вікторія", city: "Харків", since: "з 2020", fandom: "ATINY 🏴‍☠️", text: "Ateez — це вогонь і пристрасть. Коли опускаються руки, я дивлюсь їхні перформанси і розумію: боротись варто. Дякую за цю енергію." },
-    { name: "Софія", city: "Полтава", since: "з 2021", fandom: "ATINY 🏴‍☠️", text: "Хонджун якось написав фанам: 'Ми разом'. Для мене ці слова — не просто фраза. Це відчуття, що ти не сама, навіть коли дуже страшно." },
-  ],
-  "ENHYPEN": [
-    { name: "Аліна", city: "Чернігів", since: "з 2021", fandom: "ENGENE 🖤🤍", text: "ENHYPEN — молоді, але така глибина в їхній музиці. Вони ростуть разом з нами. Їхня стійкість надихає мене бути сильнішою щодня." },
-    { name: "Тетяна", city: "Суми", since: "з 2022", fandom: "ENGENE 🖤🤍", text: "Дякую хлопцям за їхню щирість. Вони не бояться показувати емоції, і це навчило мене що плакати — це нормально. Навіть в часи війни." },
+    { name: "Еліна", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую всім, хто небайдужий — це цінно!" },
+    { name: "Дарина", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об'єднують багатьох людей." },
   ],
   "Stray Kids": [
-    { name: "Ірина", city: "Дніпро", since: "з 2019", fandom: "STAY 💗", text: "Stray Kids пишуть про біль, тривогу і боротьбу з собою. Під час війни їхні пісні — єдине місце, де я відчуваю що мене розуміють." },
-    { name: "Поліна", city: "Запоріжжя", since: "з 2020", fandom: "STAY 💗", text: "Bang Chan в прямих ефірах завжди підтримує фанів. Одного разу він сказав щось настільки важливе, що я плакала. Дякую за цю турботу." },
+    { name: "Мей", city: "", since: "з любов'ю", fandom: "STAY 💗", text: "Дякую за той період життя, який я провела з вами." },
+    { name: "Катерина", city: "", since: "з любов'ю", fandom: "STAY 💗", text: "Дякую за творчість, за наполегливість і прошу — будьте в безпеці, добре відпочивайте і гарно їжте. Бажаю, щоб вас більше не спіткала війна, як це сталось із нами." },
+    { name: "Анастасія", city: "", since: "з любов'ю", fandom: "STAY 💗", text: "Дякую за те, що з'явилися в моєму житті тоді, коли були мені так потрібні. Навіть коли я цього не усвідомлювала." },
+  ],
+  "ENHYPEN": [
+    { name: "Анастасія", city: "", since: "з любов'ю", fandom: "ENGENE 🖤🤍", text: "Дякую за те, що з'явилися в моєму житті тоді, коли були мені так потрібні. Навіть коли я цього не усвідомлювала." },
+  ],
+  "ATEEZ": [
+    { name: "Вікторія", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Дякую, що з'явилися в моєму житті — ви буквально рятуєте мене кожен день і даєте сил не здаватися." },
+    { name: "Софія", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Дякую за творчість, за ком'юніті. Дякую, що не склали рук і зробили все можливе, щоб опинитися в моїх рекомендаціях :)" },
+  ],
+  "TXT": [
+    { name: "Kalipsa94", city: "", since: "з любов'ю", fandom: "MOA 🌙", text: "Дякую за важку працю! Ваша музика надає мені сил, щоб насолоджуватися життям, не зважаючи ні на що." },
+  ],
+  "ITZY": [
+    { name: "Poleaxe", city: "", since: "з любов'ю", fandom: "MIDZY 💜", text: "Дякую за все — це все, що я хотіла б вам сказати." },
+    { name: "Мей", city: "", since: "з любов'ю", fandom: "MIDZY 💜", text: "Дякую за той період життя, який я провела з вами." },
+  ],
+  "GOT7": [
+    { name: "Катерина", city: "", since: "з любов'ю", fandom: "ahgase 🐦", text: "Ваша творчість є важливою в моєму житті. Бажаю, щоб і ваше життя було насиченим та легким." },
+  ],
+  "BIGBANG": [
+    { name: "Дарина", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об'єднують багатьох людей." },
+    { name: "Яся", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую за те, що в найтемніші часи ви поруч." },
+  ],
+  "aespa": [
+    { name: "Еліна", city: "", since: "з любов'ю", fandom: "MY 🦋", text: "Дякую всім, хто небайдужий — це цінно!" },
+  ],
+  "TWICE": [
+    { name: "Таня", city: "", since: "з любов'ю", fandom: "ONCE 🍭", text: "Дякую за музику та підтримку — кожна ваша пісня залишає окремий теплий слід у серці." },
   ],
 };
 
@@ -614,7 +633,7 @@ function openDrawer(artistName) {
       <div class="letter-meta">
         <div class="letter-avatar">${l.name[0]}</div>
         <div class="letter-author">
-          <strong>${l.name}</strong>${l.city}
+          <strong>${l.name}</strong>${l.city ? ' · ' + l.city : ''}
         </div>
         <div class="letter-since">${l.since} · ${l.fandom}</div>
       </div>
@@ -641,6 +660,8 @@ function setLang(lang) {
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent === lang.toUpperCase()));
   document.querySelectorAll('.ua-only').forEach(el => el.style.display = lang === 'ua' ? '' : 'none');
   document.querySelectorAll('.en-only').forEach(el => el.style.display = lang === 'en' ? '' : 'none');
+  const navJoin = document.getElementById('navJoinItem');
+  if (navJoin) navJoin.style.display = lang === 'ua' ? '' : 'none';
   document.querySelectorAll('[data-ua][data-en]').forEach(el => {
     const val = el.getAttribute('data-' + lang);
     if (val) {
@@ -669,40 +690,39 @@ function setLang(lang) {
 // ========== АНГЛІЙСЬКІ ДАНІ ==========
 const SITE_DATA_EN = {
   stats: [
-    { icon: "💬", number: "247", animated: true,  label: "participants shared their story" },
-    { icon: "🌍", number: "18",  animated: true,  label: "regions of Ukraine represented" },
-    { icon: "💛", number: "91%", animated: false, label: "reported a positive impact on mental health" },
-    { icon: "🎵", number: "78%", animated: false, label: "listen to K-pop as their main stress-coping tool" }
+    { icon: "💬", number: "33",    animated: true,  label: "participants shared their story" },
+    { icon: "🎂", number: "12–51", animated: false, label: "age range of project participants" },
+    { icon: "💛", number: "91%",   animated: false, label: "reported a positive impact of K-pop on their mental wellbeing during the war" },
+    { icon: "🎵", number: "85%",   animated: false, label: "say: music helps even without understanding the words" }
   ],
   charts: {
     how_kpop_helps: {
-      title: "How K-pop helps (top answers)",
+      title: "What helps participants most (survey results)",
       bars: [
-        { label: "Distracts from anxiety",    percent: 89 },
-        { label: "Gives sense of community",  percent: 76 },
-        { label: "Source of inspiration",     percent: 68 },
-        { label: "Helps fall asleep",         percent: 54 },
-        { label: "Learning Korean",           percent: 42 }
+        { label: "🎵 Music & melody",           percent: 85 },
+        { label: "💫 Dream of the future",       percent: 76 },
+        { label: "📝 Lyrics & meaning",          percent: 61 },
+        { label: "🤍 Fandom & community",        percent: 52 },
+        { label: "📱 Artists' lives & content",  percent: 48 }
       ]
     },
     top_fandoms: {
-      title: "Top fandoms among participants",
+      title: "Top artists among participants",
       bars: [
-        { label: "BTS / ARMY",         percent: 82 },
-        { label: "BLACKPINK / BLINK",  percent: 61 },
-        { label: "SEVENTEEN / CARATs", percent: 48 },
-        { label: "aespa / MY",         percent: 35 },
-        { label: "Stray Kids / STAY",  percent: 31 }
+        { label: "BTS / ARMY",          percent: 64 },
+        { label: "Stray Kids / STAY",   percent: 21 },
+        { label: "BLACKPINK / BLINK",   percent: 15 },
+        { label: "ATEEZ / ATINY",       percent: 15 },
+        { label: "ITZY / MIDZY",        percent: 12 }
       ]
     }
   },
   stories: [
-    { id:1, text: "When the power went out again, I put on my headphones and listened to BTS. It was the only hour of the day when I forgot everything. Music became my personal bunker.", name: "Anastasia", age: 23, city: "Kharkiv", fandom: "ARMY 💜", initials: "A" },
-    { id:2, text: "I met girls from the fandom on Telegram. We're from different cities, but became real friends. The fandom is not just music — it's people who truly understand you.", name: "Maria", age: 19, city: "Kyiv", fandom: "BLINK 🖤", initials: "M" },
-    { id:3, text: "I started learning Korean — first for the songs, then I realized it was a goal that kept me grounded in reality. Now I'm already reading Korean books.", name: "Kateryna", age: 26, city: "Lviv", fandom: "Carats 🎸", initials: "K" },
-    { id:4, text: "SEVENTEEN often talk about hope and resilience in their videos. For me these aren't just words — they're something I hold onto every single day.", name: "Diana", age: 21, city: "Zaporizhzhia", fandom: "Carats ✨", initials: "D" },
-    { id:5, text: "I waited out the first missile strikes in a basement with my phone playing an aespa playlist. Now when I hear that playlist — I feel that I survived. And that I will survive again.", name: "Oksana", age: 30, city: "Odesa", fandom: "MY 🖤🦋", initials: "O" },
-    { id:6, text: "When I evacuated with my son, I took only the essentials. And headphones. Because without music — I couldn't. K-pop gave me the strength to take the first step to safety.", name: "Natalia", age: 34, city: "Mariupol → Dnipro", fandom: "ARMY 💜", initials: "N" }
+    { id:1, text: "When my brother went to war and went missing, BTS and their songs gave me the certainty that everything would be okay. And it was. My brother was found alive. He came back.", name: "Viktoria", job: "Teacher", fandom: "ARMY 💜", initials: "V" },
+    { id:2, text: "The day of the missile strike on my city is the memory that stays with me most. My hands were shaking so badly I could barely hold my phone. When I got confirmation everyone was safe, I turned on BTS immediately. Their music worked like the strongest sedative — a safe corner where I could breathe.", name: "Marta", job: "Full-stack developer", fandom: "ARMY 💜", initials: "M" },
+    { id:3, text: "One night during a heavy drone attack I had a severe panic attack and lost all sense of space. I don't remember crawling to my phone, but somehow I ended up watching a BTS performance at the UN. I didn't understand a word — but hearing a familiar voice, I started to let go.", name: "Maria", job: "Executive Director", fandom: "ARMY 💜", initials: "M" },
+    { id:4, text: "It's all TikTok's fault 😂 A video appeared: 'They weren't invited to MAMA, they were ignored... but they persevered...' I got curious who they were, started exploring their journey... and then it was all a blur)", name: "Alona", job: "NGO worker", fandom: "ARMY 💜", initials: "A" },
+    { id:5, text: "I found out about BTS after the war had already started. Something about Yoongi's music spoke to me — he turned his struggles with depression into art. He taught me that expressing emotions through music is a strength, not a weakness.", name: "Vryna", job: "with love", fandom: "ARMY 💜", initials: "V" }
   ]
 };
 
@@ -719,40 +739,39 @@ const SITE_DATA = {
     year: "2026"
   },
   stats: [
-    { icon: "💬", number: "247", animated: true,  label: "учасників поділились своєю історією" },
-    { icon: "🌍", number: "18",  animated: true,  label: "областей України представлено" },
-    { icon: "💛", number: "91%", animated: false, label: "відзначили позитивний вплив на ментальне здоров'я" },
-    { icon: "🎵", number: "78%", animated: false, label: "слухають K-pop як основний механізм подолання стресу" }
+    { icon: "💬", number: "33",    animated: true,  label: "учасниць поділились своєю історією" },
+    { icon: "🎂", number: "12–51", animated: false, label: "вік учасниць проєкту" },
+    { icon: "💛", number: "91%",   animated: false, label: "відзначили позитивний вплив K-pop на психологічне самопочуття під час війни" },
+    { icon: "🎵", number: "85%",   animated: false, label: "кажуть: музика допомагає навіть без розуміння слів" }
   ],
   charts: {
     how_kpop_helps: {
-      title: "Як K-pop допомагає (топ-відповіді)",
+      title: "Що допомагає найбільше (відповіді учасниць)",
       bars: [
-        { label: "Відволікає від тривоги",   percent: 89 },
-        { label: "Дає відчуття спільноти",   percent: 76 },
-        { label: "Джерело натхнення",        percent: 68 },
-        { label: "Допомагає засипати",       percent: 54 },
-        { label: "Навчання корейської",      percent: 42 }
+        { label: "🎵 Музика та мелодія",        percent: 85 },
+        { label: "💫 Мрія про майбутнє",         percent: 76 },
+        { label: "📝 Тексти та сенси",           percent: 61 },
+        { label: "🤍 Фандом і спільнота",        percent: 52 },
+        { label: "📱 Прямі ефіри артистів",      percent: 48 }
       ]
     },
     top_fandoms: {
-      title: "Топ фандоми серед учасників",
+      title: "Топ гурти серед учасниць",
       bars: [
-        { label: "BTS / ARMY",         percent: 82 },
-        { label: "BLACKPINK / BLINK",  percent: 61 },
-        { label: "SEVENTEEN / CARATs", percent: 48 },
-        { label: "aespa / MY",         percent: 35 },
-        { label: "Stray Kids / STAY",  percent: 31 }
+        { label: "BTS / ARMY",          percent: 64 },
+        { label: "Stray Kids / STAY",   percent: 21 },
+        { label: "BLACKPINK / BLINK",   percent: 15 },
+        { label: "ATEEZ / ATINY",       percent: 15 },
+        { label: "ITZY / MIDZY",        percent: 12 }
       ]
     }
   },
   stories: [
-    { id:1, text: "Коли в нас знову не було світла, я вмикала навушники і слухала BTS. Це була єдина година на добу, коли я забувала про все. Музика стала моїм особистим бункером.", name: "Анастасія", age: 23, city: "Харків", fandom: "ARMY 💜", initials: "А" },
-    { id:2, text: "Я познайомилась з дівчатами з фандому в Telegram. Ми з різних міст, але стали справжніми подругами. Фандом — це не просто музика, це люди, які тебе розуміють.", name: "Марія", age: 19, city: "Київ", fandom: "BLINK 🖤", initials: "М" },
-    { id:3, text: "Почала вивчати корейську мову — спершу заради пісень, потім зрозуміла, що це мета, яка тримає мене у реальності. Зараз я вже читаю корейські книжки.", name: "Катерина", age: 26, city: "Львів", fandom: "Carats 🎸", initials: "К" },
-    { id:4, text: "Хлопці зі SEVENTEEN у своїх відео часто говорять про надію і стійкість. Для мене це не просто слова — це те, за що я тримаюсь кожного дня.", name: "Діана", age: 21, city: "Запоріжжя", fandom: "Carats ✨", initials: "Д" },
-    { id:5, text: "Я перечекала перші ракетні удари в підвалі з телефоном, де грав плейлист aespa. Зараз, коли чую цей плейлист — відчуваю, що вижила. І що вижию ще.", name: "Оксана", age: 30, city: "Одеса", fandom: "MY 🖤🦋", initials: "О" },
-    { id:6, text: "Коли евакуювалась із сином, взяла тільки найнеобхідніше. І навушники. Бо без музики — не змогла б. K-pop дав мені сили зробити перший крок до безпеки.", name: "Наталія", age: 34, city: "Маріуполь → Дніпро", fandom: "ARMY 💜", initials: "Н" }
+    { id:1, text: "Коли брат пішов воювати і зник безвісти — саме BTS та їх пісні давали впевненість і відчуття, що ще трішки і все буде добре. Так і сталося. Брат знайшовся живий. Повернувся.", name: "Вікторія", job: "Вчитель", fandom: "ARMY 💜", initials: "В" },
+    { id:2, text: "Найбільше в пам'яті закарбувався день потужного ракетного удару. Мої руки нестримно тряслися, я ледве могла тримати телефон. Коли нарешті отримала повідомлення, що всі в безпеці, відразу ввімкнула BTS. Їхня музика спрацювала як найсильніше заспокійливе — той безпечний куточок, де можна видихнути.", name: "Марта", job: "Full-stack розробниця", fandom: "ARMY 💜", initials: "М" },
+    { id:3, text: "Вночі, під час дуже сильної атаки дронами, почалась панічна атака — я втратила відчуття простору, всі звуки злились у какофонію. Не пам'ятаю, як доповзла до телефону, але якось потрапила на відео виступу BTS в ООН. Не розуміла жодного слова, але почувши знайомий голос — мене почало відпускати.", name: "Марія", job: "Виконавча директорка", fandom: "ARMY 💜", initials: "М" },
+    { id:4, text: "В усьому винен TikTok та його рекомендації 😂 Відео лунало: «їх не запросили на MAMA, їх ігнорували... але вони вистояли...» Мене зацікавило, хто це, їхній шлях... Ну і все, далі як в тумані)", name: "Альона", job: "Громадська організація", fandom: "ARMY 💜", initials: "А" },
+    { id:5, text: "Я дізналась про BTS вже після початку війни. Чогось моєму серцю припав Юнгі — можливо, тому що ми схожі. В нього була депресія, і він перетворив це на музику. Він навчив мене, що виражати емоції — це сила, а не слабкість. Навіть раніше ніколи не слухала реп, а тепер слухаю його.", name: "Врина", job: "з любов'ю", fandom: "ARMY 💜", initials: "В" }
   ],
   artists: [
     "Girls' Generation", "BIGBANG", "EXO", "SHINee", "2NE1", "f(x)",
@@ -790,33 +809,63 @@ function renderChart(containerId, titleId, chart) {
 
 // ========== ФРАЗИ ==========
 const PHRASES_UA = [
-  { text: "єдина причина, чому я взагалі встаю вранці", author: "Анна", city: "Харків" },
-  { text: "мій особистий бункер без стін", author: "Дар'я", city: "Київ" },
-  { text: "місце, де війни не існує — хоча б на три хвилини", author: "Юлія", city: "Запоріжжя" },
-  { text: "спосіб нагадати собі, що світ більший за біль", author: "Олена", city: "Львів" },
-  { text: "200 людей у Telegram, які точно розуміють", author: "Марина", city: "Одеса" },
-  { text: "причина вивчити корейську під час блекауту", author: "Вікторія", city: "Дніпро" },
-  { text: "голос, який каже 'ти не одна' о третій ночі", author: "Ірина", city: "Чернігів" },
-  { text: "єдине місце, де я можу просто відчувати", author: "Соня", city: "Суми" },
-  { text: "доказ, що краса існує попри все", author: "Катя", city: "Полтава" },
-  { text: "ліки без рецепту і побічних ефектів", author: "Надя", city: "Миколаїв" },
-  { text: "пауза між сиренами", author: "Таня", city: "Херсон" },
-  { text: "щоденний ритуал, який тримає мене в реальності", author: "Аліна", city: "Ужгород" },
+  { text: "тихе, спокійне місце, яке є безпечним та в яке я можу повернутись ніби повертаюсь в час як до війни" },
+  { text: "один із ресурсів натхнення" },
+  { text: "можливість думати про гарне" },
+  { text: "спосіб підтримати свій настрій та емоційний стан" },
+  { text: "натхнення, нові знання та знайомства" },
+  { text: "музика, яку я люблю слухати" },
+  { text: "маяк надії" },
+  { text: "спосіб відійти від реальності і відволіктися" },
+  { text: "місце безпеки, підтримки, натхнення" },
+  { text: "емоційний щит і мій невидимий якір. Музика, яка обіймає мене в укритті і нагадує, що моя внутрішня сила може бути гучнішою за будь-які вибухи, а після найстрашнішої зими обов'язково настане весна" },
+  { text: "засіб, завдяки якому я тримаюсь на плаву" },
+  { text: "спосіб не здаватися. Це підтримка в ті моменти, коли здається, що сил більше немає. Це музика, яка допомагає триматися й іти до кінця" },
+  { text: "острівець позитиву, світла та любові, натхнення на власну творчість" },
+  { text: "безпека та втіха" },
+  { text: "куточок спокою, любові та натхнення" },
+  { text: "щось, що допомагає повернутись у безпечний час" },
+  { text: "схованка від реальності" },
+  { text: "можливість поринути у світ без тривожності на деякий час" },
+  { text: "спосіб не втратити розум та саму себе" },
+  { text: "можливість згадати про звичайні людські проблеми — кохання, дружбу, призначення в житті — без необхідності щоденно думати про виживання" },
+  { text: "сила, яка дає сили жити далі" },
+  { text: "віддушина" },
+  { text: "те, що стало другим домом" },
+  { text: "психологічний відпочинок" },
+  { text: "тиха пристань" },
+  { text: "сенс життя" },
+  { text: "допоміжна сила" },
 ];
 
 const PHRASES_EN = [
-  { text: "the only reason I get up in the morning", author: "Anna", city: "Kharkiv" },
-  { text: "my personal bunker without walls", author: "Daria", city: "Kyiv" },
-  { text: "a place where the war doesn't exist — even for three minutes", author: "Yulia", city: "Zaporizhzhia" },
-  { text: "a way to remind myself the world is bigger than pain", author: "Olena", city: "Lviv" },
-  { text: "200 people in Telegram who truly understand", author: "Maryna", city: "Odesa" },
-  { text: "a reason to learn Korean during a blackout", author: "Victoria", city: "Dnipro" },
-  { text: "a voice that says 'you're not alone' at 3am", author: "Iryna", city: "Chernihiv" },
-  { text: "the one place where I can simply feel", author: "Sonya", city: "Sumy" },
-  { text: "proof that beauty exists despite everything", author: "Katya", city: "Poltava" },
-  { text: "medicine without a prescription or side effects", author: "Nadya", city: "Mykolaiv" },
-  { text: "a pause between air raid sirens", author: "Tanya", city: "Kherson" },
-  { text: "a daily ritual that keeps me grounded in reality", author: "Alina", city: "Uzhhorod" },
+  { text: "a quiet, peaceful place I can return to — like going back to before the war" },
+  { text: "a source of inspiration" },
+  { text: "a chance to think about something beautiful" },
+  { text: "a way to support my mood and emotional state" },
+  { text: "inspiration, new knowledge and new friendships" },
+  { text: "music I love to listen to" },
+  { text: "a beacon of hope" },
+  { text: "a way to step away from reality" },
+  { text: "a place of safety, support and inspiration" },
+  { text: "an emotional shield and my invisible anchor. Music that embraces me in the shelter and reminds me my inner strength can be louder than any explosion — and that after the darkest winter, spring will always come" },
+  { text: "the thing that keeps me afloat" },
+  { text: "a way not to give up. Support in moments when it feels like there's no strength left. Music that helps hold on and keep going" },
+  { text: "an island of positivity, light and love, inspiration for my own creativity" },
+  { text: "safety and comfort" },
+  { text: "a corner of peace, love and inspiration" },
+  { text: "something that helps me return to a safe time" },
+  { text: "a hideaway from reality" },
+  { text: "a chance to dive into a world without anxiety for a little while" },
+  { text: "a way not to lose my mind and myself" },
+  { text: "a chance to remember ordinary human problems — love, friendship, purpose — without having to think about survival every day" },
+  { text: "a force that gives strength to keep living" },
+  { text: "an outlet" },
+  { text: "something that became a second home" },
+  { text: "psychological rest" },
+  { text: "a quiet harbor" },
+  { text: "the meaning of life" },
+  { text: "a supporting force" },
 ];
 
 let phraseTimer = null;
@@ -834,7 +883,7 @@ function renderPhrases(phrases) {
   carousel.innerHTML = phrases.map((p, i) => `
     <div class="phrase-slide ${i === 0 ? 'active' : ''}" data-idx="${i}">
       <div class="phrase-big-text">${p.text}</div>
-      <div class="phrase-big-author"><span>${p.author}</span>${p.city ? ` · ${p.city}` : ''}</div>
+      <div class="phrase-big-author"><span>учасниця проєкту MAY</span></div>
     </div>`).join('');
 
   // build dots
@@ -871,7 +920,7 @@ function renderStories(stories) {
       <p class="story-text">${s.text}</p>
       <div class="story-meta">
         <div class="story-avatar">${s.initials}</div>
-        <div class="story-author"><strong>${s.name}, ${s.age}</strong>${s.city}</div>
+        <div class="story-author"><strong>${s.name}</strong>${s.job ? ' · ' + s.job : ''}</div>
         <div class="fandom-tag">${s.fandom}</div>
       </div>
     </div>`).join('');
