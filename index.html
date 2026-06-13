@@ -3149,43 +3149,40 @@ function downloadBadge() {
   const canvas = document.getElementById('loveBadgeCanvas');
   const dataURL = canvas.toDataURL('image/png');
 
-  // Detect Instagram / Facebook / TikTok in-app browsers
+  // Detect in-app browsers (Instagram, Facebook, TikTok)
   const ua = navigator.userAgent || '';
-  const isIAB = /Instagram|FBAN|FBAV|TikTok|musical_ly|Snapchat|Twitter/i.test(ua);
+  const isIAB = /Instagram|FBAN|FBAV|TikTok|musical_ly|Snapchat/i.test(ua);
 
   if (isIAB) {
-    // Open image in new tab — user can long-press to save
     const w = window.open('', '_blank');
     if (w) {
-      w.document.write(`
-        <html><head><meta name="viewport" content="width=device-width,initial-scale=1">
-        <title>ARMY Badge</title>
-        <style>body{margin:0;background:#050816;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:sans-serif;}
-        img{max-width:100%;border-radius:12px;}
-        p{color:#a855f7;text-align:center;margin-top:1rem;font-size:1rem;padding:0 1rem;}</style></head>
-        <body>
-          <img src="${dataURL}" alt="ARMY Badge"/>
-          <p>📥 ${currentLang === 'en' ? 'Hold the image to save 💜' : 'Затисни зображення щоб зберегти 💜'}</p>
-        </body></html>`);
+      w.document.write(`<html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARMY Badge</title><style>body{margin:0;background:#050816;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;}img{max-width:95vw;border-radius:12px;}p{color:#a855f7;text-align:center;margin-top:1rem;font-size:1rem;padding:0 1rem;font-family:sans-serif;}</style></head><body><img src="${dataURL}"/><p>📥 ${currentLang==='en'?'Hold image to save 💜':'Затисни зображення щоб зберегти 💜'}</p></body></html>`);
       w.document.close();
-    } else {
-      // Fallback if popup blocked — show inline instruction
-      const msg = currentLang === 'en'
-        ? '📥 Hold the badge image to save it 💜'
-        : '📥 Затисни зображення бейджа щоб зберегти 💜';
-      const note = document.createElement('p');
-      note.textContent = msg;
-      note.style.cssText = 'color:#a855f7;font-size:0.85rem;margin-top:0.8rem;';
-      canvas.parentNode.insertBefore(note, canvas.nextSibling);
     }
     return;
   }
 
-  // Normal browsers — direct download
-  const a = document.createElement('a');
-  a.download = 'army-badge-bts-festa-2026.png';
-  a.href = dataURL;
-  a.click();
+  // Try Blob method first (most reliable on mobile)
+  try {
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'army-badge-bts-festa-2026.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }, 'image/png');
+  } catch(e) {
+    // Fallback: open in new tab
+    const w = window.open(dataURL, '_blank');
+    if (!w) {
+      alert(currentLang==='en'
+        ? 'Hold the badge image to save it 💜'
+        : 'Затисни зображення щоб зберегти 💜');
+    }
+  }
 }
 
 </script>
