@@ -3151,15 +3151,18 @@ function downloadBadge() {
   const isIAB = /Instagram|FBAN|FBAV/i.test(navigator.userAgent || '');
 
   if (isIAB) {
-    // Instagram blocks all download methods — show image inline instead
-    let existing = document.getElementById('badgeInlineImg');
-    if (existing) { existing.remove(); return; }
-    const img = document.createElement('img');
-    img.id = 'badgeInlineImg';
-    img.src = dataURL;
-    img.style.cssText = 'display:block;max-width:100%;border-radius:12px;margin-top:1rem;box-shadow:0 8px 40px rgba(168,85,247,0.3);';
-    canvas.parentNode.insertBefore(img, canvas.nextSibling);
-    img.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    let existing = document.getElementById('badgePopup');
+    if (existing) existing.remove();
+    const popup = document.createElement('div');
+    popup.id = 'badgePopup';
+    popup.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;padding:1rem;';
+    popup.innerHTML = `
+      <div style="position:relative;max-width:520px;width:100%;">
+        <button onclick="document.getElementById('badgePopup').remove()" style="position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:#1a0a3a;border:1px solid rgba(255,215,0,0.3);color:#FFD700;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1;">✕</button>
+        <img src="${dataURL}" style="width:100%;border-radius:12px;box-shadow:0 8px 40px rgba(168,85,247,0.4);display:block;"/>
+      </div>`;
+    popup.addEventListener('click', e => { if (e.target === popup) popup.remove(); });
+    document.body.appendChild(popup);
     return;
   }
 
