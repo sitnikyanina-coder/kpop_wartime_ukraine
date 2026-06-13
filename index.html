@@ -3148,41 +3148,27 @@ function generateBadge() {
 function downloadBadge() {
   const canvas = document.getElementById('loveBadgeCanvas');
   const dataURL = canvas.toDataURL('image/png');
+  const isUA = currentLang !== 'en';
 
-  // Detect in-app browsers (Instagram, Facebook, TikTok)
-  const ua = navigator.userAgent || '';
-  const isIAB = /Instagram|FBAN|FBAV|TikTok|musical_ly|Snapchat/i.test(ua);
+  // Detect Instagram in-app browser
+  const isIAB = /Instagram|FBAN|FBAV/i.test(navigator.userAgent || '');
 
   if (isIAB) {
-    const w = window.open('', '_blank');
-    if (w) {
-      w.document.write(`<html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARMY Badge</title><style>body{margin:0;background:#050816;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;}img{max-width:95vw;border-radius:12px;}p{color:#a855f7;text-align:center;margin-top:1rem;font-size:1rem;padding:0 1rem;font-family:sans-serif;}</style></head><body><img src="${dataURL}"/><p>📥 ${currentLang==='en'?'Hold image to save 💜':'Затисни зображення щоб зберегти 💜'}</p></body></html>`);
-      w.document.close();
-    }
+    window.open(dataURL, '_blank');
     return;
   }
 
-  // Try Blob method first (most reliable on mobile)
-  try {
-    canvas.toBlob(blob => {
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'army-badge-bts-festa-2026.png';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    }, 'image/png');
-  } catch(e) {
-    // Fallback: open in new tab
-    const w = window.open(dataURL, '_blank');
-    if (!w) {
-      alert(currentLang==='en'
-        ? 'Hold the badge image to save it 💜'
-        : 'Затисни зображення щоб зберегти 💜');
-    }
-  }
+  // All other browsers — Blob download
+  canvas.toBlob(blob => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'army-badge-bts-festa-2026.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }, 'image/png');
 }
 
 </script>
