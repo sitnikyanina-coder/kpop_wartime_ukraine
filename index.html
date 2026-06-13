@@ -14,7 +14,8 @@
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { font-family: 'Inter', sans-serif; background: var(--night); color: var(--text); overflow-x: hidden; min-height: 100vh; }
+  html { overflow-x: hidden; }
+  body { font-family: 'Inter', sans-serif; background: var(--night); color: var(--text); overflow-x: hidden; min-height: 100vh; max-width: 100vw; }
   body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
 
   .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 6rem 2rem 2rem; overflow: hidden; }
@@ -52,7 +53,7 @@
   @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
 
   section { padding: 6rem 2rem; position: relative; }
-  .container { max-width: 1100px; margin: 0 auto; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
   .section-label { font-family: 'Unbounded', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem; }
   .section-label::before { content: ''; display: block; width: 30px; height: 1px; background: var(--gold); }
   .section-title { font-family: 'Unbounded', sans-serif; font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; line-height: 1.1; margin-bottom: 1.5rem; }
@@ -73,7 +74,7 @@
   .chart-title { font-family: 'Unbounded', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--gold); margin-bottom: 2rem; letter-spacing: 0.05em; }
   .bar-chart { display: flex; flex-direction: column; gap: 1rem; }
   .bar-item { display: flex; align-items: center; gap: 1rem; }
-  .bar-label { min-width: 160px; font-size: 0.82rem; color: var(--muted); text-align: right; }
+  .bar-label { width: 195px; flex-shrink: 0; font-size: 0.82rem; color: var(--muted); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .bar-track { flex: 1; height: 10px; background: rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; }
   .bar-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--blue), var(--gold)); transform-origin: left; animation: barGrow 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
   @keyframes barGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
@@ -97,7 +98,7 @@
   .artists-marquee-wrap::before, .artists-marquee-wrap::after { content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none; }
   .artists-marquee-wrap::before { left: 0; background: linear-gradient(90deg, var(--night), transparent); }
   .artists-marquee-wrap::after { right: 0; background: linear-gradient(-90deg, var(--night), transparent); }
-  .artists-marquee { display: flex; gap: 1rem; animation: marquee 20s linear infinite; width: max-content; }
+  .artists-marquee { display: flex; gap: 1rem; animation: marquee 55s linear infinite; width: max-content; }
   .artists-marquee:hover { animation-play-state: paused; }
   @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   .artist-pill { font-family: 'Noto Serif KR', serif; font-size: 0.85rem; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 2rem; padding: 0.6rem 1.4rem; white-space: nowrap; color: var(--text); transition: all 0.2s; }
@@ -133,19 +134,228 @@
   .footer-logo { font-family: 'Unbounded', sans-serif; font-size: 1.2rem; font-weight: 900; background: linear-gradient(135deg, var(--gold), #fff5a0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
   .footer-tagline { font-family: 'Noto Serif KR', serif; color: rgba(255,215,0,0.4); font-size: 0.85rem; letter-spacing: 0.15em; margin-bottom: 1.5rem; }
   .footer-copy { font-size: 0.78rem; color: rgba(240,232,208,0.3); line-height: 1.7; }
-  /* ===== PHRASES SECTION ===== */
+  /* ===== PHRASE NAV ===== */
+  .phrase-nav {
+    display: flex; align-items: center; justify-content: center;
+    gap: 1rem; margin-top: 1.8rem;
+  }
+  .phrase-nav-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,215,0,0.06);
+    border: 1px solid rgba(255,215,0,0.25);
+    color: var(--gold); font-size: 1rem;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+  .phrase-nav-btn:hover { background: rgba(255,215,0,0.15); border-color: var(--gold); transform: scale(1.1); }
+
+  /* Side arrows — absolute positioned on edges of carousel */
+  .phrase-outer { position: relative; }
+  .phrase-side-btn {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 10;
+    width: 44px !important; height: 44px !important;
+    background: rgba(15,21,37,0.85) !important;
+    border: 1px solid rgba(255,215,0,0.4) !important;
+    backdrop-filter: blur(4px);
+  }
+  .phrase-side-prev { left: -22px !important; }
+  .phrase-side-next { right: -22px !important; }
+  .phrase-side-btn:hover { background: rgba(255,215,0,0.15) !important; border-color: var(--gold) !important; transform: translateY(-50%) scale(1.05) !important; }
+  @media (max-width: 768px) {
+    .phrase-side-prev { left: 4px !important; }
+    .phrase-side-next { right: 4px !important; }
+    .phrase-side-btn {
+      width: 36px !important; height: 36px !important;
+      font-size: 1rem !important;
+      background: rgba(15,21,37,0.9) !important;
+      border-color: rgba(255,215,0,0.6) !important;
+    }
+    /* Push text away from arrows */
+    .phrase-slide { padding-left: 50px !important; padding-right: 50px !important; }
+  }
+
+  /* ===== QUOTES + PLAYLIST SIDE-BY-SIDE ===== */
+  .quotes-playlist-section { background: var(--dark); }
+  .qp-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; align-items: start; }
+  @media (max-width: 768px) { .qp-layout { grid-template-columns: 1fr; gap: 2rem; } }
+
+  .qp-col-title { font-family: 'Unbounded', sans-serif; font-size: 0.75rem; font-weight: 600; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem; }
+  .qp-col-title::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
+
+  /* Quotes — chat bubbles with scroll */
+  .quotes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 0.4rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,215,0,0.25) transparent;
+  }
+  .quotes-list::-webkit-scrollbar { width: 3px; }
+  .quotes-list::-webkit-scrollbar-track { background: transparent; }
+  .quotes-list::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.25); border-radius: 99px; }
+
+  .quote-item {
+    display: flex;
+    flex-direction: column;
+    max-width: 88%;
+    animation: bubbleFadeIn 0.4s ease both;
+  }
+  @keyframes bubbleFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  /* alternate left / right */
+  .quote-item:nth-child(odd)  { align-self: flex-start; }
+  .quote-item:nth-child(even) { align-self: flex-end; }
+
+  .quote-bubble {
+    padding: 0.75rem 1rem;
+    border-radius: 1.1rem;
+    line-height: 1.6;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--text);
+    position: relative;
+  }
+  .quote-item:nth-child(odd)  .quote-bubble {
+    background: rgba(0,91,187,0.18);
+    border: 1px solid rgba(0,91,187,0.3);
+    border-bottom-left-radius: 3px;
+  }
+  .quote-item:nth-child(even) .quote-bubble {
+    background: rgba(255,215,0,0.1);
+    border: 1px solid rgba(255,215,0,0.2);
+    border-bottom-right-radius: 3px;
+  }
+  .quote-item-korean {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.7rem;
+    color: rgba(255,215,0,0.5);
+    margin-top: 0.25rem;
+    padding: 0 0.2rem;
+  }
+  .quote-translation {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-style: normal;
+    margin-top: 0.3rem;
+    padding: 0 0.2rem;
+    opacity: 0.7;
+  }
+  .quote-item-artist {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.05em;
+    margin-top: 0.2rem;
+    padding: 0 0.3rem;
+  }
+  .quote-item:nth-child(even) .quote-item-artist { text-align: right; }
+
+  /* Playlist — compact */
+  .playlist-list { display: flex; flex-direction: column; gap: 0.4rem; }
+  .playlist-item {
+    display: flex; align-items: center; gap: 0.9rem;
+    padding: 0.7rem 1rem; border-radius: 0.7rem;
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .playlist-item:hover { border-color: rgba(255,215,0,0.3); background: rgba(255,255,255,0.05); }
+  .playlist-num { font-family: 'Unbounded', sans-serif; font-size: 0.62rem; color: rgba(255,215,0,0.3); min-width: 18px; text-align: right; }
+  .playlist-icon { font-size: 0.9rem; flex-shrink: 0; }
+  .playlist-info { flex: 1; min-width: 0; }
+  .playlist-song { font-size: 0.83rem; color: var(--text); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .playlist-artist { font-size: 0.7rem; color: var(--muted); margin-top: 0.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .playlist-link { font-size: 0.65rem; color: rgba(255,215,0,0.4); text-decoration: none; font-family: 'Unbounded', sans-serif; flex-shrink: 0; transition: color 0.2s; }
+  .playlist-link:hover { color: var(--gold); }
+
+  /* ===== QUOTES SECTION ===== */
+  .quotes-section { background: var(--dark); }
+  .quotes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem; margin-top: 3rem; }
+  .quote-card {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 1.2rem; padding: 1.8rem; position: relative;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .quote-card:hover { transform: translateY(-4px); border-color: rgba(255,215,0,0.3); }
+  .quote-mark { font-family: 'Noto Serif KR', serif; font-size: 3.5rem; line-height: 1; color: rgba(255,215,0,0.12); margin-bottom: -0.5rem; }
+  .quote-text { font-size: 0.92rem; line-height: 1.75; color: var(--text); font-style: italic; margin-bottom: 1rem; }
+  .quote-korean { font-family: 'Noto Serif KR', serif; font-size: 0.82rem; color: rgba(255,215,0,0.5); margin-bottom: 1rem; }
+  .quote-artist { font-family: 'Unbounded', sans-serif; font-size: 0.7rem; font-weight: 600; color: var(--gold); letter-spacing: 0.08em; }
+
+  /* ===== PLAYLIST SECTION ===== */
+  .playlist-section { background: var(--night); }
+  .playlist-list { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 2.5rem; max-width: 700px; }
+  .playlist-item {
+    display: flex; align-items: center; gap: 1.2rem;
+    padding: 0.9rem 1.2rem; border-radius: 0.9rem;
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    transition: border-color 0.2s, background 0.2s;
+    cursor: default;
+  }
+  .playlist-item:hover { border-color: rgba(255,215,0,0.3); background: rgba(255,255,255,0.06); }
+  .playlist-num { font-family: 'Unbounded', sans-serif; font-size: 0.68rem; color: rgba(255,215,0,0.4); min-width: 20px; text-align: right; }
+  .playlist-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .playlist-info { flex: 1; }
+  .playlist-song { font-size: 0.88rem; color: var(--text); font-weight: 500; }
+  .playlist-artist { font-size: 0.75rem; color: var(--muted); margin-top: 0.15rem; }
+  .playlist-link { font-size: 0.72rem; color: rgba(255,215,0,0.5); text-decoration: none; font-family: 'Unbounded', sans-serif; letter-spacing: 0.05em; transition: color 0.2s; flex-shrink: 0; }
+  .playlist-link:hover { color: var(--gold); }
+
+  /* ===== CULTURE SECTION ===== */
+  .culture-section { background: var(--dark); }
+  .culture-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2.5rem; }
+  .culture-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 1.2rem; padding: 2rem; }
+  .culture-card-title { font-family: 'Unbounded', sans-serif; font-size: 0.75rem; font-weight: 600; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+  .culture-stat-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.9rem; }
+  .culture-stat-bar-wrap { display: none; }
+  .culture-stat-bar { display: none; }
+  .culture-stat-label { font-size: 0.82rem; color: var(--muted); flex: 1; }
+  .culture-stat-pct { font-family: 'Unbounded', sans-serif; font-size: 0.7rem; color: var(--gold); min-width: 36px; text-align: right; }
+  @media (max-width: 680px) { .culture-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 540px) {
+    .culture-stat-row { gap: 0.5rem; }
+    .culture-stat-label { min-width: unset; flex: 1; font-size: 0.72rem; }
+    .culture-stat-bar-wrap { display: none; }
+    .culture-stat-pct { min-width: unset; font-size: 0.75rem; }
+    .culture-card { padding: 1.2rem; }
+  }
+
+  /* ===== GALAXY ===== */
+  .galaxy-canvas { width: 100%; aspect-ratio: 1 / 1; height: auto; display: block; border-radius: 1rem; }
+
+  /* ===== TALISMAN COMPACT ===== */
+  .talisman-section { background: var(--night); }
+  .talisman-list { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 2rem; max-width: 720px; }
+  .talisman-row {
+    display: flex; align-items: flex-start; gap: 0.9rem;
+    padding: 0.8rem 1.1rem;
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 0.8rem;
+    transition: border-color 0.2s;
+  }
+  .talisman-row:hover { border-color: rgba(255,215,0,0.25); }
+  .talisman-row-icon { font-size: 1rem; flex-shrink: 0; line-height: 1.6; }
+  .talisman-row-text { font-size: 0.85rem; line-height: 1.65; color: var(--muted); }
   .phrases-section { background: var(--night); text-align: center; }
   .phrases-carousel {
     position: relative;
     max-width: 700px;
     margin: 0 auto;
-    min-height: 160px;
-    display: flex; align-items: center; justify-content: center;
+    height: 220px;
   }
   .phrase-slide {
     position: absolute; inset: 0;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
+    padding: 1rem;
     opacity: 0;
     transform: translateY(16px);
     transition: opacity 0.7s ease, transform 0.7s ease;
@@ -207,9 +417,10 @@
     padding: 2rem 2rem 3rem;
     transform: translateY(100%);
     transition: transform 0.45s cubic-bezier(0.34, 1.2, 0.64, 1);
-    max-height: 80vh;
+    max-height: 85vh;
     overflow-y: auto;
   }
+  @media (max-width: 480px) { .drawer { padding: 1.5rem 1rem 2rem; max-height: 90vh; } }
   .drawer.open { transform: translateY(0); }
 
   .drawer-handle {
@@ -244,6 +455,7 @@
     max-width: 700px; margin: 0 auto;
   }
 
+  @media (max-width: 480px) { .letter-card { padding: 1.2rem; } .letter-text { font-size: 0.88rem; } }
   .letter-card {
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,215,0,0.1);
@@ -257,6 +469,18 @@
   .letter-quote { font-size: 2.5rem; line-height: 1; color: rgba(255,215,0,0.12); font-family: 'Noto Serif KR', serif; margin-bottom: -0.5rem; }
   .letter-text { font-size: 0.93rem; line-height: 1.8; color: var(--text); font-style: italic; margin-bottom: 1rem; }
   .letter-meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 1rem;
+  }
+  .letter-fandom-tag {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: rgba(255,215,0,0.6);
+    letter-spacing: 0.05em;
+  }
     display: flex; align-items: center; gap: 0.8rem;
     padding-top: 0.8rem;
     border-top: 1px solid rgba(255,215,0,0.08);
@@ -283,9 +507,10 @@
   .drawer-close:hover { background: rgba(255,215,0,0.18); }
 
   .artist-pill { cursor: pointer; transition: all 0.2s; }
+  @media (max-width: 480px) { .artist-pill { padding: 0.7rem 1.2rem; font-size: 0.9rem; } }
   .artist-pill:hover { background: rgba(255,215,0,0.15); border-color: var(--gold); color: var(--gold); transform: scale(1.05); }
 
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; transition: background 0.3s; gap: 1rem; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; transition: background 0.3s; gap: 1rem;  width: 100%; box-sizing: border-box;}
   nav.scrolled { background: rgba(8,12,20,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,215,0,0.08); }
   .nav-logo { font-family: 'Unbounded', sans-serif; font-size: 0.85rem; font-weight: 900; color: var(--gold); text-decoration: none; white-space: nowrap; flex-shrink: 0; }
   .nav-links { display: flex; gap: 1.2rem; list-style: none; margin-left: auto; }
@@ -302,30 +527,20 @@
   @media (max-width: 900px) { .nav-links { display: none; } }
   @media (max-width: 600px) { .stories-grid { grid-template-columns: 1fr; } nav { padding: 0.9rem 1.2rem; } .nav-logo { font-size: 0.75rem; } }
 
+  .constellation-wrap { position: relative; width: 464px; max-width: 100%; }
+  #galaxyCanvas { width: 464px; height: 340px; max-width: 100%; display: block; background: transparent; }
   .about-section { background: var(--night); }
-  .about-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: center; }
-  .about-visual { position: relative; aspect-ratio: 1; max-width: 380px; }
-  .about-circle { width: 100%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 40% 40%, rgba(0,91,187,0.3), transparent 60%), radial-gradient(circle at 70% 70%, rgba(255,215,0,0.15), transparent 50%), rgba(255,255,255,0.02); border: 1px solid rgba(255,215,0,0.12); display: flex; align-items: center; justify-content: center; position: relative; }
-  .about-circle-text { position: relative; width: 100%; height: 100%; min-height: 200px; overflow: hidden; border-radius: 50%; }
-  .cloud-word {
-    position: absolute;
-    font-family: 'Noto Serif KR', serif;
-    color: var(--gold);
-    user-select: none;
-    opacity: 0;
-    white-space: nowrap;
+  .about-split { display: grid; grid-template-columns: 464px 1fr; gap: 4rem; align-items: center; }
+  .about-constellation-col { flex-shrink: 0; }
+  @media (max-width: 960px) { .about-split { grid-template-columns: 1fr; gap: 2rem; } }
+  .constellation-legend {
+    position: absolute; bottom: -22px; left: 0;
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.68rem; color: rgba(255,215,0,0.38);
     pointer-events: none;
-    animation: cloudFloat var(--float-dur, 6s) ease-in-out infinite;
-    animation-delay: var(--float-delay, 0s);
   }
-  @keyframes cloudFloat {
-    0%   { transform: translate(-50%, -50%); }
-    25%  { transform: translate(calc(-50% + var(--dx, 3px)), calc(-50% - var(--dy, 4px))); }
-    50%  { transform: translate(calc(-50% + var(--dx2, -3px)), calc(-50% + var(--dy2, 3px))); }
-    75%  { transform: translate(calc(-50% - var(--dx, 3px)), calc(-50% + var(--dy, 2px))); }
-    100% { transform: translate(-50%, -50%); }
-  }
-  .cloud-word.visible { opacity: 1; }
+  .legend-star { font-size: 0.7rem; color: rgba(255,215,0,0.45); }
+  .about-text-col p { color: var(--muted); line-height: 1.8; font-size: 0.93rem; margin-bottom: 0.9rem; }
   .about-circle-badge { position: absolute; bottom: 10%; right: 0; background: linear-gradient(135deg, var(--gold), var(--warm-gold)); color: var(--night); font-family: 'Unbounded', sans-serif; font-size: 0.65rem; font-weight: 700; padding: 0.6rem 1rem; border-radius: 2rem; white-space: nowrap; box-shadow: 0 8px 25px rgba(255,215,0,0.4); }
   .about-text p { color: var(--muted); line-height: 1.85; margin-bottom: 1.2rem; font-size: 0.95rem; }
   .about-text p strong { color: var(--text); }
@@ -334,11 +549,555 @@
   .about-block-num { font-family: 'Unbounded', sans-serif; font-size: 0.7rem; font-weight: 700; color: var(--gold); min-width: 24px; }
   .about-block p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin: 0; }
 
-  @media (max-width: 768px) { .contact-grid, .about-grid { grid-template-columns: 1fr; gap: 2.5rem; } .bar-label { min-width: 100px; font-size: 0.75rem; } }
-  @media (max-width: 600px) { .nav-links { display: none; } .stories-grid { grid-template-columns: 1fr; } }
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .about-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .about-visual { max-width: 300px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .chart-section > div { grid-template-columns: 1fr !important; gap: 2rem !important; }
+    section { padding: 4rem 2rem; }
+  }
+  @media (max-width: 768px) {
+    .contact-grid, .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .about-visual { max-width: 260px; margin: 0 auto; }
+    .bar-label { min-width: 100px; width: auto; font-size: 0.75rem; }
+    .hero-title { font-size: clamp(1.8rem, 10vw, 3rem); }
+    .section-title { font-size: clamp(1.4rem, 6vw, 2.2rem); }
+    .stat-number { font-size: clamp(2rem, 8vw, 3rem); }
+    .stories-grid { grid-template-columns: 1fr; }
+    section { padding: 3rem 1.2rem; }
+    .hero { padding: 5rem 1.2rem 2rem; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .stat-card { padding: 1.4rem 1rem; }
+    .phrases-carousel { height: 220px; }
+  }
+  @media (max-width: 480px) {
+    .nav-links { display: none; }
+    nav { padding: 0.8rem 1rem; }
+    .nav-logo { font-size: 0.72rem; }
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .stat-card { padding: 1.2rem 0.8rem; }
+    .hero-tag { font-size: 0.55rem; padding: 0.35rem 0.9rem; }
+    .hero-cta-group { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-ghost { width: 100%; max-width: 280px; text-align: center; }
+    .bar-item { flex-wrap: wrap; gap: 0.4rem; }
+    .bar-label { min-width: unset; width: 100%; text-align: left; }
+    .bar-track { width: 100%; }
+    .about-visual { max-width: 220px; }
+    .phrase-big-text { font-size: clamp(0.95rem, 4.5vw, 1.3rem); }
+    .story-card { padding: 1.4rem 1rem; }
+    .section-title { font-size: clamp(1.3rem, 7vw, 2rem); }
+  }
+  @media (min-width: 1440px) {
+    .container { max-width: 1280px; }
+    .hero-title { font-size: clamp(4rem, 6vw, 6.5rem); }
+    .section-title { font-size: clamp(2.5rem, 3.5vw, 3.5rem); }
+    .about-visual { max-width: 460px; }
+    .about-grid { gap: 7rem; }
+  }
+
+  .join-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--night);
+    background: linear-gradient(135deg, var(--gold), var(--warm-gold));
+    border-radius: 3rem;
+    padding: 1.1rem 2.4rem;
+    box-shadow: 0 6px 30px rgba(255,215,0,0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .join-cta-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .join-cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(255,215,0,0.5);
+  }
+  .join-cta-btn:hover::before { opacity: 1; }
+  .join-cta-icon { font-size: 1rem; }
+  .join-cta-arrow {
+    font-size: 1.1rem;
+    transition: transform 0.25s ease;
+  }
+  .join-cta-btn:hover .join-cta-arrow { transform: translateX(4px); }
+
+  .join-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .join-left { max-width: 520px; }
+
+  /* Instagram card */
+  .insta-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 1.4rem;
+    padding: 1.8rem;
+    transition: border-color 0.3s;
+  }
+  .insta-card:hover { border-color: rgba(255,215,0,0.3); }
+  .insta-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  .insta-avatar {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 900; font-size: 1.1rem;
+    color: var(--night);
+    flex-shrink: 0;
+    box-shadow: 0 0 0 2px rgba(255,215,0,0.3);
+  }
+  .insta-info { flex: 1; }
+  .insta-handle {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.15rem;
+  }
+  .insta-name {
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .insta-follow-btn {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--night);
+    background: linear-gradient(135deg, var(--gold), var(--warm-gold));
+    border-radius: 2rem;
+    padding: 0.45rem 1rem;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .insta-follow-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255,215,0,0.35);
+  }
+  .insta-bio {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 1.2rem;
+  }
+  .insta-divider {
+    height: 1px;
+    background: rgba(255,215,0,0.1);
+    margin-bottom: 1.2rem;
+  }
+  .insta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1.3rem;
+  }
+  .insta-post {
+    aspect-ratio: 1;
+    border-radius: 0.6rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .insta-post--1 { background: linear-gradient(135deg, rgba(0,91,187,0.5), rgba(255,215,0,0.2)); }
+  .insta-post--2 { background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(0,91,187,0.4)); }
+  .insta-post--3 { background: linear-gradient(135deg, rgba(0,91,187,0.3), rgba(255,215,0,0.35)); }
+  .insta-post-overlay {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.3rem;
+    font-size: 1.4rem;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .insta-post:hover .insta-post-overlay { opacity: 1; }
+  .insta-post-tag {
+    font-size: 0.55rem;
+    font-family: 'Unbounded', sans-serif;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+  .insta-view-all {
+    display: block;
+    text-align: center;
+    font-size: 0.75rem;
+    font-family: 'Unbounded', sans-serif;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: opacity 0.2s;
+    padding: 0.3rem 0;
+  }
+  .insta-view-all:hover { opacity: 0.7; }
+
+  @media (max-width: 768px) {
+    .join-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .join-left { max-width: 100%; }
+  }
+
+  /* ===== INSIGHT BUTTONS ===== */
+  .insights-section { background: var(--dark); padding: 2.5rem 0; }
+  .insights-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  @media (max-width: 600px) { .insights-row { grid-template-columns: 1fr; } }
+  .insight-btn {
+    display: flex; align-items: center; gap: 1.1rem;
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 1.2rem; padding: 1.4rem 1.6rem;
+    cursor: pointer; text-align: left; width: 100%;
+    transition: border-color .25s, transform .25s, box-shadow .25s;
+  }
+  .insight-btn:hover { border-color: rgba(255,215,0,.4); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,.3); }
+  .insight-btn-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .insight-btn-body { flex: 1; }
+  .insight-btn-title { font-family: 'Unbounded', sans-serif; font-size: .78rem; font-weight: 700; color: var(--text); margin-bottom: .3rem; }
+  .insight-btn-sub { font-size: .72rem; color: var(--muted); }
+  .insight-btn-arrow { font-size: 1.1rem; color: rgba(255,215,0,.4); transition: color .2s, transform .2s; flex-shrink: 0; }
+  .insight-btn:hover .insight-btn-arrow { color: var(--gold); transform: translateX(4px); }
+
+  /* ===== MODAL ===== */
+  .imodal-overlay {
+    position: fixed; inset: 0; z-index: 999;
+    background: rgba(0,0,0,.75); backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+    opacity: 0; pointer-events: none; transition: opacity .3s ease;
+  }
+  .imodal-overlay.open { opacity: 1; pointer-events: all; }
+  .imodal-box {
+    background: var(--card-bg); border: 1px solid rgba(255,215,0,.15);
+    border-radius: 1.6rem;
+    max-width: 720px; width: calc(100% - 2rem); max-height: 85vh;
+    position: relative;
+    display: flex; flex-direction: column;
+    transform: translateY(20px); transition: transform .3s ease;
+  }
+  .imodal-header {
+    display: flex; align-items: center; justify-content: flex-end;
+    padding: 1rem 1.2rem 0;
+    flex-shrink: 0;
+  }
+  .imodal-body {
+    overflow-y: auto; padding: 0.5rem 2.5rem 2.5rem;
+    scrollbar-width: thin; scrollbar-color: rgba(255,215,0,.2) transparent;
+    flex: 1;
+  }
+  @media (max-width: 480px) {
+    .imodal-box { border-radius: 1rem; max-height: 92vh; }
+    .imodal-body { padding: 0.5rem 1rem 2rem; }
+    .imodal-overlay { padding: 0.5rem; align-items: flex-end; }
+  }
+  .imodal-overlay.open .imodal-box { transform: translateY(0); }
+  .imodal-close {
+    background: rgba(255,255,255,.07); border: none; border-radius: 50%;
+    width: 36px; height: 36px; font-size: .9rem; color: var(--muted);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .2s, color .2s; flex-shrink: 0;
+  }
+  .imodal-close:hover { background: rgba(255,215,0,.15); color: var(--gold); }
+  .imodal-title { font-family: 'Unbounded', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: .4rem; }
+  .imodal-sub { font-size: .8rem; color: var(--muted); margin-bottom: 2rem; }
+
+
+  .talisman-heading {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,215,0,0.6);
+    padding: 1.2rem 0 0.5rem;
+    border-bottom: 1px solid rgba(255,215,0,0.1);
+    margin-bottom: 0.3rem;
+  }
+  .talisman-heading:first-child { padding-top: 0; }
+
+  /* ===== COMPREHENSIVE MOBILE FIX ===== */
+  @media (max-width: 768px) {
+    html, body { overflow-x: hidden !important; width: 100% !important; }
+    section { padding: 3rem 1rem !important; }
+    .container { padding: 0 1rem !important; width: 100% !important; }
+    nav { padding: 0.8rem 1rem !important; }
+    .nav-logo { font-size: 0.72rem !important; }
+    .nav-right { gap: 0.5rem; }
+    .lang-btn { padding: 0.35rem 0.6rem; font-size: 0.6rem; }
+    .about-split { grid-template-columns: 1fr !important; gap: 2rem !important; }
+    .constellation-wrap { width: 100% !important; max-width: 100% !important; }
+    #galaxyCanvas { width: 100% !important; height: auto !important; aspect-ratio: 464/340; }
+    .imodal-overlay { padding: 0.5rem !important; align-items: flex-end !important; }
+    .imodal-box { width: 100% !important; max-width: 100% !important; border-radius: 1.2rem 1.2rem 0 0 !important; max-height: 92vh !important; padding: 1.5rem 1rem !important; }
+    .drawer { padding: 1.5rem 1rem 2rem !important; }
+    .bar-item { flex-wrap: wrap; gap: 0.3rem; }
+    .bar-label { width: 100% !important; min-width: unset !important; text-align: left !important; font-size: 0.75rem; }
+    .bar-track { width: 100% !important; }
+    .phrases-carousel { height: 240px !important; }
+    .phrase-big-text { font-size: clamp(0.9rem, 4vw, 1.2rem) !important; }
+    .insights-row { grid-template-columns: 1fr !important; }
+    .qp-layout { grid-template-columns: 1fr !important; }
+    .stories-grid { grid-template-columns: 1fr !important; }
+    .culture-grid { grid-template-columns: 1fr !important; }
+    .join-layout { grid-template-columns: 1fr !important; }
+  }
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr 1fr !important; gap: 0.7rem !important; }
+    .hero-title { font-size: clamp(1.6rem, 9vw, 2.5rem) !important; }
+    .section-title { font-size: clamp(1.3rem, 6vw, 1.8rem) !important; }
+    .letter-text { font-size: 0.88rem !important; }
+    .insight-btn-title { font-size: 0.72rem !important; }
+    /* Phrase nav arrows — bigger tap targets on mobile */
+    .phrase-nav-btn {
+      width: 48px !important; height: 48px !important;
+      font-size: 1.3rem !important;
+      background: rgba(255,215,0,0.12) !important;
+      border-color: rgba(255,215,0,0.5) !important;
+    }
+    .phrase-nav { gap: 1.5rem !important; margin-top: 1.2rem !important; }
+  }
+
+
+  /* Track stories button */
+  .tracks-story-btn {
+    display: block; width: 100%;
+    text-align: center;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+    color: rgba(255,215,0,0.6);
+    border: 1px solid rgba(255,215,0,0.2);
+    border-radius: 2rem; padding: 0.75rem 1rem;
+    background: transparent; cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    margin-top: 0.3rem;
+  }
+  .tracks-story-btn:hover { background: rgba(255,215,0,0.07); border-color: rgba(255,215,0,0.45); color: var(--gold); }
+  .track-story-card { padding: 1.2rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .track-story-card:last-child { border-bottom: none; }
+  .track-story-song { font-family: 'Unbounded', sans-serif; font-size: 0.72rem; font-weight: 700; color: var(--gold); margin-bottom: 0.5rem; }
+  .track-story-text { font-size: 0.85rem; color: var(--muted); line-height: 1.7; font-style: italic; }
+
+
+  /* ===== BTS FESTA INTRO ===== */
+  #festaOverlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #050a18;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    opacity: 1;
+    transition: opacity 0.9s ease;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  #festaOverlay.fade-out { opacity: 0; pointer-events: none; }
+
+  .festa-stars {
+    position: absolute; inset: 0;
+    pointer-events: none;
+  }
+  .festa-star {
+    position: absolute;
+    width: 2px; height: 2px;
+    border-radius: 50%;
+    background: #a855f7;
+    animation: twinkle var(--d, 3s) var(--delay, 0s) infinite ease-in-out;
+    opacity: 0;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+  .festa-particles {
+    position: absolute; inset: 0;
+    pointer-events: none; overflow: hidden;
+  }
+  .festa-particle {
+    position: absolute; bottom: -20px;
+    width: 6px; height: 6px; border-radius: 50%;
+    animation: floatUp var(--d,4s) var(--delay,0s) ease-in infinite;
+    opacity: 0;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 0.8; }
+    100% { transform: translateY(-100vh) scale(0.3); opacity: 0; }
+  }
+  .festa-content {
+    text-align: center;
+    animation: festaIn 1.2s cubic-bezier(0.34,1.56,0.64,1) both;
+    padding: 2rem;
+    position: relative; z-index: 2;
+  }
+  @keyframes festaIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.9); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .festa-label {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(0.6rem, 2vw, 0.75rem);
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: #a855f7; margin-bottom: 1.2rem;
+    animation: festaIn 1.2s 0.2s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  .festa-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(2.8rem, 10vw, 5.5rem);
+    font-weight: 900; line-height: 1;
+    background: linear-gradient(135deg, #a855f7 0%, #c084fc 40%, #FFD700 70%, #fff5a0 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    animation: festaIn 1.2s 0.1s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  .festa-year {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(1rem, 4vw, 1.8rem);
+    font-weight: 300; color: rgba(255,255,255,0.5);
+    letter-spacing: 0.15em;
+    animation: festaIn 1.2s 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  .festa-hearts {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    margin: 1.5rem 0;
+    animation: festaIn 1.2s 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+    letter-spacing: 0.5rem;
+  }
+  .festa-sub {
+    font-size: clamp(0.75rem, 2.5vw, 0.95rem);
+    color: rgba(255,255,255,0.45);
+    line-height: 1.8;
+    animation: festaIn 1.2s 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  .festa-skip {
+    position: absolute; bottom: 2.5rem; right: 2.5rem;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.6rem; letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.25);
+    background: none; border: none; cursor: pointer;
+    transition: color 0.2s;
+    animation: festaIn 1.2s 0.8s both;
+  }
+  .festa-skip:hover { color: rgba(255,255,255,0.6); }
+  .festa-progress {
+    position: absolute; bottom: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #a855f7, #FFD700);
+    animation: festaProgress 9s linear both;
+    width: 0%;
+  }
+  @keyframes festaProgress {
+    from { width: 0%; }
+    to   { width: 100%; }
+  }
+
+  @keyframes cardReveal {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Sticky collapse stories button */
+  #storiesCollapseFloat {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+    display: none;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em;
+    color: var(--gold);
+    border: 1px solid rgba(255,215,0,0.4);
+    border-radius: 2rem; padding: 0.7rem 1.2rem;
+    background: rgba(15,21,37,0.92);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    animation: floatIn 0.3s ease both;
+  }
+  #storiesCollapseFloat:hover {
+    background: rgba(255,215,0,0.1);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+  @keyframes floatIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+
+  .love-section { background: linear-gradient(180deg, var(--dark) 0%, #0a0818 100%); text-align:center; }
+  .love-main-btn {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    font-family: 'Unbounded', sans-serif; font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.06em; color: #fff;
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    border: none; border-radius: 3rem; padding: 1.1rem 2.5rem;
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(168,85,247,0.4);
+  }
+  .love-main-btn:hover { transform: scale(1.05); box-shadow: 0 8px 32px rgba(168,85,247,0.55); }
+  .love-main-btn:active { transform: scale(0.97); }
+  .love-btn-heart { font-size: 1.4rem; animation: heartbeat 1.4s ease-in-out infinite; }
+  @keyframes heartbeat { 0%,100%{transform:scale(1)} 50%{transform:scale(1.25)} }
+  .love-download-btn {
+    font-family: 'Unbounded', sans-serif; font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.08em; color: var(--gold);
+    border: 1px solid rgba(255,215,0,0.35); border-radius: 2rem;
+    padding: 0.75rem 2rem; background: transparent; cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .love-download-btn:hover { background: rgba(255,215,0,0.08); border-color: var(--gold); }
+  .fly-heart {
+    position: fixed; pointer-events: none;
+    animation: flyUp var(--d,2.5s) var(--delay,0s) ease-out both; opacity: 0;
+  }
+  @keyframes flyUp {
+    0%   { transform: translateY(0) rotate(var(--r,0deg)) scale(0.5); opacity:1; }
+    80%  { opacity: 1; }
+    100% { transform: translateY(-75vh) rotate(calc(var(--r,0deg)*3)) scale(1.2); opacity:0; }
+  }
+
 </style>
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48dGV4dCB5PSIuOWVtIiBmb250LXNpemU9IjkwIj7wn5KcPC90ZXh0Pjwvc3ZnPg==" type="image/svg+xml">
+  <link rel="shortcut icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48dGV4dCB5PSIuOWVtIiBmb250LXNpemU9IjkwIj7wn5KcPC90ZXh0Pjwvc3ZnPg==" type="image/svg+xml">
 </head>
 <body>
+<!-- BTS FESTA INTRO -->
+<div id="festaOverlay" onclick="closeFesta()">
+  <canvas class="festa-stars" id="festaCanvas"></canvas>
+  <div class="festa-particles" id="festaParticles"></div>
+
+  <div class="festa-content">
+    <div class="festa-label">💜 June · BTS FESTA · 2026</div>
+    <div class="festa-title">Happy 13th</div>
+    <div class="festa-year">ANNIVERSARY</div>
+    <div class="festa-hearts">💜 💜 💜</div>
+    <div class="festa-sub">
+      13 червня 2013 — 13 червня 2026<br>
+      Thirteen years of music, love & light.<br>
+      <span style="color:#a855f7">I Purple You 💜</span>
+    </div>
+  </div>
+
+  <button class="festa-skip" onclick="closeFesta()">пропустити →</button>
+  <div class="festa-progress"></div>
+</div>
+
 
 <div class="progress-bar" id="progressBar"></div>
 
@@ -346,6 +1105,7 @@
   <a href="#" class="nav-logo">MAY ✦ Media About You</a>
   <ul class="nav-links">
     <li><a href="#stats" data-ua="Статистика" data-en="Statistics">Статистика</a></li>
+    <li><a href="#quotes" data-ua="Плейлист" data-en="Playlist">Плейлист</a></li>
     <li><a href="#stories" data-ua="Історії" data-en="Stories">Історії</a></li>
     <li><a href="#thanks" data-ua="Подяка" data-en="Thank You">Подяка</a></li>
     <li id="navJoinItem"><a href="#join" data-ua="Долучитись" data-en="">Долучитись</a></li>
@@ -382,14 +1142,17 @@
 
 <section class="about-section" id="about">
   <div class="container">
-    <div class="about-grid">
-      <div class="about-visual">
-        <div class="about-circle">
-          <div class="about-circle-text" id="wordCloud"></div>
-          <div class="about-circle-badge" id="badgeText">MAY × K-pop 2026</div>
+    <div class="about-split">
+      <div class="about-constellation-col">
+        <div class="constellation-wrap">
+          <canvas id="galaxyCanvas"></canvas>
+          <div class="constellation-legend">
+            <span class="legend-star">✦</span>
+            <span class="legend-text" data-ua="Яскравіші зірки = частіше згадувались в опитуванні" data-en="Brighter stars = mentioned more often in the survey">Яскравіші зірки = частіше згадувались в опитуванні</span>
+          </div>
         </div>
       </div>
-      <div class="about-text">
+      <div class="about-text-col">
         <div class="section-label" data-ua="Про проєкт" data-en="About the Project">Про проєкт</div>
         <h2 class="section-title">
           <span data-ua="Музика, що " data-en="Music that ">Музика, що </span><span style="color:var(--gold)" data-ua="рятувала" data-en="saved lives">рятувала</span>
@@ -420,7 +1183,7 @@
       <h2 class="section-title">
         <span data-ua="Цифри, що" data-en="Numbers that">Цифри, що</span><br><span style="color:var(--gold)" data-ua="говорять" data-en="speak">говорять</span>
       </h2>
-      <p data-ua="Дані зібрані в рамках культурного проєкту MAY. Учасники — україномовні K-pop фанати, які поділились своїм досвідом під час повномасштабного вторгнення."
+      <p data-ua="Дані зібрані в рамках культурного проєкту MAY.<br>Учасники — україномовні K-pop фанати, які поділились своїм досвідом під час повномасштабного вторгнення."
          data-en="Data collected as part of the MAY cultural project. Participants are Ukrainian-speaking K-pop fans who shared their experiences during the full-scale invasion.">
          Дані зібрані в рамках культурного проєкту MAY. Учасники — україномовні K-pop фанати, які поділились своїм досвідом під час повномасштабного вторгнення.
       </p>
@@ -444,11 +1207,105 @@
       <span data-ua="Під час війни K-pop" data-en="During the war, K-pop">Під час війни K-pop</span><br>
       <span style="color:var(--gold)" data-ua="для мене — це..." data-en="for me is...">для мене — це...</span>
     </h2>
-
-    <div class="phrases-carousel" id="phrasesCarousel"></div>
-    <div class="phrase-dots" id="phraseDots"></div>
+    <div class="phrase-outer" style="position:relative; max-width:700px; margin:0 auto;">
+      <button class="phrase-nav-btn phrase-side-btn phrase-side-prev" id="phrasePrev" onclick="goToPhrase((phraseIndex - 1 + currentPhrases.length) % currentPhrases.length)" aria-label="Попередня">←</button>
+      <div class="phrases-carousel" id="phrasesCarousel"></div>
+      <button class="phrase-nav-btn phrase-side-btn phrase-side-next" id="phraseNext" onclick="goToPhrase((phraseIndex + 1) % currentPhrases.length)" aria-label="Наступна">→</button>
+      <div class="phrase-nav" style="justify-content:center; margin-top:1rem;">
+        <div class="phrase-dots" id="phraseDots"></div>
+      </div>
+    </div>
+      </div>
+    </div>
   </div>
 </section>
+
+<div class="divider"></div>
+
+<!-- QUOTES + PLAYLIST SIDE-BY-SIDE -->
+<section class="quotes-playlist-section" id="quotes">
+  <div class="container">
+    <div class="section-label" data-ua="Музика та слова" data-en="Music & Words">Музика та слова</div>
+    <h2 class="section-title">
+      <span data-ua="Слова і пісні, що " data-en="Words & songs that ">Слова і пісні, що </span><span style="color:var(--gold)" data-ua="тримали" data-en="held us">тримали</span>
+    </h2>
+    <div class="qp-layout">
+      <div>
+        <div class="qp-col-title" data-ua="Фрази, які рятували" data-en="Phrases that saved">Фрази, які рятували</div>
+        <div class="quotes-list" id="quotesGrid"></div>
+      </div>
+      <div>
+        <div class="qp-col-title" data-ua="Playlist of Resilience" data-en="Playlist of Resilience">Playlist of Resilience</div>
+        <p style="font-size:0.78rem; color:var(--muted); margin-bottom:1.2rem; line-height:1.6;"
+           data-ua="42 треки — пісні, що тримали за руку. Слухай прямо тут або відкрий у Spotify."
+           data-en="42 tracks — songs that held on. Listen right here or open in Spotify.">
+           42 треки — пісні, що тримали за руку. Слухай прямо тут або відкрий у Spotify.
+        </p>
+        <iframe
+          src="https://open.spotify.com/embed/playlist/4rdLlTeLEvAHqNTNkOyrPE?utm_source=generator&theme=0"
+          width="100%"
+          height="380"
+          frameborder="0"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+          style="border-radius:14px; margin-bottom:1rem;">
+        </iframe>
+
+        <button class="tracks-story-btn" onclick="openTracksModal()"
+          data-ua="✦ Чому саме ці треки?" data-en="✦ Why these tracks?">
+          ✦ Чому саме ці треки?
+        </button>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACK STORIES MODAL -->
+<div class="imodal-overlay" id="tracksModalOverlay" onclick="closeTracksModal()">
+  <div class="imodal-box" onclick="event.stopPropagation()">
+    <div class="imodal-header">
+      <button class="imodal-close" onclick="closeTracksModal()">✕</button>
+    </div>
+    <div class="imodal-body" id="tracksModalContent"></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- COMPACT INSIGHT BUTTONS -->
+<section class="insights-section">
+  <div class="container">
+    <div class="insights-row">
+      <button class="insight-btn" onclick="openInsightModal('culture')">
+        <span class="insight-btn-icon">🇺🇦 &amp; 🇰🇷</span>
+        <div class="insight-btn-body">
+          <div class="insight-btn-title" data-ua="Україна &amp; Корея" data-en="Ukraine &amp; Korea">Україна &amp; Корея</div>
+          <div class="insight-btn-sub" data-ua="Культурний зв'язок · відкрити" data-en="Cultural connection · open">Культурний зв'язок · відкрити</div>
+        </div>
+        <span class="insight-btn-arrow">→</span>
+      </button>
+      <button class="insight-btn" onclick="openInsightModal('talisman')">
+        <span class="insight-btn-icon">🎴</span>
+        <div class="insight-btn-body">
+          <div class="insight-btn-title" data-ua="Маленькі речі, що тримають" data-en="Small things that hold us">Маленькі речі, що тримають</div>
+          <div class="insight-btn-sub" data-ua="Ритуали та талісмани · відкрити" data-en="Rituals &amp; talismans · open">Ритуали та талісмани · відкрити</div>
+        </div>
+        <span class="insight-btn-arrow">→</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL POPUP -->
+<div class="imodal-overlay" id="imodalOverlay" onclick="closeInsightModal()">
+  <div class="imodal-box" onclick="event.stopPropagation()">
+  <div class="imodal-header">
+    <button class="imodal-close" onclick="closeInsightModal()">✕</button>
+  </div>
+  <div class="imodal-body" id="imodalContent"></div>
+  </div>
+</div>
 
 <div class="divider"></div>
 
@@ -487,30 +1344,72 @@
 
 <div class="divider"></div>
 
+<!-- ===== LOVE BTS SECTION ===== -->
+<section class="love-section" id="love">
+  <div class="container" style="text-align:center; max-width:680px;">
+    <div class="section-label" data-ua="Місяць Феста" data-en="Festa Month">Місяць Феста</div>
+    <h2 class="section-title" style="margin-bottom:0.6rem;">
+      <span data-ua="Надішли любов" data-en="Send your love">Надішли любов</span>
+      <span style="color:var(--gold)"> BTS 💜</span>
+    </h2>
+    <p style="color:var(--muted);font-size:0.88rem;line-height:1.7;margin-bottom:2.5rem;"
+       data-ua="Натисни серце — і отримай свій особистий бейдж ARMY, який можна зберегти."
+       data-en="Tap the heart — and get your personal ARMY badge to keep.">
+      Натисни серце — і отримай свій особистий бейдж ARMY, який можна зберегти.
+    </p>
+    <button id="loveBtnMain" onclick="sendLove()" class="love-main-btn">
+      <span class="love-btn-heart">💜</span>
+      <span class="love-btn-text" data-ua="Надіслати любов до BTS" data-en="Send love to BTS">Надіслати любов до BTS</span>
+    </button>
+    <div id="loveBadgeWrap" style="display:none;margin-top:2.5rem;">
+      <canvas id="loveBadgeCanvas" style="border-radius:1.2rem;max-width:100%;box-shadow:0 8px 40px rgba(168,85,247,0.3);"></canvas>
+      <div style="margin-top:1.2rem;">
+        <button onclick="downloadBadge()" class="love-download-btn">
+          <span data-ua="⬇ Завантажити бейдж" data-en="⬇ Download badge">⬇ Завантажити бейдж</span>
+        </button>
+      </div>
+      <p style="color:var(--muted);font-size:0.75rem;margin-top:1rem;line-height:1.6;"
+         data-ua="Збережи на пам'ять або поділись у сторіс 💜"
+         data-en="Save it as a memory or share in your stories 💜">
+        Збережи на пам'ять або поділись у сторіс 💜
+      </p>
+    </div>
+    <div id="loveHeartsContainer" style="position:fixed;inset:0;pointer-events:none;z-index:500;"></div>
+  </div>
+</section>
+
 <section class="contact-section ua-only" id="join">
   <div class="container">
     <div class="section-label">Долучитись</div>
-    <h2 class="section-title" style="margin-bottom:3rem;">Розкажи <span style="color:var(--gold)">свою</span> історію</h2>
-    <div class="contact-grid">
-      <div class="contact-info">
-        <p>Якщо ти — фан K-pop в Україні і хочеш поділитися своєю історією, взяти участь у проєкті або просто підтримати MAY — напиши нам!</p>
-        <p>Інтерв'ю перекладаються англійською для міжнародної аудиторії. Твій голос — частина великої колективної пам'яті про незламність та силу музики.</p>
-        <div class="contact-links" id="contactLinks">
-          <a href="https://instagram.com/mediaboutyou" class="contact-link" target="_blank"><span>📸</span> @mediaboutyou — Instagram</a>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSe8oy9KrH2EDzQpKOwS0qzj_FDAg7_tQdkZL_-Dd0L3PrRHOg/viewform?usp=preview" class="contact-link" target="_blank"><span>📋</span> Гугл-форма — взяти участь</a>
-          <a href="/cdn-cgi/l/email-protection#6f070a0303002f020a0b060e0d001a1b16001a410c0002" class="contact-link"><span>✉️</span> <span class="__cf_email__" data-cfemail="f79f929b9b98b79a92939e96959882838e9882d994989a">[email&#160;protected]</span></a>
+    <h2 class="section-title" style="margin-bottom:1.5rem;">Розкажи <span style="color:var(--gold)">свою</span> історію</h2>
+
+    <div class="join-layout">
+
+      <!-- LEFT: текст + кнопка -->
+      <div class="join-left">
+        <p style="color:var(--muted); line-height:1.85; margin-bottom:0.8rem;">
+          Якщо ти любиш K-pop і хочеш стати частиною нашого проєкту — заповни це невелике опитування.
+        </p>
+        <p style="color:var(--muted); line-height:1.85; margin-bottom:2.5rem;">
+          Кожна відповідь — це внесок у велику історію про те, як музика об'єднує та робить нас сильними. Чекаємо саме на твою історію!
+        </p>
+
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe8oy9KrH2EDzQpKOwS0qzj_FDAg7_tQdkZL_-Dd0L3PrRHOg/viewform?usp=preview"
+           target="_blank"
+           class="join-cta-btn">
+          <span class="join-cta-icon">✦</span>
+          Долучитись до проєкту
+          <span class="join-cta-arrow">→</span>
+        </a>
+
+        <div class="contact-links" id="contactLinks" style="margin-top:2.5rem;">
+          <a href="https://instagram.com/mediaboutyou" class="contact-link" target="_blank"><span>📸</span> @mediaboutyou — Instagram проєкту</a>
+          <a href="https://www.instagram.com/mayleen.off" class="contact-link" target="_blank"><span>📸</span> @mayleen.off — авторка проєкту</a>
+          <p style="color:var(--muted); font-size:0.88rem; line-height:1.6; margin-top:1.2rem;">Завжди рада почути твої думки, запитання і побажання — пиши в директ 💛</p>
         </div>
       </div>
-      <div>
-        <div class="contact-form" id="contactForm">
-          <div class="form-group"><label class="form-label">Ім'я</label><input type="text" class="form-input" placeholder="Твоє ім'я"></div>
-          <div class="form-group"><label class="form-label">Email або Instagram</label><input type="text" class="form-input" placeholder="@нік або email"></div>
-          <div class="form-group"><label class="form-label">Як K-pop допоміг тобі?</label><textarea class="form-textarea" placeholder="Розкажи свою коротку історію..."></textarea></div>
-          <button class="form-submit" onclick="submitForm()">Надіслати ✦</button>
-          <p class="form-note">Надсилаючи форму, ти погоджуєшся на можливу публікацію (з твоєю згодою та анонімізацією за бажанням).</p>
-        </div>
-        <div class="form-success" id="formSuccess">감사합니다 💛<br>Дякуємо! Незабаром напишемо.</div>
-      </div>
+
+      <!-- RIGHT: Instagram блок -->
     </div>
   </div>
 </section>
@@ -523,8 +1422,9 @@
       Interested in the project? Want to collaborate, publish, or learn more about K-pop and mental health in wartime Ukraine? We'd love to hear from you.
     </p>
     <div style="display:flex; flex-direction:column; gap:0.8rem; max-width:400px;">
-      <a href="https://instagram.com/mediaboutyou" class="contact-link" target="_blank"><span>📸</span> @mediaboutyou — Instagram</a>
-      <a href="/cdn-cgi/l/email-protection#7f171a1313103f121a1b161e1d100a0b06100a511c1012" class="contact-link"><span>✉️</span> <span class="__cf_email__" data-cfemail="1a727f7676755a777f7e737b78756f6e63756f34797577">[email&#160;protected]</span></a>
+      <a href="https://instagram.com/mediaboutyou" class="contact-link" target="_blank"><span>📸</span> @mediaboutyou — project Instagram</a>
+      <a href="https://www.instagram.com/mayleen.off" class="contact-link" target="_blank"><span>📸</span> @mayleen.off — project author</a>
+      <p style="color:var(--muted); font-size:0.88rem; line-height:1.6; margin-top:1rem;">Always happy to hear your thoughts, questions and wishes — feel free to DM 💛</p>
     </div>
   </div>
 </section>
@@ -561,64 +1461,250 @@ const ARTIST_META = {
   "Girls' Generation":{ kr: "소녀시대" },
   "f(x)":             { kr: "에프엑스" },
   "Super Junior":     { kr: "슈퍼주니어" },
+  "(G)I-DLE":         { kr: "여자아이들" },
+  "DAY6":             { kr: "데이식스" },
+  "MAMAMOO":          { kr: "마마무" },
+  "Dreamcatcher":     { kr: "드림캐쳐" },
+  "ZEROBASEONE":      { kr: "제로베이스원" },
+  "P1Harmony":        { kr: "피원하모니" },
+  "NMIXX":            { kr: "엔믹스" },
+  "iKON":             { kr: "아이콘" },
+  "ONEUS":            { kr: "원어스" },
+  "MONSTA X":         { kr: "몬스타엑스" },
+  "Agust D":          { kr: "어거스트 디" },
+  "IU":               { kr: "아이유" },
+  "G-Dragon":         { kr: "지드래곤" },
+  "B.I":              { kr: "비아이" },
+  "BIBI":             { kr: "비비" },
+  "Epik High":        { kr: "에픽하이" },
+  "Kiss of Life":     { kr: "키스 오브 라이프" },
 };
-
 const LETTERS_DATA = {
+  "(G)I-DLE": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "NEVERLAND 💜", text: "Дякую за той період життя, який я провела з вами." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "NEVERLAND 💜", text: "Кожному окреме повідомлення з подякою 💜" },
+  ],
+  "G-Dragon": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об'єднують багатьох людей." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую." },
+  ],
+  "Dreamcatcher": [
+  ],
+  "MAMAMOO": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "MooMoo 🌻", text: "Дуже дякую вам за вашу музику, яка допомогла пережити багато ситуацій у моєму житті. Ви з'явились саме тоді, коли мені були дуже потрібні. Навіть без знання мови, я розуміла вас за допомогою музики — з першого ж прослуховування торкнулося всієї глибини мого серця." },
+  ],
+  "ZEROBASEONE": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ZEROSE 🌟", text: "Дякую за те, що були поруч у моменти, коли здавалося, сил вже немає. Ваша музика ставала місцем, де можна сховатися від поганих думок та подій, що відбуваються навколо." },
+  ],
+  "P1Harmony": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "P1ece 💙", text: "Дякую за те, що були поруч у моменти, коли здавалося, сил вже немає. Ваша музика ставала місцем, де можна сховатися від поганих думок та подій, що відбуваються навколо." },
+  ],
+  "NMIXX": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "NSWER 🎵", text: "Дякую за те, що були поруч у моменти, коли здавалося, сил вже немає. Ваша музика ставала місцем, де можна сховатися від поганих думок та подій, що відбуваються навколо." },
+  ],
+  "DAY6": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "My Day ☀️", text: "Дякую за все!" },
+  ],
+  "ONEUS": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "To Moon 🌙", text: "Дякую за все!" },
+  ],
+  "B.I": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!" },
+  ],
+  "Bobby": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!" },
+  ],
+  "Dawn": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!" },
+  ],
+  "Woodz": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!" },
+  ],
+  "Holland": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!" },
+  ],
+  "Epik High": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!" },
+  ],
+  "JUSTB": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ONLY B 💛", text: "Дякую за те, що були поруч у моменти, коли здавалося, сил вже немає. Ваша музика ставала місцем, де можна сховатися від поганих думок та подій, що відбуваються навколо." },
+  ],
+  "안예은": [
+  ],
+  "인순이": [
+  ],
+  "Kiss of Life": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "Kissy 💋", text: "Кожному окреме повідомлення з подякою 💜" },
+  ],
+  "BIBI": [
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Кожному окреме повідомлення з подякою 💜" },
+  ],
   "BTS": [
-    { name: "Марта", city: "", since: "Full-stack розробниця", fandom: "ARMY 💜", text: "Якби я могла сказати вам це особисто, я б просто подивилася вам в очі і сказала: дякую за те, що стали моїм домом і врятували мене, навіть не підозрюючи про це. Коли мій реальний світ руйнувався, а я ховалася в укритті, ваша музика обіймала мене." },
     { name: "Юлія", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую БТС, що ви прийшли в моє життя, наповнили його сенсом, мріями і жагою до життя!" },
-    { name: "Ksen.i710", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую, що стали для мене прикладом не зламатись, а рухатись вперед." },
+    { name: "з любов'ю", city: "", since: "ARMY 💜", fandom: "ARMY 💜", text: "Сім хлопців, які подарували мені мир посеред хаосу війни. Дякую BTS за те, що стали моїм безпечним прихистком, моєю тихою гаванню та джерелом незламної віри у краще майбутнє. Пишаюся тим, що йду з вами пліч-о-пліч уже стільки років. Борахе! 💜" },
+    { name: "з любов'ю", city: "", since: "ARMY 💜", fandom: "ARMY 💜", text: "Дякую, завдяки вам я бачу світло в своєму житті." },
+    { name: "Olena", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую що з'явилися саме тоді, коли душа моя кликала вас 🙏🦋💜" },
+    { name: "Анастасія", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую за те, що з'явилися в моєму житті тоді, коли були мені так потрібні. Навіть коли я цього не усвідомлювала. Вже через час, переглядаючи старі дорами, шоу та контент, чула музику і тільки потім усвідомлювала, що ви були поруч — просто я не помічала. Ваша музика виявилася поряд у момент кризи особистості та віри у себе. Усі ті слова, що вкладали у текст, дійшли до мене. Це доповнило мене, дало нові захоплення, знання, бажання та можливості. Дякую за те, що відчинили двері в новий для мене світ." },
+    { name: "Врина", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую за ваші пісні, вони мені дають сили жити." },
+    { name: "Олена", city: "", since: "ARMY з 2017", fandom: "ARMY 💜", text: "Подякувала б за те, що вони просто є — і саме тому я ніколи не відчуваю себе самотньою. Також важливо подякувати фандому АРМІ, який пов'язаний між собою любов'ю до BTS і проводить різноманітні івенти, фестивалі, фан-кафе. Я спробувала багато нового та знайшла круте ком'юніті однодумців саме завдяки бантанам — це важливо у такий час." },
+    { name: "Вікторія", city: "", since: "Вчитель", fandom: "ARMY 💜", text: "Дякую за те що з'явилися в моєму житті тоді, коли здавалося що мій мозок і психіка не витримають більше; за мотиваційні слова і за те що ви є такі які є." },
+    { name: "з любов'ю", city: "", since: "ARMY 💜", fandom: "ARMY 💜", text: "Дуже дякую вам за вашу музику, яка допомогла пережити багато ситуацій у моєму житті. Ви з'явились саме тоді, коли були дуже потрібні. Навіть без знання мови я розуміла вас за допомогою музики — з першого ж прослуховування мене пробрав мороз по шкірі і торкнулося всієї глибини мого серця." },
+    { name: "Олександра", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую, що поруч, розділяєте з нами частинку вашого життя та даруєте нам неймовірні пісні та дорами." },
+    { name: "Ліза", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую що були у моєму житті в найважчі його моменти 💜" },
+    { name: "Kalipsa94", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую за важку працю! Ваша музика надає мені сил, щоб насолоджуватися життям, не дивлячись ні на що." },
+    { name: "з любов'ю", city: "", since: "ARMY 💜", fandom: "ARMY 💜", text: "Я хочу від щирого серця подякувати гурту BTS та особливо Jimin. Чімін — дуже щира й світла людина. Його голос, його пісні та його підтримка по-справжньому допомагають у складні моменти. Пісні BTS неймовірно сильні та надихаючі. Коли стає дуже важко, достатньо увімкнути їхню пісню — і всередині з'являється тепло та надія. Я дуже хочу, щоб кожна людина, навіть якщо вона не є фанатом, одного разу почула хоча б одну їхню пісню. Дякую всім учасникам BTS за їхні прекрасні, підтримуючі та мотивуючі пісні. Я щиро вам вдячна. 💜" },
+    { name: "Марія", city: "", since: "Виконавча директорка", fandom: "ARMY 💜", text: "Хотіла б подякувати бантанам, що в їх текстах можу знайти відповіді на всі питання. Окремо б виділила Юнгі та Намджуна. Від першого отримала чарівного пенделя аби не здаватись, від другого — життєву мудрість і хованку від панічних атак." },
+    { name: "Марта", city: "", since: "Full-stack розробниця", fandom: "ARMY 💜", text: "Якби я могла сказати вам це особисто, я б просто подивилася вам в очі і сказала: дякую за те, що стали моїм домом і врятували мене, навіть не підозрюючи про це. Коли мій реальний світ руйнувався, а я ховалася в укритті з ноутбуком, намагаючись вчитися під звуки сирен, ваша музика була моїм єдиним безпечним простором. Чонгуку, твоя щирість і твій голос багато разів відчувалися як рука, що тримає мою в суцільній темряві. Завдяки вам я зберегла здатність мріяти. Думка про те, що одного дня я буду стояти на вашому концерті й співати разом із вами, є моєю найбільшою мотивацією рухатися вперед. Дякую за кожну пісню, яка допомогла мені вижити і не зламатися." },
+    { name: "Ksen.i710", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую що стали для мене прикладом не зламатись, а рухатись вперед." },
+    { name: "Альона", city: "", since: "Громадська організація", fandom: "ARMY 💜", text: "Для БТС: дякую, що встояли, що досягли цього місця попри все. Пишаюся вашою невтомною працею." },
     { name: "Марі", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Ваші пісні — то сонце, що світить з темряви." },
-    { name: "Вікторія", city: "", since: "Вчитель", fandom: "ARMY 💜", text: "Дякую за те, що з'явилися в моєму житті тоді, коли здавалося, що мій мозок і психіка не витримають більше; за мотиваційні слова і за те, що ви є такі, які є." },
-    { name: "Врина", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую за твої пісні, вони мені дають сили жити." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об\'єднують багатьох людей." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую за той період життя, який я провела з вами." }
   ],
   "BLACKPINK": [
-    { name: "Степан", city: "", since: "з любов'ю", fandom: "BLINK 🖤💗", text: "Побажав би успіхів та натхнення." },
-    { name: "Еліна", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую всім, хто небайдужий — це цінно! А інші — відкрийте очі, будь ласка..." },
+    { name: "Еліна", city: "", since: "з любов'ю", fandom: "BLINK 🖤💗", text: "Дякую всім, хто небайдужий — це цінно! А інші — відкрийте очі, будь ласка..." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "BLINK 🖤💗", text: "Дякую за той період життя, який я провела з вами." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "BLINK 🖤💗", text: "Дуже дякую вам за вашу музику, яка допомогла пережити багато ситуацій у моєму житті. Ви з\'явились саме тоді, коли мені були дуже потрібні. Навіть без знання мови, я розуміла вас за допомогою музики — з першого ж прослуховування торкнулося всієї глибини мого серця." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "BLINK 🖤💗", text: "Кожному окреме повідомлення з подякою 💜" }
   ],
   "SEVENTEEN": [
-    { name: "Еліна", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую всім, хто небайдужий — це цінно!" },
-    { name: "Дарина", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об'єднують багатьох людей." },
+    { name: "Еліна", city: "", since: "з любов'ю", fandom: "CARATs 💎", text: "Дякую всім, хто небайдужий — це цінно!" },
+    { name: "Дарина", city: "", since: "з любов'ю", fandom: "CARATs 💎", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об'єднують багатьох людей." },
   ],
   "Stray Kids": [
     { name: "Мей", city: "", since: "з любов'ю", fandom: "STAY 💗", text: "Дякую за той період життя, який я провела з вами." },
-    { name: "Катерина", city: "", since: "з любов'ю", fandom: "STAY 💗", text: "Дякую за творчість, за наполегливість і прошу — будьте в безпеці, добре відпочивайте і гарно їжте. Бажаю, щоб вас більше не спіткала війна, як це сталось із нами." },
     { name: "Анастасія", city: "", since: "з любов'ю", fandom: "STAY 💗", text: "Дякую за те, що з'явилися в моєму житті тоді, коли були мені так потрібні. Навіть коли я цього не усвідомлювала." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "STAY 💗", text: "Дякую, за творчість, за ком\'юніті. Дякую, що не склали рук і зробили все можливе, щоб опинитися в моїх рекомендаціях:)" },
   ],
   "ENHYPEN": [
     { name: "Анастасія", city: "", since: "з любов'ю", fandom: "ENGENE 🖤🤍", text: "Дякую за те, що з'явилися в моєму житті тоді, коли були мені так потрібні. Навіть коли я цього не усвідомлювала." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ENGENE 🤍", text: "Дякую за той період життя, який я провела з вами." }
   ],
   "ATEEZ": [
     { name: "Вікторія", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Дякую, що з'явилися в моєму житті — ви буквально рятуєте мене кожен день і даєте сил не здаватися." },
     { name: "Софія", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Дякую за творчість, за ком'юніті. Дякую, що не склали рук і зробили все можливе, щоб опинитися в моїх рекомендаціях :)" },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Дякую що з\'явилися в моєму житті — я вас дуже люблю, ви буквально рятуєте мене кожен день і даєте сил не здаватися." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Дякую." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Кожному окреме повідомлення з подякою 💜" }
   ],
   "TXT": [
     { name: "Kalipsa94", city: "", since: "з любов'ю", fandom: "MOA 🌙", text: "Дякую за важку працю! Ваша музика надає мені сил, щоб насолоджуватися життям, не зважаючи ні на що." },
   ],
   "ITZY": [
-    { name: "Poleaxe", city: "", since: "з любов'ю", fandom: "MIDZY 💜", text: "Дякую за все — це все, що я хотіла б вам сказати." },
+    { name: "Poleaxe", city: "", since: "з любов'ю", fandom: "MIDZY 💜", text: "Дякую за все!" },
     { name: "Мей", city: "", since: "з любов'ю", fandom: "MIDZY 💜", text: "Дякую за той період життя, який я провела з вами." },
   ],
   "GOT7": [
-    { name: "Катерина", city: "", since: "з любов'ю", fandom: "ahgase 🐦", text: "Ваша творчість є важливою в моєму житті. Бажаю, щоб і ваше життя було насиченим та легким." },
+    { name: "Катерина", city: "", since: "з любов'ю", fandom: "Ahgase 🐦", text: "Ваша творчість є важливою в моєму житті. Бажаю, щоб і ваше життя було насиченим та легким." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "Ahgase 🐦", text: "Дякую, що ви є — ваша творчість є важливою в моєму житті. Бажаю, щоб і ваше життя було насиченим та легким." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "Ahgase 🐦", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об\'єднують багатьох людей." }
   ],
   "BIGBANG": [
     { name: "Дарина", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об'єднують багатьох людей." },
     { name: "Яся", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую за те, що в найтемніші часи ви поруч." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую." }
   ],
   "aespa": [
     { name: "Еліна", city: "", since: "з любов'ю", fandom: "MY 🦋", text: "Дякую всім, хто небайдужий — це цінно!" },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "MY 🦋", text: "Кожному окреме повідомлення з подякою 💜" }
   ],
   "TWICE": [
     { name: "Таня", city: "", since: "з любов'ю", fandom: "ONCE 🍭", text: "Дякую за музику та підтримку — кожна ваша пісня залишає окремий теплий слід у серці." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ONCE 🍭", text: "Кожному окреме повідомлення з подякою 💜" }
   ],
+};
+
+// Універсальні подяки — додаються до кожного гурту
+const UNIVERSAL_LETTERS = [
+  { fandom: "з любов'ю 💛", text: "Дякую, завдяки вам я бачу світло в своєму житті.", en: "Thank you — because of you I see light in my life." },
+  { fandom: "з любов'ю 💛", text: "Дякую що з'явилися саме тоді, коли душа моя кликала вас 🙏🦋💜", en: "Thank you for appearing exactly when my soul was calling out to you 🙏🦋💜" },
+  { fandom: "з любов'ю 💛", text: "Дякую за ваші пісні, вони мені дають сили жити.", en: "Thank you for your songs — they give me the strength to live." },
+  { fandom: "з любов'ю 💛", text: "Дякую, що поруч, розділяєте з нами частинку вашого життя та даруєте нам неймовірні пісні та дорами.", en: "Thank you for being here and sharing a piece of your life with us." },
+  { fandom: "з любов'ю 💛", text: "Дякую що були у моєму житті в найважчі його моменти 💜", en: "Thank you for being part of my life in its hardest moments 💜" },
+  { fandom: "з любов'ю 💛", text: "Дякую за важку працю! Ваша музика надає мені сил, щоб насолоджуватися життям, не дивлячись ні на що.", en: "Thank you for your hard work! Your music gives me strength to enjoy life no matter what." },
+
+  { fandom: "з любов'ю 💛", text: "Дякую за той період життя, який я провела з вами.", en: "Thank you for the time in my life that I spent with you." },
+  { fandom: "з любов'ю 💛", text: "Дякую що стали для мене прикладом не зламатись, а рухатись вперед.", en: "Thank you for showing me that it's possible not to break, but to keep moving forward." },
+  { fandom: "з любов'ю 💛", text: "Дякую за все!", en: "Thank you for everything!" },
+  { fandom: "з любов'ю 💛", text: "Дякую що з'явилися в моєму житті — я вас дуже люблю, ви буквально рятуєте мене кожен день і даєте сил не здаватися.", en: "Thank you for coming into my life — I love you so much, you literally save me every day and give me strength not to give up." },
+  { fandom: "з любов'ю 💛", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об'єднують багатьох людей.", en: "Thank you for continuing to create music that brings so many people together." },
+  { fandom: "з любов'ю 💛", text: "Ваші пісні — то сонце, що світить з темряви.", en: "Your songs are like sunlight shining out of the darkness." },
+  { fandom: "з любов'ю 💛", text: "Дякую всім, хто небайдужий — це цінно! А інші — відкрийте очі, будь ласка...", en: "Thank you to everyone who cares — it matters so much! And to others — please, open your eyes..." },
+  { fandom: "з любов'ю 💛", text: "Дякую, що ви є — ваша творчість є важливою в моєму житті. Бажаю, щоб і ваше життя було насиченим та легким.", en: "Thank you for existing — your art matters deeply in my life. I wish you a life full of joy and ease." },
+];
+
+// Офіційні назви фандомів
+const FANDOM_MAP = {
+  "BTS":          "ARMY 💜",
+  "Stray Kids":   "STAY 💗",
+  "BLACKPINK":    "BLINK 🖤💗",
+  "ATEEZ":        "ATINY 🏴‍☠️",
+  "ITZY":         "MIDZY 💜",
+  "TXT":          "MOA 🌙",
+  "SEVENTEEN":    "CARATs 💎",
+  "GOT7":         "Ahgase 🐦",
+  "ENHYPEN":      "ENGENE 🤍",
+  "(G)I-DLE":     "NEVERLAND 💜",
+  "BIGBANG":      "VIP 👑",
+  "TWICE":        "ONCE 🍭",
+  "EXO":          "EXO-L ✨",
+  "SHINee":       "Shawol 💎",
+  "2NE1":         "Blackjack ♠️",
+  "Red Velvet":   "ReVeluv 💜💚",
+  "MONSTA X":     "Monbebe 🌺",
+  "IVE":          "DIVE 💙",
+  "NewJeans":     "Bunnies 🐰",
+  "LE SSERAFIM":  "FEARNOT 🪷",
+  "aespa":        "MY 🦋",
+  "DAY6":         "My Day ☀️",
+  "MAMAMOO":      "MooMoo 🌻",
+  "Dreamcatcher": "InSomnia 🌙",
+  "ZEROBASEONE":  "ZEROSE 🌟",
+  "P1Harmony":    "P1ece 💙",
+  "NMIXX":        "NSWER 🎵",
+  "iKON":         "iKONIC 🎊",
+  "ONEUS":        "To Moon 🌙",
+  "Agust D":      "ARMY 💜",
+  "IU":           "UAENA 🎵",
+  "G-Dragon":     "VIP 👑",
+  "JUSTB":        "ONLY B 💛",
+  "Kiss of Life": "KISSY 💋",
 };
 
 // Для гуртів без листів — дефолтний лист
 function getLetters(artistName) {
-  return LETTERS_DATA[artistName] || [
-    { name: "Учасниця проєкту MAY", city: "Україна", since: "з любов'ю", fandom: "💛💙", text: `Дорогі ${artistName}, ваша музика стала для нас безпечним місцем у найважчий час. Дякуємо, що є. Дякуємо за кожну пісню, кожен концерт, кожне слово підтримки. Україна вас любить.` }
-  ];
+  const SOLO_FEMALE = ["IU","BIBI","인순이","안예은"];
+  const SOLO_MALE   = ["Agust D","G-Dragon","B.I","Bobby","Dawn","Woodz","Holland"];
+  const salutation  = SOLO_FEMALE.includes(artistName) ? "Дорога"
+                    : SOLO_MALE.includes(artistName)   ? "Дорогий"
+                    : "Дорогі";
+  const verb        = SOLO_FEMALE.includes(artistName) || SOLO_MALE.includes(artistName)
+                    ? "твоя музика стала" : "ваша музика стала";
+
+  // Правильний фандом для цього артиста
+  const fandom = FANDOM_MAP[artistName] || "з любов'ю 💛";
+
+  const specific = (LETTERS_DATA[artistName] || []
+  // Замінюємо "з любов'ю 💛" на правильний фандом у специфічних листах
+  ).map(l => ({
+    ...l,
+    fandom: (l.fandom === "з любов'ю 💛" || l.fandom === "💛💙") ? fandom : l.fandom
+  }));
+
+  // Merge: specific + universal з правильним фандомом
+  const existingTexts = new Set(specific.map(l => l.text.trim().slice(0, 60)));
+  const extra = UNIVERSAL_LETTERS
+    .filter(l => !existingTexts.has(l.text.trim().slice(0, 60)))
+    .map(l => ({ ...l, fandom })); // правильний фандом замість "з любов'ю"
+
+  // Лист від проєкту MAY — завжди перший
+  const projectLetter = {
+    fandom: "MAY Project 💛💙",
+    text: `${salutation} ${artistName}, дякуємо за вашу творчість і за те, що ви є. Ваша музика стала для нас безпечним місцем у найважчий час. Дякуємо за кожну пісню, кожен виступ і кожне слово підтримки. Україна вас любить.`,
+    en: `Dear ${artistName}, thank you for your creativity and for being here. Your music became a safe space for us in the hardest of times. Thank you for every song, every performance, and every word of support. Ukraine loves you.`
+  };
+
+  return [projectLetter, ...specific, ...extra];
 }
 
 function openDrawer(artistName) {
@@ -626,21 +1712,32 @@ function openDrawer(artistName) {
   document.getElementById('drawerArtistName').textContent = artistName;
   document.getElementById('drawerArtistKr').textContent = meta.kr;
   const letters = getLetters(artistName);
-  document.getElementById('drawerLetters').innerHTML = letters.map(l => `
+  // deduplicate by text
+  const seen = new Set();
+  const unique = letters.filter(l => {
+    const key = l.text.trim().slice(0, 60);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+  const visibleLetters = unique.filter(l =>
+    currentLang !== 'en' || l.en || l.fandom === 'MAY Project 💛💙'
+  );
+  document.getElementById('drawerLetters').innerHTML = visibleLetters.map(l => {
+    const displayText = (currentLang === 'en' && l.en) ? l.en : l.text;
+    return `
     <div class="letter-card">
       <div class="letter-quote">"</div>
-      <p class="letter-text">${l.text}</p>
+      <p class="letter-text">${displayText}</p>
       <div class="letter-meta">
-        <div class="letter-avatar">${l.name[0]}</div>
-        <div class="letter-author">
-          <strong>${l.name}</strong>${l.city ? ' · ' + l.city : ''}
-        </div>
-        <div class="letter-since">${l.since} · ${l.fandom}</div>
+        <div class="letter-fandom-tag">${l.fandom}</div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
   document.getElementById('drawerOverlay').classList.add('open');
   document.getElementById('letterDrawer').classList.add('open');
   document.body.style.overflow = 'hidden';
+  setTimeout(() => { document.getElementById('letterDrawer').scrollTop = 0; }, 50);
 }
 
 function closeDrawer() {
@@ -656,10 +1753,13 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(
 let currentLang = 'ua';
 
 function setLang(lang) {
+  // Reset love badge when switching language
+  const badgeWrap = document.getElementById('loveBadgeWrap');
+  if (badgeWrap) badgeWrap.style.display = 'none';
   currentLang = lang;
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent === lang.toUpperCase()));
-  document.querySelectorAll('.ua-only').forEach(el => el.style.display = lang === 'ua' ? '' : 'none');
-  document.querySelectorAll('.en-only').forEach(el => el.style.display = lang === 'en' ? '' : 'none');
+  document.querySelectorAll('.ua-only').forEach(el => el.style.display = lang === 'ua' ? 'block' : 'none');
+  document.querySelectorAll('.en-only').forEach(el => el.style.display = lang === 'en' ? 'block' : 'none');
   const navJoin = document.getElementById('navJoinItem');
   if (navJoin) navJoin.style.display = lang === 'ua' ? '' : 'none';
   document.querySelectorAll('[data-ua][data-en]').forEach(el => {
@@ -675,6 +1775,7 @@ function setLang(lang) {
     renderChart('chart2', 'chart2Title', SITE_DATA_EN.charts.top_fandoms);
     renderStories(SITE_DATA_EN.stories);
     renderPhrases(PHRASES_EN);
+    renderQuotes();
     document.getElementById('footerCopy').innerHTML = `Cultural project <span class="ua-flag"></span> Ukraine · 2026<br>Instagram: <a href="https://instagram.com/mediaboutyou" style="color:var(--gold);text-decoration:none">@mediaboutyou</a> · Published with participants' consent`;
   } else {
     renderStats(SITE_DATA.stats);
@@ -682,6 +1783,7 @@ function setLang(lang) {
     renderChart('chart2', 'chart2Title', SITE_DATA.charts.top_fandoms);
     renderStories(SITE_DATA.stories);
     renderPhrases(PHRASES_UA);
+    renderQuotes();
     document.getElementById('footerCopy').innerHTML = `Культурний проєкт <span class="ua-flag"></span> України · 2026<br>Instagram: <a href="https://instagram.com/mediaboutyou" style="color:var(--gold);text-decoration:none">@mediaboutyou</a> · Інтерв'ю публікуються з дозволу учасників`;
   }
   document.querySelectorAll('.stats-grid').forEach(el => obs.observe(el));
@@ -690,10 +1792,10 @@ function setLang(lang) {
 // ========== АНГЛІЙСЬКІ ДАНІ ==========
 const SITE_DATA_EN = {
   stats: [
-    { icon: "💬", number: "33",    animated: true,  label: "participants shared their story" },
-    { icon: "🎂", number: "12–51", animated: false, label: "age range of project participants" },
-    { icon: "💛", number: "91%",   animated: false, label: "reported a positive impact of K-pop on their mental wellbeing during the war" },
-    { icon: "🎵", number: "85%",   animated: false, label: "say: music helps even without understanding the words" }
+    { icon: "💬", number: "37",    animated: true,  label: "Ukrainians shared their story" },
+    { icon: "✦",  number: "12–51", animated: false, label: "age range of project participants" },
+    { icon: "💛", number: "94%",   animated: false, label: "reported a positive impact of K-pop on their mental wellbeing during the war" },
+    { icon: "💙", number: "43%",   animated: false, label: "say K-pop literally helped them get out of a critical state" }
   ],
   charts: {
     how_kpop_helps: {
@@ -707,22 +1809,36 @@ const SITE_DATA_EN = {
       ]
     },
     top_fandoms: {
-      title: "Top artists among participants",
+      title: "What emotions K-pop brings during the war",
       bars: [
-        { label: "BTS / ARMY",          percent: 64 },
-        { label: "Stray Kids / STAY",   percent: 21 },
-        { label: "BLACKPINK / BLINK",   percent: 15 },
-        { label: "ATEEZ / ATINY",       percent: 15 },
-        { label: "ITZY / MIDZY",        percent: 12 }
+        { label: "💪 Inspiration & inner strength", percent: 52 },
+        { label: "😌 Calm & safety",                percent: 18 },
+        { label: "🌀 Emotional rest",               percent: 18 },
+        { label: "😢 Mixed / bittersweet",          percent: 9  },
+        { label: "🌑 Emotional emptiness",          percent: 3  }
       ]
     }
   },
   stories: [
-    { id:1, text: "When my brother went to war and went missing, BTS and their songs gave me the certainty that everything would be okay. And it was. My brother was found alive. He came back.", name: "Viktoria", job: "Teacher", fandom: "ARMY 💜", initials: "V" },
-    { id:2, text: "The day of the missile strike on my city is the memory that stays with me most. My hands were shaking so badly I could barely hold my phone. When I got confirmation everyone was safe, I turned on BTS immediately. Their music worked like the strongest sedative — a safe corner where I could breathe.", name: "Marta", job: "Full-stack developer", fandom: "ARMY 💜", initials: "M" },
-    { id:3, text: "One night during a heavy drone attack I had a severe panic attack and lost all sense of space. I don't remember crawling to my phone, but somehow I ended up watching a BTS performance at the UN. I didn't understand a word — but hearing a familiar voice, I started to let go.", name: "Maria", job: "Executive Director", fandom: "ARMY 💜", initials: "M" },
-    { id:4, text: "It's all TikTok's fault 😂 A video appeared: 'They weren't invited to MAMA, they were ignored... but they persevered...' I got curious who they were, started exploring their journey... and then it was all a blur)", name: "Alona", job: "NGO worker", fandom: "ARMY 💜", initials: "A" },
-    { id:5, text: "I found out about BTS after the war had already started. Something about Yoongi's music spoke to me — he turned his struggles with depression into art. He taught me that expressing emotions through music is a strength, not a weakness.", name: "Vryna", job: "with love", fandom: "ARMY 💜", initials: "V" }
+    { id:1,  text: "I'm grateful that at the right moment I found my own 'refuge' — comfort and solace, meaning and inspiration, motivation and faith in myself.", name: "Olena", job: "with love · 42", fandom: "ARMY 💜", initials: "О" },
+    { id:2,  text: "The day of the powerful missile strike on my city is the memory that stays with me most. The sounds of explosions were so close and terrifying it felt like the world was falling apart. My hands were shaking badly — I could barely hold my phone. When everyone confirmed they were safe, I immediately turned on BTS. Their music worked like the strongest sedative — that safe corner where I could breathe and let go of the horror.", name: "Marta", job: "Full-stack developer · 22", fandom: "ARMY 💜", initials: "M" },
+    { id:3,  text: "When my brother went to war and went missing, BTS and their songs gave me the certainty that everything would be okay soon. And it was. My brother was found alive. He came back.", name: "Viktoria", job: "Teacher · 35", fandom: "ARMY 💜", initials: "V" },
+    { id:4,  text: "I found out about BTS after the war started. I came across some good-looking Asians who danced beautifully and got curious. Something about Yoongi spoke to my heart — maybe because we're similar. He had depression, like me. He turned his emotions into music. I'd never listened to rap before, but now I listen to him. Yoongi is my love! ❤️‍🩹", name: "Iryna", job: "with love · 50", fandom: "ARMY 💜", initials: "V" },
+    { id:5,  text: "I'm a calm person with a resilient psyche. K-pop didn't change for me after the war started — by then it was already a normal part of my life. It has always supported and inspired me.", name: "project participant", job: "with love", fandom: "STAY 💗", initials: "P" },
+    { id:6,  text: "One night during a heavy drone attack I huddled in a corner and had a severe panic attack — I lost all sense of space, every sound became noise. I don't remember crawling to my phone, but somehow I ended up watching a BTS performance at the UN. I didn't understand a word — but hearing a familiar voice, I started to let go.", name: "Maria", job: "Executive Director · 27", fandom: "ARMY 💜", initials: "M" },
+    { id:7,  text: "The hardest times were when I lived alone in another city without family. During long nighttime attacks I put on headphones and turned the music up loud so I couldn't hear the shahed drones — that sound made me tremble the most. When I had no strength left but had to get up for work and studies in the morning — I just turned on BTS loud and fell asleep.", name: "Katrusya", job: "student", fandom: "ARMY 💜", initials: "✦" },
+    { id:8,  text: "My main habit became listening to music as a way to regain control. When the situation becomes critical — I pick up my phone and play songs I know by heart. Sometimes the same track on repeat over and over. I can't control what's happening outside my window — but I can control what plays in my headphones. And that gives me strength to hold on.", name: "Marta", job: "Full-stack developer · 22", fandom: "ARMY 💜", initials: "M" },
+    { id:9,  text: "When things get really hard — I start watching BTS livestreams. Sometimes an old live, sometimes a random video. Just seeing their laughter and smiles makes things easier inside. Jungkook's lives especially lift my mood — there's a special warmth and coziness, like a friend came to talk. Even on the hardest day it gets a little brighter. 💜", name: "Nastya", job: "Nanny", fandom: "ARMY 💜 · STAY 💗", initials: "N" },
+    { id:10, text: "During heavy attacks we talked with our fan-friends — it gave a sense of safety. We always check on each other after a loud night in our cities. It became support from a distance and a feeling of unity.", name: "project participant", job: "with love", fandom: "ARMY 💜", initials: "K" },
+    { id:11, text: "After several attacks I started having panic attacks. I listen to Namjoon — the timbre of his voice grounds me and I can calm down faster.", name: "Maria", job: "Executive Director · 27", fandom: "ARMY 💜", initials: "M" },
+    { id:12, text: "Music most often helps me during airstrikes — sitting in the hallway while drones and rockets fly past my window. It becomes so much easier and less scary when I turn on music. It feels like hope that everything will be okay and it will all end soon. ZEROBASEONE's music calms me especially — very energetic and fun, it helps me switch off. Right now I'm in a difficult place with an uncertain future, but my dream of attending K-pop concerts gives me strength and motivation to keep moving forward.", name: "Vitalina", job: "Student · 20", fandom: "ZEROSE 🌟", initials: "V" },
+    { id:13, text: "I'm living abroad now. Coincidences aren't coincidences — I heard them exactly when I needed them. My heart belongs only to BTS.", name: "project participant", job: "with love", fandom: "ARMY 💜", initials: "✦" },
+    { id:14, text: "Music has always been an important part of my life since childhood. But during the full-scale war it took on a different meaning. I remember sitting in a shelter trying to do complex university lab work. Everything around felt like a continuous nightmare. To keep from going crazy and clear my head even a little, I'd turn on K-pop. This music became my island of calm that truly helped me get through it all.", name: "project participant", job: "student", fandom: "ARMY 💜", initials: "✦" },
+    { id:15, text: "I had already moved to Czech Republic, settling in a small town about an hour from Prague. Every time I rode the bus to and from work I listened to what was then a new Stray Kids album — Oddinary. Through it I felt support from the members, and it inspired me to keep going and not lose strength.", name: "project participant", job: "with love", fandom: "STAY 💗", initials: "✦" },
+    { id:16, text: "I came to K-pop in 2022 — one of the hardest periods of my life. My mom and I had moved to France with no acquaintances or friends. Returning to Ukraine was impossible because of heavy bombing. That helplessness was unbearable. That's exactly when I stumbled across someone on Instagram talking about attending a BTS concert. I started watching their performances and discovered Jimin — his beautiful voice, grace, and sincerity opened BTS for me. That's how I became a fan. I started listening to Stray Kids in 2024. K-pop gradually became an important part of my life. Their songs help people cope with depression, find strength to keep living, and see light even in the darkest times.", name: "Anastasia", job: "with love", fandom: "ARMY 💜", initials: "A" },
+    { id:17, text: "K-pop and doramas help me escape from bad news and immerse myself, even briefly, in beautiful music and another culture. Doramas teach respect and care for one another. BTS motivates me to move forward and achieve my goals.", name: "Oleksandra", job: "with love", fandom: "ARMY 💜", initials: "✦" },
+    { id:18, text: "The first weeks in the shelter under the dormitory were spent listening to K-pop songs from 2016–2019 — my favourite era. Then idol shows, vlogs and live streams helped with distraction — especially Run BTS. It was like a safe space in those terrible conditions, and for a while it brought me back to peaceful life, when the biggest problem was making it in time for my bias's stream on Weverse.", name: "Olena", job: "student", fandom: "ARMY 💜", initials: "✦" },
+    { id:19, text: "In the first weeks of the full-scale invasion I avoided the internet entirely — too scared to see the news, so I held on only through books. At some point I remembered an episode of Run BTS — the famous 'Lachibilala.' It was the first time since February 24, 2022 that I had genuinely smiled. More than a year had passed… I felt transported back to 2015. BTS were my quiet harbour. It's remarkable how they always appear in my life in the hardest times.", name: "project participant", job: "with love", fandom: "ARMY 💜", initials: "✦" }
   ]
 };
 
@@ -739,10 +1855,10 @@ const SITE_DATA = {
     year: "2026"
   },
   stats: [
-    { icon: "💬", number: "33",    animated: true,  label: "учасниць поділились своєю історією" },
-    { icon: "🎂", number: "12–51", animated: false, label: "вік учасниць проєкту" },
-    { icon: "💛", number: "91%",   animated: false, label: "відзначили позитивний вплив K-pop на психологічне самопочуття під час війни" },
-    { icon: "🎵", number: "85%",   animated: false, label: "кажуть: музика допомагає навіть без розуміння слів" }
+    { icon: "💬", number: "37",    animated: true,  label: "українців та українок поділились своєю історією" },
+    { icon: "✦",  number: "12–51", animated: false, label: "вік учасниць проєкту" },
+    { icon: "💛", number: "94%",   animated: false, label: "відзначили позитивний вплив K-pop на психологічне самопочуття під час війни" },
+    { icon: "💙", number: "43%",   animated: false, label: "кажуть: K-pop буквально допоміг вийти з критичного стану" }
   ],
   charts: {
     how_kpop_helps: {
@@ -756,28 +1872,45 @@ const SITE_DATA = {
       ]
     },
     top_fandoms: {
-      title: "Топ гурти серед учасниць",
+      title: "Емоції від K-pop під час війни",
       bars: [
-        { label: "BTS / ARMY",          percent: 64 },
-        { label: "Stray Kids / STAY",   percent: 21 },
-        { label: "BLACKPINK / BLINK",   percent: 15 },
-        { label: "ATEEZ / ATINY",       percent: 15 },
-        { label: "ITZY / MIDZY",        percent: 12 }
+        { label: "💪 Натхнення та внутрішня сила",  percent: 52 },
+        { label: "😌 Спокій та безпека",             percent: 18 },
+        { label: "🌀 Емоційний перепочинок",         percent: 18 },
+        { label: "😢 Змішані / суперечливі емоції",  percent: 9  },
+        { label: "🌑 Емоційна порожнеча",            percent: 3  }
       ]
     }
   },
   stories: [
-    { id:1, text: "Коли брат пішов воювати і зник безвісти — саме BTS та їх пісні давали впевненість і відчуття, що ще трішки і все буде добре. Так і сталося. Брат знайшовся живий. Повернувся.", name: "Вікторія", job: "Вчитель", fandom: "ARMY 💜", initials: "В" },
-    { id:2, text: "Найбільше в пам'яті закарбувався день потужного ракетного удару. Мої руки нестримно тряслися, я ледве могла тримати телефон. Коли нарешті отримала повідомлення, що всі в безпеці, відразу ввімкнула BTS. Їхня музика спрацювала як найсильніше заспокійливе — той безпечний куточок, де можна видихнути.", name: "Марта", job: "Full-stack розробниця", fandom: "ARMY 💜", initials: "М" },
-    { id:3, text: "Вночі, під час дуже сильної атаки дронами, почалась панічна атака — я втратила відчуття простору, всі звуки злились у какофонію. Не пам'ятаю, як доповзла до телефону, але якось потрапила на відео виступу BTS в ООН. Не розуміла жодного слова, але почувши знайомий голос — мене почало відпускати.", name: "Марія", job: "Виконавча директорка", fandom: "ARMY 💜", initials: "М" },
-    { id:4, text: "В усьому винен TikTok та його рекомендації 😂 Відео лунало: «їх не запросили на MAMA, їх ігнорували... але вони вистояли...» Мене зацікавило, хто це, їхній шлях... Ну і все, далі як в тумані)", name: "Альона", job: "Громадська організація", fandom: "ARMY 💜", initials: "А" },
-    { id:5, text: "Я дізналась про BTS вже після початку війни. Чогось моєму серцю припав Юнгі — можливо, тому що ми схожі. В нього була депресія, і він перетворив це на музику. Він навчив мене, що виражати емоції — це сила, а не слабкість. Навіть раніше ніколи не слухала реп, а тепер слухаю його.", name: "Врина", job: "з любов'ю", fandom: "ARMY 💜", initials: "В" }
+    { id:1,  text: "Я вдячна, що в слушний момент знайшла свою «віддушину» — втіху та відраду, сенс та натхнення, мотивацію та віру в себе.", name: "Olena", job: "з любов'ю · 42 р.", fandom: "ARMY 💜", initials: "О" },
+    { id:2,  text: "Найбільше в пам'яті закарбувався день потужного ракетного удару по моєму місту. Звуки вибухів були настільки близькими і страшними, що здавалося, ніби світ розвалюється. Від паніки мої руки нестримно тряслися, я ледве могла тримати телефон. Коли сирена стихла і всі написали що в безпеці — мене накрила хвиля постстресу. Щоб не зірватися, я відразу ввімкнула BTS. Їхня музика спрацювала як найсильніше заспокійливе — той безпечний куточок, де можна видихнути і відпустити пережитий жах.", name: "Марта", job: "Full-stack розробниця · 22 р.", fandom: "ARMY 💜", initials: "М" },
+    { id:3,  text: "Коли брат пішов воювати і зник безвісти — саме BTS та їх пісні давали впевненість і відчуття, що ще трішки і все буде добре. Так і сталося. Брат знайшовся живий. Повернувся.", name: "Вікторія", job: "Вчитель · 35 р.", fandom: "ARMY 💜", initials: "В" },
+    { id:4,  text: "Я дізналась про BTS вже після початку війни. Якось натрапила на гарних азіатів, що гарно танцювали. Почала вивчати — і чогось моєму серцю припав Юнгі. Можливо тому, що в нього була депресія, як і в мене. Він перетворив свої емоції на музику. Навіть раніше ніколи не слухала реп, а тепер слухаю його. Юнгі моє кохання! ❤️‍🩹", name: "Ірина", job: "з любов'ю · 50 р.", fandom: "ARMY 💜", initials: "В" },
+    { id:5,  text: "Я спокійна людина з витривалою психікою. K-pop не змінився для мене після початку війни — бо вже на той час він був звичною частиною мого життя. Він завжди підтримував і надихав мене.", name: "учасниця проєкту", job: "з любов'ю", fandom: "STAY 💗", initials: "P" },
+    { id:6,  text: "Пам'ятаю як вночі, коли була дуже сильна атака дронами я сильно забилась в куток. Думаю, що багато людей мене зрозуміє. Почалась дуже сильна панічна атака, коли я просто втратила відчуття простору і всі звуки були наче какофонія. Я не пам'ятаю, як я доповзла до телефону, але я просто лягла на підлогу і на ютубі висвітилось відео з виступу в ООН. Я не розуміла нічого, але через те, що почула знайомий голос мене почало відпускати.", name: "Марія", job: "Виконавча директорка · 27 р.", fandom: "ARMY 💜", initials: "М" },
+    { id:7,  text: "Найскладніші часи — коли я жила одна в іншому місці без рідних. Під час довгих нічних обстрілів вдягала навушники і вмикала гучно музику, щоб не чути шахедів — саме цей звук змушував найбільше тремтіти. Коли вже не було сил, а зранку треба на навчання і роботу — просто гучно вмикала BTS і засинала.", name: "Катруся", job: "студентка", fandom: "ARMY 💜", initials: "✦" },
+    { id:8,  text: "Моєю головною звичкою стало прослуховування музики як спосіб повернути собі контроль. Коли ситуація стає критичною — беру телефон і вмикаю пісні, які знаю напам'ять. Іноді один і той самий трек на повторі раз за разом. Я не можу контролювати те, що відбувається за вікном — але я можу контролювати те, що звучить у моїх навушниках. І це дає мені сили триматися.", name: "Марта", job: "Full-stack розробниця · 22 р.", fandom: "ARMY 💜", initials: "М" },
+    { id:9,  text: "Коли мені стає по-справжньому важко — починаю переглядати ефіри BTS. Іноді старий прямий ефір, іноді випадковий ролик. Від того, що бачу їхній сміх і усмішки — всередині стає легше. Особливо піднімають настрій прямі ефіри Jungkook — ніби друг прийшов поговорити по-домашньому. І навіть у найважчий день стає світлішим. 💜", name: "Настя", job: "Нянечка", fandom: "ARMY 💜 · STAY 💗", initials: "Н" },
+    { id:10, text: "Під час лютих обстрілів ми спілкувались з подругами-фанатками — це давало відчуття безпеки. Завжди питаємо одна одну після гучної ночі в наших містах чи кожна в порядку. Це стало підтримкою на відстані і почуттям єдності.", name: "учасниця проєкту", job: "з любов'ю", fandom: "ARMY 💜", initials: "К" },
+    { id:11, text: "Після кількох обстрілів у мене почались панічні атаки. Я слухаю Намджуна — тембр його голосу мене заземлює і я можу швидше заспокоїтись.", name: "Марія", job: "Виконавча директорка · 27 р.", fandom: "ARMY 💜", initials: "М" },
+    { id:12, text: "Найчастіше музика допомагає мені під час обстрілів, коли я сиджу в коридорі, а за вікном летять шахеди та ракети. Мені стає набагато легше і менш страшно, коли я вмикаю музику — вона ніби дає надію, що все буде добре і незабаром закінчиться. Особливо мене заспокоює музика ZEROBASEONE — дуже енергійна та весела, допомагає відволіктися. Наразі я в складному стані із невизначеним майбутнім, але моя мрія потрапити на к-поп концерти дає мені сили рухатися далі.", name: "Віталіна", job: "Студентка · 20 р.", fandom: "ZEROSE 🌟", initials: "В" },
+    { id:13, text: "Я проживаю зараз з-за кордоном. Випадковості не випадкові — я почула їх саме тоді, коли просто потребувала. В моєму серці тільки BTS.", name: "учасниця проєкту", job: "з любов'ю", fandom: "ARMY 💜", initials: "✦" },
+    { id:14, text: "Для мене музика завжди була важливою частиною життя ще з дитинства. Але під час повномасштабної війни вона набула іншого сенсу. Пам'ятаю моменти, коли я сиділа в укритті, намагаючись робити складні університетські лабораторні. Навколо — ніби суцільний кошмар. Щоб просто не збожеволіти і хоча б трішки розвантажити думки, я вмикала K-pop. Ця музика стала моїм острівцем спокою, який дійсно допоміг мені з усім цим впоратися.", name: "учасниця проєкту", job: "студентка", fandom: "ARMY 💜", initials: "✦" },
+    { id:15, text: "Я виїхала до Чехії і осилилась в маленькому містечку за годину їзди до Праги. Кожен раз коли їхала туди й назад на автобусі, слухала тоді ще новий альбом Stray Kids — Oddinary. Через нього відчувала підтримку з боку членів гурту та надихалась щось робити і не втрачати сил.", name: "учасниця проєкту", job: "з любов'ю", fandom: "STAY 💗", initials: "✦" },
+    { id:16, text: "У K-pop я прийшла в 2022 році — в один із найважчих періодів мого життя. Ми з мамою переїхали до Франції. Нова країна, де немає ні знайомих, ні друзів. Повернутися було неможливо — в Україні точилися сильні обстріли. Саме тоді я натрапила на Instagram на хлопця, який розповідав про концерт BTS. Я почала дивитися їхні виступи й натрапила на Jimin — його голос, пластика і щирість відкрили для мене BTS. Так я стала фанаткою. Stray Kids я почала слухати вже 2024 року. Їхні пісні допомагають справлятися з депресією, знаходити сили жити далі і бачити світло навіть у темряві.", name: "Анастасія", job: "з любов'ю", fandom: "ARMY 💜", initials: "А" },
+    { id:17, text: "K-pop та дорами допомагають відволіктись від поганих новин та хоча б на якийсь час поринути у світ прекрасної музики і відчути іншу культуру. Дорами навчають поваги та бережного ставлення один до одного. BTS мотивує йти вперед та досягати своїх цілей.", name: "Олександра", job: "з любов'ю", fandom: "ARMY 💜", initials: "✦" },
+    { id:18, text: "Перші тижні у сховищі під гуртожитком — прослуховування кпоп-пісень 2016–2019 років, це моя улюблена ера. Потім допомагали відволікатися шоу, влоги, ефіри айдолів — зокрема Run BTS. Це був наче safe space у тих жахливих умовах, і на деякий час ніби повертав у мирне життя, коли найбільшою проблемою було встигнути на ефір біаса у Weverse.", name: "Олена", job: "студентка", fandom: "ARMY 💜", initials: "✦" },
+    { id:19, text: "У перші тижні повномасштабного вторгнення я взагалі уникала інтернету — мені було страшно бачити новини, тому трималась тільки на книгах. В якийсь момент мені згадалась серія з Run BTS. Знаменита 'Lachibilala'. Це було вперше з 24.02.22, коли я щиро посміхалась. А пройшло вже більше року... Я ніби знову потрапила в далекий 2015 рік. BTS були моєю тихою гаванню. Це так дивовижно — вони завжди з'являються в моєму житті саме у найважчі часи.", name: "учасниця проєкту", job: "з любов'ю", fandom: "ARMY 💜", initials: "✦" }
   ],
   artists: [
-    "Girls' Generation", "BIGBANG", "EXO", "SHINee", "2NE1", "f(x)",
-    "Super Junior", "BTS", "BLACKPINK", "TWICE", "Red Velvet", "SEVENTEEN",
-    "GOT7", "MONSTA X", "Stray Kids", "ATEEZ", "ENHYPEN", "TXT",
-    "ITZY", "IVE", "NewJeans", "LE SSERAFIM", "aespa"
+    "BTS", "Stray Kids", "BLACKPINK", "ATEEZ", "ITZY", "TXT",
+    "SEVENTEEN", "GOT7", "ENHYPEN", "(G)I-DLE", "BIGBANG", "TWICE",
+    "EXO", "SHINee", "2NE1", "Red Velvet", "MONSTA X", "IVE",
+    "NewJeans", "LE SSERAFIM", "aespa", "DAY6", "MAMAMOO",
+    "Dreamcatcher", "ZEROBASEONE", "P1Harmony", "NMIXX", "iKON", "ONEUS",
+    "Agust D", "IU",
+    "G-Dragon", "B.I", "Bobby", "Dawn", "Woodz", "Holland", "Kiss of Life", "BIBI", "JUSTB", "안예은", "인순이", "Epik High"
   ]
 };
 
@@ -791,7 +1924,6 @@ async function loadData() {
 function renderStats(stats) {
   document.getElementById('statsGrid').innerHTML = stats.map(s => `
     <div class="stat-card">
-      <div class="stat-icon">${s.icon}</div>
       <div class="stat-number" ${s.animated ? `data-target="${parseInt(s.number)}"` : ''}>${s.animated ? '0' : s.number}</div>
       <div class="stat-label">${s.label}</div>
     </div>`).join('');
@@ -799,12 +1931,16 @@ function renderStats(stats) {
 
 function renderChart(containerId, titleId, chart) {
   document.getElementById(titleId).textContent = chart.title;
-  document.getElementById(containerId).innerHTML = chart.bars.map(b => `
+  const maxPct = Math.max(...chart.bars.map(b => b.percent));
+  document.getElementById(containerId).innerHTML = chart.bars.map(b => {
+    const scaledWidth = Math.round((b.percent / maxPct) * 100);
+    return `
     <div class="bar-item">
       <span class="bar-label">${b.label}</span>
-      <div class="bar-track"><div class="bar-fill" style="width:${b.percent}%"></div></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${scaledWidth}%"></div></div>
       <span class="bar-pct">${b.percent}%</span>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 // ========== ФРАЗИ ==========
@@ -883,7 +2019,6 @@ function renderPhrases(phrases) {
   carousel.innerHTML = phrases.map((p, i) => `
     <div class="phrase-slide ${i === 0 ? 'active' : ''}" data-idx="${i}">
       <div class="phrase-big-text">${p.text}</div>
-      <div class="phrase-big-author"><span>учасниця проєкту MAY</span></div>
     </div>`).join('');
 
   // build dots
@@ -893,12 +2028,13 @@ function renderPhrases(phrases) {
 
   // auto-advance
   if (phraseTimer) clearInterval(phraseTimer);
-  phraseTimer = setInterval(() => goToPhrase((phraseIndex + 1) % phrases.length), 3500);
+  phraseTimer = setInterval(() => goToPhrase((phraseIndex + 1) % phrases.length), 6000);
 }
 
 function goToPhrase(idx) {
   const slides = document.querySelectorAll('.phrase-slide');
   const dotBtns = document.querySelectorAll('.phrase-dot-btn');
+  const carousel = document.getElementById('phrasesCarousel');
   if (!slides.length) return;
 
   slides[phraseIndex].classList.remove('active');
@@ -910,20 +2046,70 @@ function goToPhrase(idx) {
   dotBtns.forEach((d, i) => d.classList.toggle('active', i === phraseIndex));
 
   if (phraseTimer) clearInterval(phraseTimer);
-  phraseTimer = setInterval(() => goToPhrase((phraseIndex + 1) % currentPhrases.length), 3500);
+  phraseTimer = setInterval(() => goToPhrase((phraseIndex + 1) % currentPhrases.length), 6000);
 }
 
 function renderStories(stories) {
-  document.getElementById('storiesGrid').innerHTML = stories.map(s => `
-    <div class="story-card">
+  const INITIAL = 3;
+  const grid = document.getElementById('storiesGrid');
+
+  const renderCard = (s, delay) => {
+    const anon = s.name === 'учасниця проєкту' || s.name === 'project participant';
+    return `<div class="story-card" style="${delay ? `animation-delay:${delay}` : ''}">
       <div class="story-quote-mark">"</div>
       <p class="story-text">${s.text}</p>
       <div class="story-meta">
-        <div class="story-avatar">${s.initials}</div>
-        <div class="story-author"><strong>${s.name}</strong>${s.job ? ' · ' + s.job : ''}</div>
+        ${anon ? '' : `<div class="story-avatar">${s.initials}</div>`}
+        ${anon ? '' : `<div class="story-author"><strong>${s.name}</strong></div>`}
         <div class="fandom-tag">${s.fandom}</div>
       </div>
-    </div>`).join('');
+    </div>`;
+  };
+
+  grid.innerHTML = stories.slice(0, INITIAL).map(s => renderCard(s, '')).join('');
+
+  // Remove old button if exists
+  const old = document.getElementById('storiesToggleBtn');
+  if (old) old.remove();
+
+  if (stories.length <= INITIAL) return;
+
+  const rest = stories.slice(INITIAL);
+  const moreLabel = currentLang === 'en'
+    ? `Show all stories ↓`
+    : `Показати всі історії ↓`;
+  const lessLabel = currentLang === 'en' ? 'Show less ↑' : 'Згорнути ↑';
+
+  const wrap = document.createElement('div');
+  wrap.id = 'storiesToggleBtn';
+  wrap.style.cssText = 'text-align:center;margin-top:2rem;';
+  wrap.innerHTML = `<button id="storiesBtn" data-expanded="false" style="
+    font-family:'Unbounded',sans-serif;font-size:0.68rem;font-weight:700;
+    letter-spacing:0.08em;color:rgba(255,215,0,0.7);
+    border:1px solid rgba(255,215,0,0.25);border-radius:2rem;
+    padding:0.8rem 2rem;background:transparent;cursor:pointer;
+    transition:all 0.2s;">${moreLabel}</button>`;
+  grid.after(wrap);
+
+  const btn = document.getElementById('storiesBtn');
+  btn.addEventListener('mouseenter', () => { btn.style.background='rgba(255,215,0,0.07)'; btn.style.borderColor='rgba(255,215,0,0.5)'; });
+  btn.addEventListener('mouseleave', () => { btn.style.background='transparent'; btn.style.borderColor='rgba(255,215,0,0.25)'; });
+  btn.addEventListener('click', () => {
+    const expanded = btn.dataset.expanded === 'true';
+    if (!expanded) {
+      const extra = rest.map((s, i) => renderCard(s, `${i * 0.05}s`)).join('');
+      grid.insertAdjacentHTML('beforeend', extra);
+      btn.textContent = lessLabel;
+      btn.dataset.expanded = 'true';
+      document.getElementById('storiesCollapseFloat').style.display = 'block';
+    } else {
+      Array.from(grid.querySelectorAll('.story-card')).slice(3).forEach(c => c.remove());
+      btn.textContent = moreLabel;
+      btn.dataset.expanded = 'false';
+      document.getElementById('storiesCollapseFloat').style.display = 'none';
+      grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
 }
 
 function renderArtists(artists) {
@@ -941,9 +2127,9 @@ function renderArtists(artists) {
 
 function renderContact(p) {
   document.getElementById('contactLinks').innerHTML = `
-    <a href="${p.instagram}" class="contact-link" target="_blank"><span>📸</span> ${p.instagram_handle} — Instagram</a>
-    <a href="${p.google_form_url}" class="contact-link" target="_blank"><span>📋</span> Гугл-форма — взяти участь</a>
-    <a href="mailto:${p.email}" class="contact-link"><span>✉️</span> ${p.email}</a>`;
+    <a href="${p.instagram}" class="contact-link" target="_blank"><span>📸</span> ${p.instagram_handle} — Instagram проєкту</a>
+    <a href="https://www.instagram.com/mayleen.off" class="contact-link" target="_blank"><span>📸</span> @mayleen.off — авторка проєкту</a>
+    <p style="color:var(--muted); font-size:0.88rem; line-height:1.6; margin-top:1.2rem;">Завжди рада почути твої думки, запитання і побажання — пиши в директ 💛</p>`;
 }
 
 function renderFooter(p) {
@@ -965,92 +2151,645 @@ const obs = new IntersectionObserver(entries => entries.forEach(e => {
   if (e.isIntersecting) { e.target.querySelectorAll('[data-target]').forEach(animateCount); obs.unobserve(e.target); }
 }), { threshold: 0.3 });
 
-// ========== WORD CLOUD ==========
-function initWordCloud(artists) {
-  const container = document.getElementById('wordCloud');
-  if (!container) return;
-  container.innerHTML = '';
+// ========== CONSTELLATION ==========
+const MENTIONED_GROUPS = new Set([
+  "BTS","Stray Kids","BLACKPINK","ATEEZ","ITZY","TXT","GOT7",
+  "SEVENTEEN","ENHYPEN","BIGBANG","(G)I-DLE","TWICE",
+  "DAY6","MAMAMOO","iKON","Dreamcatcher","ZEROBASEONE","P1Harmony","NMIXX","ONEUS",
+  "Agust D","IU",
+  "G-Dragon","B.I","Bobby","Dawn","Woodz","Holland","Kiss of Life","BIBI","JUSTB","안예은","인순이","Epik High"
+]);
 
-  // Wait for container to be painted and have real dimensions
-  requestAnimationFrame(() => {
-    const size = container.offsetWidth || 320;
-    const cx = size / 2;
-    const cy = size / 2;
+const MENTION_COUNT = {
+  "BTS":19,"Stray Kids":6,"ITZY":4,"ATEEZ":4,"BLACKPINK":3,"TXT":3,
+  "GOT7":2,"SEVENTEEN":2,"ENHYPEN":2,"(G)I-DLE":2,"BIGBANG":2,"G-Dragon":2,"Jackson Wang":2
+};
 
-    // Build word list with sizes
-    const words = artists.map(name => ({
-      text: name,
-      size: PRIORITY.includes(name) ? (0.95 + Math.random() * 0.4) : (0.62 + Math.random() * 0.35)
-    }));
+// Артисти галактики — окремо від бігучої стрічки
+const GALAXY_ARTISTS = [
+  "BTS","Stray Kids","BLACKPINK","ATEEZ","ITZY","TXT",
+  "SEVENTEEN","GOT7","ENHYPEN","(G)I-DLE","BIGBANG","TWICE",
+  "EXO","SHINee","Red Velvet","MONSTA X","IVE","NewJeans",
+  "LE SSERAFIM","aespa","DAY6","MAMAMOO","Dreamcatcher",
+  "ZEROBASEONE","P1Harmony","iKON","ONEUS","Agust D","IU",
+  "B.I","BIBI"
+];
 
-    // Shuffle so priority words are distributed, not all at start
-    words.sort(() => Math.random() - 0.5);
-    // Bring priority words to varied positions
-    const priorityWords = words.filter(w => PRIORITY.includes(w.text));
-    const rest = words.filter(w => !PRIORITY.includes(w.text));
-    const arranged = [];
-    rest.forEach((w, i) => {
-      arranged.push(w);
-      if (i % 4 === 1 && priorityWords.length) arranged.push(priorityWords.shift());
+function initGalaxy(artists) {
+  const canvas = document.getElementById('galaxyCanvas');
+  if (!canvas) return;
+
+  function build() {
+    const W = 464, H = 340;
+    canvas.width  = W;
+    canvas.height = H;
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    const ctx = canvas.getContext('2d');
+
+    // ── MENTION COUNTS ─────────────────────────────────────────
+    const MENTION = {
+      'BTS':19,'Stray Kids':6,'ITZY':4,'ATEEZ':4,
+      'BLACKPINK':3,'TXT':3,'GOT7':2,'SEVENTEEN':2,
+      'ENHYPEN':2,'(G)I-DLE':2,'BIGBANG':2,'Agust D':2,'IU':1
+    };
+
+    // ── FIXED POSITIONS: 5-point star layout ────────────────────
+    // Inner pentagon  (r≈48) + outer pentagram tips (r≈110) + BTS center
+    // + perimeter ring filling the canvas edges
+    const POS = {
+      // Center
+      'BTS':          [232, 162],
+      // Outer pentagram tips (r=110)
+      'Stray Kids':   [232,  50],   // top
+      'ATEEZ':        [337, 126],   // top-right
+      'BLACKPINK':    [297, 252],   // bottom-right
+      'TXT':          [167, 252],   // bottom-left
+      'ITZY':         [127, 126],   // top-left
+      // Inner pentagon (r=48)
+      'SEVENTEEN':    [261, 121],
+      'GOT7':         [278, 176],
+      'ENHYPEN':      [232, 212],
+      '(G)I-DLE':    [186, 176],
+      'BIGBANG':     [203, 121],
+      // Perimeter — top band
+      'IU':           [ 50,  42],
+      'EXO':          [152,  28],
+      'SHINee':       [312,  28],
+      'aespa':        [414,  42],
+      // Near-top corners
+      '2NE1':         [ 76,  86],
+      'NewJeans':     [388,  86],
+      // Left edge
+      'Red Velvet':   [ 38, 148],
+      'MAMAMOO':      [ 38, 192],
+      'TWICE':        [ 38, 234],
+      'MONSTA X':     [ 38, 276],
+      // Right edge
+      'LE SSERAFIM':  [424, 144],
+      'DAY6':         [428, 190],
+      'iKON':         [424, 232],
+      'Dreamcatcher': [420, 276],
+      // Bottom band
+      'ONEUS':        [108, 316],
+      'P1Harmony':    [168, 320],
+      'Agust D':      [232, 322],
+      'ZEROBASEONE':  [298, 318],
+      'IVE':          [362, 314],
+      'NMIXX':        [428, 308],
+      // New artists — placed in free perimeter gaps
+      'G-Dragon':     [110,  68],
+      'JUSTB':        [188,  62],
+      '안예은':        [268,  60],
+      'B.I':          [340,  56],
+      'Bobby':        [ 96, 104],
+      'Dawn':         [155, 100],
+      'Holland':      [368,  98],
+      '인순이':        [380, 138],
+      'Kiss of Life': [ 72, 215],
+      'Woodz':        [112, 232],
+      'Epik High':    [350, 262],
+      'BIBI':         [ 82, 296],
+    };
+
+    // ── EXPLICIT CONSTELLATION CONNECTIONS ──────────────────────
+    const CONN_PAIRS = [
+      // Pentagram outline (skips one outer tip each time → draws the star shape)
+      ['Stray Kids','BLACKPINK'],
+      ['BLACKPINK','ITZY'],
+      ['ITZY','ATEEZ'],
+      ['ATEEZ','TXT'],
+      ['TXT','Stray Kids'],
+      // BTS hub → inner pentagon
+      ['BTS','SEVENTEEN'],['BTS','GOT7'],['BTS','ENHYPEN'],
+      ['BTS','(G)I-DLE'],['BTS','BIGBANG'],
+      // Inner pentagon → outer tips
+      ['SEVENTEEN','Stray Kids'],['SEVENTEEN','ATEEZ'],
+      ['GOT7','ATEEZ'],       ['GOT7','BLACKPINK'],
+      ['ENHYPEN','BLACKPINK'],['ENHYPEN','TXT'],
+      ['(G)I-DLE','TXT'],     ['(G)I-DLE','ITZY'],
+      ['BIGBANG','ITZY'],     ['BIGBANG','Stray Kids'],
+      // Perimeter → nearest core node
+      ['IU','ITZY'],
+      ['EXO','Stray Kids'],
+      ['SHINee','Stray Kids'],
+      ['aespa','ATEEZ'],
+      ['2NE1','BIGBANG'],
+      ['NewJeans','SEVENTEEN'],
+      ['Red Velvet','ITZY'],
+      ['MAMAMOO','(G)I-DLE'],
+      ['TWICE','TXT'],
+      ['MONSTA X','TXT'],
+      ['LE SSERAFIM','ATEEZ'],
+      ['DAY6','GOT7'],
+      ['iKON','BLACKPINK'],
+      ['Dreamcatcher','BLACKPINK'],
+      ['ONEUS','TXT'],
+      ['P1Harmony','ENHYPEN'],
+      ['Agust D','BTS'],
+      ['ZEROBASEONE','ENHYPEN'],
+      ['IVE','BLACKPINK'],
+      ['NMIXX','GOT7'],
+      // New artists → nearest existing node
+      ['G-Dragon','2NE1'],
+      ['JUSTB','Stray Kids'],
+      ['안예은','Stray Kids'],
+      ['B.I','NewJeans'],
+      ['Bobby','2NE1'],
+      ['Dawn','EXO'],
+      ['Holland','NewJeans'],
+      ['인순이','LE SSERAFIM'],
+      ['Kiss of Life','MAMAMOO'],
+      ['Woodz','MONSTA X'],
+      ['Epik High','BLACKPINK'],
+      ['BIBI','MONSTA X'],
+    ];
+
+    // ── BUILD NODE LIST ─────────────────────────────────────────
+    const nodes = [];
+    const byName = {};
+    artists.forEach(name => {
+      const count = MENTION[name] || 0;
+      const isBTS = name === 'BTS';
+      const pos   = POS[name] || [232, 162]; // fallback to center
+      const fontSize = isBTS?15: count>=6?13: count>=3?12: count>=1?11: 9;
+      const weight   = isBTS?'700': count>=3?'600': count>=1?'500':'400';
+      const alpha    = isBTS?1.0: count>=6?0.95: count>=3?0.85: count>=1?0.72: 0.38+Math.random()*0.1;
+      const starR    = isBTS?4.5: count>=6?3.2: count>=3?2.6: count>=1?2.0: 1.1;
+      const node = {
+        name, count, isBTS, fontSize, weight, alpha, starR,
+        ox:pos[0], oy:pos[1], x:pos[0], y:pos[1],
+        pulse: Math.random()*Math.PI*2,
+        ps:    0.012 + Math.random()*0.01,
+        t:     Math.random()*Math.PI*2,
+        speed: isBTS?0.0004: 0.0008+Math.random()*0.001,
+        amp:   isBTS?0.6: 0.8+Math.random()*1.2,
+      };
+      nodes.push(node);
+      byName[name] = node;
     });
-    priorityWords.forEach(w => arranged.push(w));
 
-    arranged.forEach((w, i) => {
-      const span = document.createElement('span');
-      span.className = 'cloud-word';
-      span.textContent = w.text;
-      span.style.fontSize = w.size + 'rem';
-
-      // Fibonacci sunflower spiral placement — fills circle evenly
-      const golden = Math.PI * (3 - Math.sqrt(5));
-      const r = Math.sqrt((i + 0.5) / arranged.length) * (size * 0.44);
-      const theta = i * golden;
-      const x = cx + r * Math.cos(theta);
-      const y = cy + r * Math.sin(theta);
-
-      span.style.left = x + 'px';
-      span.style.top = y + 'px';
-      span.style.transform = 'translate(-50%, -50%)';
-
-      // unique floating motion per word
-      const dx  = (2 + Math.random() * 5).toFixed(1) + 'px';
-      const dy  = (2 + Math.random() * 5).toFixed(1) + 'px';
-      const dx2 = (2 + Math.random() * 4).toFixed(1) + 'px';
-      const dy2 = (2 + Math.random() * 4).toFixed(1) + 'px';
-      const dur = (5 + Math.random() * 5).toFixed(1) + 's';
-      const delay = (Math.random() * -6).toFixed(1) + 's';
-      span.style.setProperty('--dx',  dx);
-      span.style.setProperty('--dy',  dy);
-      span.style.setProperty('--dx2', dx2);
-      span.style.setProperty('--dy2', dy2);
-      span.style.setProperty('--float-dur',   dur);
-      span.style.setProperty('--float-delay', delay);
-
-      const alpha = PRIORITY.includes(w.text) ? (0.7 + Math.random() * 0.3) : (0.2 + Math.random() * 0.5);
-      span.style.color = `rgba(255, 215, 0, ${alpha})`;
-
-      container.appendChild(span);
-      // staggered fade in
-      setTimeout(() => { span.style.transition = 'opacity 0.8s ease'; span.style.opacity = '1'; }, 80 + i * 60);
+    // Resolve connections to node pairs
+    const connections = [];
+    CONN_PAIRS.forEach(([an, bn]) => {
+      const a = byName[an], b = byName[bn];
+      if (a && b) connections.push([a, b]);
     });
 
-    // Pulse: highlight random word every 2800ms — slow and smooth
-    setInterval(() => {
-      const spans = Array.from(container.querySelectorAll('.cloud-word'));
-      if (!spans.length) return;
-      const usePriority = Math.random() < 0.4;
-      const pool = usePriority
-        ? spans.filter(s => PRIORITY.includes(s.textContent))
-        : spans;
-      const pick = (pool.length ? pool : spans)[Math.floor(Math.random() * (pool.length || spans.length))];
-      pick.style.transition = 'color 0.6s ease';
-      pick.style.color = 'rgba(255,255,255,1)';
-      setTimeout(() => {
-        const alpha = PRIORITY.includes(pick.textContent) ? 0.85 : (0.2 + Math.random() * 0.5);
-        pick.style.color = `rgba(255, 215, 0, ${alpha})`;
-      }, 1200);
-    }, 2800);
-  });
+    // ── DRAW LOOP ───────────────────────────────────────────────
+    function draw() {
+      ctx.clearRect(0, 0, W, H); // transparent — no background fill
+
+      // drift
+      nodes.forEach(n => {
+        n.t += n.speed; n.pulse += n.ps;
+        n.x = n.ox + Math.cos(n.t) * n.amp;
+        n.y = n.oy + Math.sin(n.t * 0.71) * n.amp * 0.6;
+      });
+
+      // ── CONSTELLATION LINES — solid #FFD700 ──
+      ctx.save();
+      ctx.lineWidth = 0.8;
+      connections.forEach(([a, b]) => {
+        const d    = Math.hypot(a.x-b.x, a.y-b.y);
+        const maxD = Math.hypot(W, H);
+        // Stronger alpha for short lines (core), softer for long (perimeter)
+        const lineA = Math.max(0.10, Math.min(0.70, (1 - d/maxD) * 1.4));
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = `rgba(255,215,0,${lineA.toFixed(3)})`;
+        ctx.stroke();
+      });
+      ctx.restore();
+
+      // ── STARS + LABELS — all #FFD700 ──
+      nodes.forEach(n => {
+        const puls = 0.93 + 0.07 * Math.sin(n.pulse);
+        const a    = n.alpha * puls;
+
+        // Outer glow
+        const gR = n.isBTS?26: n.count>=6?20: n.count>=3?16: n.count>=1?12: 7;
+        const gA = n.isBTS?0.22: n.count>=3?0.20: n.count>=1?0.14: 0.07;
+        const gO = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,gR);
+        gO.addColorStop(0, `rgba(255,215,0,${(gA*a).toFixed(3)})`);
+        gO.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = gO;
+        ctx.beginPath(); ctx.arc(n.x,n.y,gR,0,Math.PI*2); ctx.fill();
+
+        // Inner core glow
+        const iG = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.starR*2.4);
+        iG.addColorStop(0,   `rgba(255,252,200,${(a*0.95).toFixed(3)})`);
+        iG.addColorStop(0.4, `rgba(255,215,0,${(a*0.75).toFixed(3)})`);
+        iG.addColorStop(1,   'rgba(0,0,0,0)');
+        ctx.fillStyle = iG;
+        ctx.beginPath(); ctx.arc(n.x,n.y,n.starR*2.4,0,Math.PI*2); ctx.fill();
+
+        // Solid core dot
+        ctx.beginPath(); ctx.arc(n.x,n.y,n.starR,0,Math.PI*2);
+        ctx.fillStyle = `rgba(255,248,180,${Math.min(a+0.05,1).toFixed(3)})`;
+        ctx.fill();
+
+        // 4-point spike for bright stars
+        if (n.count >= 2 || n.isBTS) {
+          const sl = n.isBTS?14: n.count>=6?10: n.count>=3?8: 6;
+          ctx.save();
+          ctx.strokeStyle = `rgba(255,230,80,${(a*0.55).toFixed(3)})`;
+          ctx.lineWidth = 0.8;
+          ctx.beginPath(); ctx.moveTo(n.x-sl,n.y);      ctx.lineTo(n.x+sl,n.y);      ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(n.x,n.y-sl*0.65); ctx.lineTo(n.x,n.y+sl*0.65); ctx.stroke();
+          ctx.restore();
+        }
+
+        // Label — radial placement (direction away from canvas centre)
+        ctx.save();
+        ctx.font = `${n.weight} ${n.fontSize}px 'Inter',sans-serif`;
+        if (n.isBTS || n.count >= 3) {
+          ctx.shadowBlur  = n.isBTS ? 14 : 7;
+          ctx.shadowColor = 'rgba(255,215,0,0.7)';
+        }
+        ctx.fillStyle = `rgba(255,215,0,${a.toFixed(3)})`;
+
+        // Unit vector pointing away from canvas centre
+        const rdx = n.ox - W/2, rdy = n.oy - H/2;
+        const rdist = Math.max(Math.hypot(rdx, rdy), 1);
+        const ux = rdx/rdist, uy = rdy/rdist;
+
+        // BTS is at centre — always place label below
+        const GAP = n.starR + 5;
+        let lx, ly;
+        if (n.isBTS) {
+          lx = n.x; ly = n.y + GAP;
+          ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+        } else {
+          lx = n.x + ux * GAP;
+          ly = n.y + uy * GAP;
+          // Horizontal or diagonal → left/right alignment
+          if (Math.abs(ux) >= 0.45) {
+            ctx.textAlign    = ux > 0 ? 'left' : 'right';
+            ctx.textBaseline = Math.abs(uy) > 0.6
+              ? (uy > 0 ? 'top' : 'bottom') : 'middle';
+          } else {
+            // Mostly vertical → centred, top or bottom
+            ctx.textAlign    = 'center';
+            ctx.textBaseline = uy > 0 ? 'top' : 'bottom';
+          }
+          // Edge clamp — pull label inward if it would leave canvas
+          const MARGIN = 4;
+          const tw = ctx.measureText(n.name).width;
+          if (ctx.textAlign === 'left'  && lx + tw > W - MARGIN) { ctx.textAlign = 'right'; lx = n.x - ux * GAP; }
+          if (ctx.textAlign === 'right' && lx - tw < MARGIN)      { ctx.textAlign = 'left';  lx = n.x - ux * GAP; }
+          if (ctx.textBaseline === 'top'    && ly + n.fontSize > H - MARGIN) { ctx.textBaseline = 'bottom'; ly = n.y - uy * GAP; }
+          if (ctx.textBaseline === 'bottom' && ly - n.fontSize < MARGIN)     { ctx.textBaseline = 'top';    ly = n.y - uy * GAP; }
+        }
+
+        ctx.fillText(n.name, lx, ly);
+        ctx.restore();
+      });
+
+      requestAnimationFrame(draw);
+    }
+    draw();
+  }
+
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+  else setTimeout(build, 300);
+}
+
+// ========== QUOTES ==========
+const QUOTES_DATA = [
+  {
+    text: "다 괜찮아질 거야",
+    en: "Everything will be okay",
+    translation: "Все буде добре",
+    artist: "Agust D — Snooze"
+  },
+  {
+    text: "어떤 어둠도 어떤 계절도 영원할 순 없으니까",
+    en: "No darkness, no season can last forever",
+    translation: "Жодна темрява, жодна пора року не тривають вічно",
+    artist: "BTS — Spring Day"
+  },
+  {
+    text: "I'll STAY forever, oh, I'll STAY here",
+    translation: "Я залишуся назавжди, о, я тут назавжди",
+    artist: "Stray Kids — 0801"
+  },
+  {
+    text: "Hold on to your ground — doesn't matter how",
+    translation: "Тримайся — будь-якою ціною",
+    artist: "ATEEZ — Enough"
+  },
+  {
+    text: "Not today",
+    en: "Not today",
+    translation: "Не сьогодні",
+    artist: "BTS — Not Today"
+  },
+  {
+    text: "You can't stop me lovin' myself",
+    translation: "Ти не зупиниш мою любов до себе",
+    artist: "BTS — Idol"
+  },
+  {
+    text: "약속할게, 지금보다 더 예뻐질 거야",
+    en: "I promise — you'll become even more beautiful than you are now",
+    translation: "Обіцяю — ти станеш ще красивішою, ніж зараз",
+    artist: "Jimin — Promise"
+  },
+  {
+    text: "행복은 감사함에서 시작돼",
+    en: "Happiness begins with gratitude",
+    translation: "Щастя починається з вдячності",
+    artist: "BTS — Magic Shop"
+  },
+  {
+    text: "꽃이 피고 지는 게 봄이 끝난 게 아니듯",
+    en: "Just as a flower fading does not mean spring is over",
+    translation: "Те, що квітка відцвіла — ще не означає кінець весни",
+    artist: "BTS — Jamais Vu"
+  },
+  {
+    text: "A day may come when we lose — but it is not this day",
+    en: "A day may come when we lose — but it is not this day",
+    translation: "Можливо, колись ми програємо — але не сьогодні",
+    artist: "BTS — Not Today"
+  },
+  {
+    text: "우린 빛나고 있어, 어둠 속에서도",
+    en: "We are shining — even in the darkness",
+    translation: "Ми сяємо — навіть у темряві",
+    artist: "BTS — Mikrokosmos"
+  },
+  {
+    text: "Щастя — це не те, що ти знаходиш, це те, що ти обираєш",
+    en: "Happiness is not something you find — it is something you choose",
+    artist: "Пак Сонхва / ATEEZ"
+  },
+
+  {
+    text: "Can you remember days? 서로를 찾아낸, when the sky so blue.",
+    translation: "Чи пам'ятаєш ті дні? Коли ми знайшли одне одного, коли небо було таким синім.",
+    en: "Can you remember days? When we found each other, when the sky was so blue.",
+    artist: "ZEROBASEONE — BLUE"
+  },
+  {
+    text: "Ми прийшли тоді, коли ви в цьому мали потребу, і підемо, коли ви будете щасливі.",
+    en: "We came when you needed us, and we'll leave when you are happy.",
+    artist: "BTS"
+  },
+  {
+    text: "Give up my youth for my future. I just want to rise up stronger.",
+    translation: "Я жертвую своєю молодістю заради майбутнього. Я просто хочу ставати сильнішим.",
+    en: "Give up my youth for my future. I just want to rise up stronger.",
+    artist: "BTS"
+  },
+  {
+    text: "Цінуйте себе і свої почуття. Ви не повинні дозволяти труднощам руйнувати себе. Якщо є щось що вас тяготить — робіть те що підказує вам серце, адже саме йому ви можете довіряти повністю.",
+    en: "Value yourself and your feelings. You should not let hardships destroy you. If something weighs on you — do what your heart tells you, for it is the one thing you can fully trust.",
+    artist: "BTS"
+  },
+  {
+    text: "Квітка, що розпустилася пізніше, все одно не стає від цього менш гарною.",
+    en: "A flower that blooms late is no less beautiful for it.",
+    artist: "Пак Сонхва / ATEEZ"
+  },
+  {
+    text: "Hold on to your ground, doesn't matter how. They don't even care so then why should you. Don't stop believing how you got there, hold on to that feeling, gonna make it far enough.",
+    translation: "Тримайся за своє місце — будь-якою ціною. Їм байдуже, то чому тобі ні? Не переставай вірити в те, як ти сюди потрапив. Тримайся цього відчуття — і ти зайдеш досить далеко.",
+    en: "Hold on to your ground, doesn't matter how. They don't even care so then why should you. Don't stop believing how you got there, hold on to that feeling, gonna make it far enough.",
+    artist: "ATEEZ — Enough"
+  },
+  {
+    text: "Смачна їжа не має калорій.",
+    en: "Delicious food has no calories.",
+    artist: "Кім Сок Джін / Jin (BTS) 😄"
+  },
+  {
+    text: "Усе буде добре. Навіть якщо сьогодні дуже боляче — ти впораєшся. Я обіцяю, що ти зможеш це пережити.",
+    en: "Everything will be okay. Even if today is very painful — you'll manage. I promise you'll get through this.",
+    artist: "Jimin (BTS) — Promise"
+  },
+  {
+    text: "everything goes",
+    translation: "Все минає.",
+    en: "everything goes",
+    artist: "RM — everythingoes"
+  },
+  {
+    text: "future's gonna be okay",
+    translation: "У майбутньому все буде добре.",
+    en: "future's gonna be okay",
+    artist: "Agust D — D-Day"
+  },
+  {
+    text: "Not today",
+    translation: "Не сьогодні.",
+    en: "Not today",
+    artist: "BTS — Not Today"
+  },
+  {
+    text: "Ранок знову настане. Бо жодна темрява, жодна пора року не може тривати вічно.",
+    en: "The morning will come again. Because no darkness, no season can last forever.",
+    artist: "BTS — Spring Day"
+  },
+];
+
+function renderQuotes() {
+  const grid = document.getElementById('quotesGrid');
+  if (!grid) return;
+  grid.innerHTML = QUOTES_DATA.map((q, i) => `
+    <div class="quote-item" style="animation-delay:${i * 0.06}s">
+      <div class="quote-bubble">${q.text}</div>
+      ${q.translation ? `<div class="quote-translation">${q.translation}</div>` : ''}
+      <div class="quote-item-artist">— ${q.artist}</div>
+    </div>`).join('');
+  // auto-scroll to bottom gently after render
+  setTimeout(() => { grid.scrollTop = 0; }, 100);
+}
+
+// ========== PLAYLIST ==========
+
+// ========== CULTURE ==========
+function renderCulture() {
+  const grid = document.getElementById('cultureGrid');
+  if (!grid) return;
+
+  const isEN = currentLang === 'en';
+
+  const langData = {
+    ua: {
+      title1: 'ЧИ ВИВЧАЛИ КОРЕЙСЬКУ / КУЛЬТУРУ?',
+      title2: "ЧИ ВІДЧУВАЮТЬ ЗВ'ЯЗОК МІЖ КУЛЬТУРАМИ?",
+      bars1: [
+        { label: "Занурювалась у культуру Кореї", percent: 33 },
+        { label: "Вчила корейську мову", percent: 24 },
+        { label: "K-pop як натхнення (без мови)", percent: 24 },
+        { label: "Цікавились ще до війни", percent: 18 },
+      ],
+      bars2: [
+        { label: "Бачать спільне в історії та боротьбі", percent: 33 },
+        { label: "Різні світи — і це подобається", percent: 27 },
+        { label: "Стало цікаво дізнатись більше", percent: 24 },
+        { label: "Схожість у менталітеті", percent: 9 },
+      ]
+    },
+    en: {
+      title1: 'EXPLORING KOREAN LANGUAGE & CULTURE',
+      title2: 'FEELING A CONNECTION BETWEEN CULTURES',
+      bars1: [
+        { label: "Deepened interest in Korean culture", percent: 33 },
+        { label: "Started learning Korean", percent: 24 },
+        { label: "K-pop as inspiration (no language study)", percent: 24 },
+        { label: "Was already interested before the war", percent: 18 },
+      ],
+      bars2: [
+        { label: "See shared history and struggle", percent: 33 },
+        { label: "Different worlds — and that's appealing", percent: 27 },
+        { label: "Became curious to learn more", percent: 24 },
+        { label: "Similarity in mentality", percent: 9 },
+      ]
+    }
+  };
+
+  const d = isEN ? langData.en : langData.ua;
+
+  function makeBars(bars) {
+    const max = Math.max(...bars.map(b => b.percent));
+    return bars.map(b => {
+      const w = Math.round((b.percent / max) * 100);
+      return `
+        <div class="culture-stat-row">
+          <span class="culture-stat-label">${b.label}</span>
+          <div class="culture-stat-bar-wrap"><div class="culture-stat-bar" style="width:${w}%"></div></div>
+          <span class="culture-stat-pct">${b.percent}%</span>
+        </div>`;
+    }).join('');
+  }
+
+  grid.innerHTML = `
+    <div class="culture-card">
+      <div class="culture-card-title">${d.title1}</div>
+      ${makeBars(d.bars1)}
+    </div>
+    <div class="culture-card">
+      <div class="culture-card-title">${d.title2}</div>
+      ${makeBars(d.bars2)}
+    </div>`;
+}
+
+const TALISMAN_DATA_UA = [
+  { type: "heading", text: "Звички" },
+  { icon: "📺", text: "Переглядаю старі ефіри БТС" },
+  { icon: "🎵", text: "Під час тривог люблю слухати улюблені треки та дивитися тіктоки артистів, вони мене розважають" },
+  { icon: "💭", text: "Іноді треба випустити свої емоції, «прожити» щось. Просто відпочити і подумати" },
+  { icon: "💃", text: "Вчу хореографії або займаюсь рукоділлям, паралельно дивлячись дорами — ну і пісні, звісно, база" },
+  { icon: "🎬", text: "Часто дивилася дорами" },
+  { icon: "🎵", text: "Слухати улюблені треки, дорами" },
+  { icon: "🌏", text: "Пошук і переклад цікавих корейських фільмів, які мають побачити українці — кінематограф Кореї досить різноманітний" },
+  { icon: "📺", text: "Переглядати Run BTS, дивитись дорами та слухати пісні бантан" },
+  { icon: "📺", text: "Люблю переглядати шоу або дивитися ефіри — ну і звісно музика" },
+  { icon: "🎵", text: "Просто слухаю музику, коли мені цього хочеться, і дивлюся дорами" },
+  { icon: "🎬", text: "Для натхнення — музика, а щоб відволіктись від реальності — світ дорам" },
+  { icon: "🕐", text: "Намагаюсь завжди виділяти час на своє хобі, щоб бути більш-менш продуктивною" },
+  { icon: "📹", text: "Часто переглядаю влоги" },
+  { icon: "🎵", text: "Треки та дорами постійно" },
+  { icon: "🎬", text: "Перегляд дорам" },
+  { icon: "🎵", text: "Музика" },
+  { icon: "📺", text: "Дивлюсь шоу з айдолами у вільний час" },
+  { icon: "🎤", text: "Наспівувати в тяжкий час" },
+  { icon: "🎵", text: "Прослуховування треків, перегляд шоу, кліпів, дорам" },
+  { icon: "🎬", text: "Інколи, коли дуже тривожусь, — дивлюся дорами, вони мене заспокоюють" },
+  { icon: "🎵", text: "Слухаю пісні" },
+  { icon: "🎙️", text: "Підкасти корейською, музика, дорами при тривожності. Мозок перемикається на аналіз іншої мови і тривога йде на другий план" },
+
+  { type: "heading", text: "Талісмани" },
+  { icon: "🎪", text: "Фігурка Чонгука з Макдональдсу" },
+  { icon: "🃏", text: "Улюблена картка Кюбіна із Zerobaseone — возила із собою на їхній концерт. Тепер відчуваю ностальгію та близькість до неї: вона була зі мною в мій найщасливіший момент" },
+  { icon: "📦", text: "Купила перший альбом, та маю брошку — мені її зробила дівчинка" },
+  { icon: "🎵", text: "Мій головний «талісман» — плейлист у телефоні та голос Чонгука. Тепер ще альбоми «ARIRANG» та Official Light Stick Ver.4 — фізичний доказ зв'язку з тим, що дає мені сили" },
+  { icon: "✨", text: "Наліпки на телефоні" },
+  { icon: "📱", text: "Заставка на телефоні та карточка в сумочці" },
+  { icon: "👕", text: "Футболка, ластік, чехол на телефоні, постери, фото-буки" },
+  { icon: "💎", text: "Татуювання з символами улюблених гуртів та артиста" },
+  { icon: "📱", text: "Заставка на телефоні" },
+  { icon: "🐰", text: "Донбьолі — рожевий зайчик, талісман мого біаса Сонхва" },
+  { icon: "📱", text: "BTS під чохлом або фото на телефоні — частіше за все Намджун, потім Хосок, іноді Юнгі" },
+  { icon: "📱", text: "Заставка на телефоні з Чіміном та Чонгуком" },
+  { icon: "🃏", text: "Картка ДжинЙона в гаманці — куплена до війни, з того часу завжди поруч" },
+  { icon: "💡", text: "Талісману немає, але дозволила собі купити лайтстіки" },
+  { icon: "🃏", text: "Ношу картку в чохлі" },
+  { icon: "🃏", text: "Картка Чонгука з його сольного альбому" },
+  { icon: "📦", text: "Свій перший альбом я купила в 2022 році — він мій талісман" },
+  { icon: "🃏", text: "Фото-карточка Техьона" },
+  { icon: "🖼️", text: "Свою кімнату обклеїла постерами, фото та картками з бантанами. Тепер поруч з моїми фото висять і їхні — як невід'ємна частина мого життя" },
+  { icon: "🃏", text: "Картка під чохлом і брелоки на ключах" },
+  { icon: "🗝️", text: "Брелок з Чонгуком" },
+  { icon: "🃏", text: "Карта з сольного альбому Техьона" },
+  { icon: "🧸", text: "Плюш біаса" },
+];
+
+const TALISMAN_DATA_EN = [
+  { type: "heading", text: "Habits" },
+  { icon: "📺", text: "Watching old BTS live streams" },
+  { icon: "🎵", text: "During air raids I love listening to favourite tracks and watching artists' TikToks — they entertain me" },
+  { icon: "💭", text: "Sometimes I need to let my emotions out, to 'live through' something. Just rest and think" },
+  { icon: "💃", text: "Learning choreography or doing crafts while watching doramas — and music is always the baseline" },
+  { icon: "🎬", text: "Watching doramas often" },
+  { icon: "🎵", text: "Favourite tracks and doramas" },
+  { icon: "🌏", text: "Searching for and translating interesting Korean films for Ukrainians — Korean cinema is surprisingly diverse" },
+  { icon: "📺", text: "Watching Run BTS, doramas, and listening to BTS songs" },
+  { icon: "📺", text: "I love watching idol shows and live streams — and music, of course" },
+  { icon: "🎵", text: "Simply listening to music when I feel like it, and watching doramas" },
+  { icon: "🎬", text: "Music for inspiration, doramas to escape reality" },
+  { icon: "🕐", text: "Always making time for my hobbies to stay at least somewhat productive" },
+  { icon: "📹", text: "Watching vlogs often" },
+  { icon: "🎵", text: "Tracks and doramas constantly" },
+  { icon: "🎬", text: "Watching doramas" },
+  { icon: "🎵", text: "Music" },
+  { icon: "📺", text: "Watching idol shows in my free time" },
+  { icon: "🎤", text: "Humming songs during hard times" },
+  { icon: "🎵", text: "Listening to tracks, watching shows, clips, doramas" },
+  { icon: "🎬", text: "When I feel very anxious — I watch doramas, they calm me down" },
+  { icon: "🎵", text: "Listening to songs" },
+  { icon: "🎙️", text: "Korean-language podcasts, music, doramas when anxious. My brain switches to parsing another language and anxiety fades into the background" },
+
+  { type: "heading", text: "Talismans" },
+  { icon: "🎪", text: "Jungkook McDonald's figure" },
+  { icon: "🃏", text: "Gyubin's photocard from Zerobaseone — brought it to their concert. Now I feel nostalgia and closeness to it: it was with me in my happiest moment" },
+  { icon: "📦", text: "Bought my first album and have a brooch — a girl made it for me" },
+  { icon: "🎵", text: "My main 'talisman' — a playlist and Jungkook's voice. Now also 'ARIRANG' albums and Official Light Stick Ver.4 — physical proof of a connection with what gives me strength" },
+  { icon: "✨", text: "Phone stickers" },
+  { icon: "📱", text: "Phone wallpaper and a photocard in my bag" },
+  { icon: "👕", text: "T-shirt, eraser, phone case, posters, photo books" },
+  { icon: "💎", text: "Tattoo with symbols of favourite groups and artist" },
+  { icon: "📱", text: "Phone wallpaper" },
+  { icon: "🐰", text: "Ddonbaeki — the pink rabbit, my bias Seonghwa's mascot" },
+  { icon: "📱", text: "BTS under the phone case or photo — usually RM, then J-Hope, sometimes Suga" },
+  { icon: "📱", text: "Phone wallpaper with Jimin and Jungkook" },
+  { icon: "🃏", text: "JinYoung's photocard in my wallet — bought before the war, always with me since" },
+  { icon: "💡", text: "No talisman, but I allowed myself to buy lightsticks" },
+  { icon: "🃏", text: "Carrying a photocard in my phone case" },
+  { icon: "🃏", text: "Jungkook's photocard from his solo album" },
+  { icon: "📦", text: "My first album bought in 2022 — my talisman" },
+  { icon: "🃏", text: "Taehyung's photocard" },
+  { icon: "🖼️", text: "Covered my room with BTS posters, photos, and photocards. Now their faces hang next to mine — an inseparable part of my life" },
+  { icon: "🃏", text: "Photocard under the phone case and keyrings on my keys" },
+  { icon: "🗝️", text: "Jungkook keyring" },
+  { icon: "🃏", text: "Photocard from Taehyung's solo album" },
+  { icon: "🧸", text: "Plushie of my bias" },
+];
+
+function renderTalismans() {
+  const grid = document.getElementById('talismanGrid');
+  if (!grid) return;
+  const data = currentLang === 'en' ? TALISMAN_DATA_EN : TALISMAN_DATA_UA;
+  grid.innerHTML = data.map(t => t.type === 'heading'
+    ? `<div class="talisman-heading">${t.text}</div>`
+    : `<div class="talisman-row">
+        <span class="talisman-row-icon">${t.icon}</span>
+        <p class="talisman-row-text">${t.text}</p>
+       </div>`).join('');
 }
 
 async function init() {
@@ -1064,8 +2803,11 @@ async function init() {
   renderArtists(SITE_DATA.artists);
   renderContact(data.project);
   renderFooter(data.project);
+  renderQuotes();
+  renderCulture();
+  renderTalismans();
   document.querySelectorAll('.stats-grid').forEach(el => obs.observe(el));
-  initWordCloud(data.artists);
+  initGalaxy(GALAXY_ARTISTS);
 }
 
 init();
@@ -1084,6 +2826,331 @@ document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click
   const t = document.querySelector(a.getAttribute('href'));
   if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
 }));
+
+// ===== INSIGHT MODAL =====
+function openInsightModal(type) {
+  const overlay = document.getElementById('imodalOverlay');
+  const content = document.getElementById('imodalContent');
+  const isEN = currentLang === 'en';
+
+  if (type === 'culture') {
+    const d = isEN ? {
+      title: 'Ukraine & Korea', sub: 'Cultural connection between two peoples',
+      t1: 'EXPLORING KOREAN LANGUAGE & CULTURE',
+      t2: 'FEELING A CONNECTION BETWEEN CULTURES',
+      bars1: [
+        { label: "Deepened interest in Korean culture", percent: 33 },
+        { label: "Started learning Korean", percent: 24 },
+        { label: "K-pop as inspiration (no language study)", percent: 24 },
+        { label: "Was already interested before the war", percent: 18 },
+      ],
+      bars2: [
+        { label: "See shared history and struggle", percent: 33 },
+        { label: "Different worlds — and that's appealing", percent: 27 },
+        { label: "Became curious to learn more", percent: 24 },
+        { label: "Similarity in mentality", percent: 9 },
+      ]
+    } : {
+      title: 'Україна & Корея', sub: "Культурний зв'язок між двома народами",
+      t1: 'ЧИ ВИВЧАЛИ КОРЕЙСЬКУ / КУЛЬТУРУ?',
+      t2: "ЧИ ВІДЧУВАЮТЬ ЗВ'ЯЗОК МІЖ КУЛЬТУРАМИ?",
+      bars1: [
+        { label: "Занурювалась у культуру Кореї", percent: 33 },
+        { label: "Вчила корейську мову", percent: 24 },
+        { label: "K-pop як натхнення (без мови)", percent: 24 },
+        { label: "Цікавились ще до війни", percent: 18 },
+      ],
+      bars2: [
+        { label: "Бачать спільне в історії та боротьбі", percent: 33 },
+        { label: "Різні світи — і це подобається", percent: 27 },
+        { label: "Стало цікаво дізнатись більше", percent: 24 },
+        { label: "Схожість у менталітеті", percent: 9 },
+      ]
+    };
+    const makeBars = bars => {
+      const max = Math.max(...bars.map(b => b.percent));
+      return bars.map(b => `
+        <div class="culture-stat-row">
+          <span class="culture-stat-label">${b.label}</span>
+          <div class="culture-stat-bar-wrap"><div class="culture-stat-bar" style="width:${Math.round(b.percent/max*100)}%"></div></div>
+          <span class="culture-stat-pct">${b.percent}%</span>
+        </div>`).join('');
+    };
+    content.innerHTML = `
+      <div class="imodal-title">🇺🇦 & 🇰🇷 ${d.title}</div>
+      <div class="imodal-sub">${d.sub}</div>
+      <div class="culture-grid" style="margin-top:0">
+        <div class="culture-card"><div class="culture-card-title">${d.t1}</div>${makeBars(d.bars1)}</div>
+        <div class="culture-card"><div class="culture-card-title">${d.t2}</div>${makeBars(d.bars2)}</div>
+      </div>`;
+
+  } else {
+    const data = currentLang === 'en' ? TALISMAN_DATA_EN : TALISMAN_DATA_UA;
+    const title = isEN ? 'Small things that hold us' : 'Маленькі речі, що тримають';
+    const sub = isEN ? 'Rituals and talismans — anchors in difficult times'
+                     : 'Особливі предмети та звички, які стали опорою в складний час';
+    content.innerHTML = `
+      <div class="imodal-title">🎴 ${title}</div>
+      <div class="imodal-sub">${sub}</div>
+      <div class="talisman-list" style="margin-top:1.5rem;max-width:100%">
+        ${data.map(t => t.type === 'heading'
+          ? `<div class="talisman-heading">${t.text}</div>`
+          : `<div class="talisman-row"><span class="talisman-row-icon">${t.icon}</span><span class="talisman-row-text">${t.text}</span></div>`
+        ).join('')}
+      </div>`;
+  }
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeInsightModal() {
+  document.getElementById('imodalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeInsightModal(); });
+
+
+// ===== TRACK STORIES =====
+const TRACK_STORIES = {
+  ua: [
+    { song: "Stay Alive — Jung Kook (BTS)", text: "Для мене пісня «Stay Alive» Чонгука стала стимулом жити далі, ходити в укриття коли були зимові страшні обстріли Києва. Це було ніби звернення... Я знаю як він любить Армі, тому, як частинка його любові, я мушу вижити, щоб побачити BTS вживу на концерті." },
+    { song: "Doom Du Doom — P1Harmony", text: "З перших днів війни було доволі складно прийти в себе, я не могла собі дозволити радіти, співати чи танцювати — постійно думала про те, що десь зараз хтось вмирає. Але в якийсь момент я випадково натрапила на цю пісню, і саме вона повернула мене до к-поп та мого звичного життя." },
+    { song: "Louder Than Bombs — BTS", text: "Пісня приходить мені на думку в найскладніші хвилини. Її сенс у тому, що хоч би яким темним і страшним був світ навколо — важливо не тікати від болю, а продовжувати боротися. Під час війни ця пісня стала для мене емоційним щитом. Вона буквально обіймала мене своєю мелодією і нагадувала, що навіть коли всередині все розривається — у мене є внутрішня сила впоратися з усим цим." },
+    { song: "0801 — Stray Kids", text: "Пісня сама по собі присвячена фанам і дуже підтримуюча. Вона починається зі слів: «Я знаю, що ти тримаєшся. Кажеш що все гаразд, але насправді це не так. І коли тебе охоплює пітьма, знай, що я поруч, чекаю на тебе» — ну як після такого не заплакати?)" },
+    { song: "Life Goes On — Agust D", text: "Гарно пам'ятаю час, коли вийшов цей альбом. Це був час мого зцілення після важкого періоду. І ця пісня запам'яталась своїм теплом." },
+    { song: "AMYGDALA — Agust D", text: "Завжди слухаю її в тяжкі часи — наче розділяю біль з піснею." },
+    { song: "Louder Than Bombs — BTS", text: "В той час мені скинула послухати цю пісню колишня подруга, і я одразу в неї закохалась. Коли виїхали з родиною з мого міста, пам'ятаю як більшість часу в дорозі слухала саме її." },
+    { song: "Epilogue: Young Forever — BTS", text: "Ця пісня завжди викликала в мені якусь теплу ностальгію, а під час війни стала асоціюватися з моїми щасливими шкільними роками вдома. Я сама з Луганщини, з міста, що окуповане з липня 2022 року — тому ця пісня має й досі важливе значення для мене." },
+    { song: "D-Day — Agust D", text: "Тому що «майбутнє буде чудовим, я дивлюсь в дзеркало та не бачу розпачу»." },
+    { song: "Stay Alive — BTS", text: "Пам'ятаю, що тоді була на роботі в іншій країні. Вся моя родина була далеко, і ця пісня була наче молитва і афірмація." },
+    { song: "Spring Day — BTS", text: "Моїм головним якорем є рядки з пісні: «Жодна темрява, жодна пора року не можуть тривати вічно» (어떤 어둠도 어떤 계절도 영원할 순 없으니까). Війна часто відчувається як нескінченна, холодна зима. Але коли я чую ці слова — особливо те, як ніжно їх співає Чонгук — я згадую, що світло обов'язково повернеться. Хай би як довго тягнулася ця 'зима', весна все одно настане." },
+    { song: "Not Today — BTS", text: "Завжди кажу собі: 'не сьогодні буде останній день'. Може завтра, але точно не сьогодні. І це допомагає не здаватись." },
+  ],
+  en: [
+    { song: "Stay Alive — Jung Kook (BTS)", text: "This song became my reason to keep going, to go to the shelter during the terrible winter airstrikes on Kyiv. It felt like a message to me... I know how much he loves ARMY, so as a piece of his love, I must survive to see BTS live in concert." },
+    { song: "Doom Du Doom — P1Harmony", text: "From the first days of the war it was hard to come back to myself. I couldn't let myself feel joy, sing or dance — constantly thinking about people dying somewhere. But at some point I randomly stumbled on this song, and it was the one that brought me back to K-pop and my normal life." },
+    { song: "Louder Than Bombs — BTS", text: "This song comes to me in the hardest moments. Its meaning is that no matter how dark and scary the world around you is — don't run from the pain, keep fighting. During the war this song became my emotional shield. It literally wrapped me in its melody and reminded me that even when everything inside is breaking apart, I have the inner strength to get through it all." },
+    { song: "0801 — Stray Kids", text: "The song is dedicated to fans and so supportive. It begins: 'I know you're holding on. You say it's fine, but it's really not. And when darkness surrounds you, know that I'm here, waiting for you' — how can you not cry?)" },
+    { song: "Life Goes On — Agust D", text: "I remember well when this album came out. It was a time of healing after a difficult period. And this song stayed with me for its warmth." },
+    { song: "AMYGDALA — Agust D", text: "I always listen to it in hard times — like I'm sharing the pain with the song." },
+    { song: "Louder Than Bombs — BTS", text: "A former friend sent me this song to listen to, and I fell in love with it immediately. When we left my city with my family, I remember spending most of the journey listening to exactly this song." },
+    { song: "Epilogue: Young Forever — BTS", text: "This song always gave me a warm nostalgia, and during the war it became associated with my happy school years at home. I'm from Luhansk region, from a city that has been occupied since July 2022 — so this song still holds great meaning for me." },
+    { song: "D-Day — Agust D", text: "Because 'the future will be beautiful, I look in the mirror and see no despair'." },
+    { song: "Stay Alive — BTS", text: "I remember being at work in another country at the time. My whole family was far away, and this song felt like a prayer and an affirmation." },
+    { song: "Spring Day — BTS", text: "My main anchor is the line: 'No darkness, no season can last forever' (어떤 어둠도 어떤 계절도 영원할 순 없으니까). The war often feels like an endless cold winter. But when I hear these words — especially the way Jungkook sings them so gently — I remember that the light will return. No matter how long this 'winter' lasts, spring will come, and we'll live fully again." },
+    { song: "Not Today — BTS", text: "I always tell myself: 'it won't be the last day today'. Maybe tomorrow, but definitely not today. And that helps me not give up." },
+  ]
+};
+
+function openTracksModal() {
+  const overlay = document.getElementById('tracksModalOverlay');
+  const content = document.getElementById('tracksModalContent');
+  const data = currentLang === 'en' ? TRACK_STORIES.en : TRACK_STORIES.ua;
+  const title = currentLang === 'en' ? 'Why these tracks?' : 'Чому саме ці треки?';
+  const sub = currentLang === 'en'
+    ? 'Personal stories — songs that held a hand during the hardest times'
+    : 'Особисті історії — пісні, які тримали за руку в найважчі часи';
+
+  content.innerHTML = `
+    <div class="imodal-title">🎵 ${title}</div>
+    <div class="imodal-sub">${sub}</div>
+    ${data.map(t => `
+      <div class="track-story-card">
+        <div class="track-story-song">${t.song}</div>
+        <p class="track-story-text">${t.text}</p>
+      </div>`).join('')}`;
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeTracksModal() {
+  document.getElementById('tracksModalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+
+// ===== BTS FESTA INTRO =====
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFesta(); });
+(function() {
+  try {
+  if (sessionStorage.getItem('festaShown')) {
+    document.getElementById('festaOverlay').style.display = 'none';
+    return;
+  }
+  sessionStorage.setItem('festaShown', '1');
+
+  // Generate stars
+  const canvas = document.getElementById('festaCanvas');
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  const ctx = canvas.getContext('2d');
+  const stars = Array.from({length: 120}, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.5 + 0.3,
+    a: Math.random(),
+    d: Math.random() * 2 + 1.5,
+    phase: Math.random() * Math.PI * 2
+  }));
+  let t = 0;
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => {
+      const alpha = (Math.sin(t / s.d + s.phase) + 1) / 2 * 0.8 + 0.1;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(168, 85, 247, ${alpha})`;
+      ctx.fill();
+    });
+    t += 0.05;
+    if (document.getElementById('festaOverlay').style.display !== 'none') {
+      requestAnimationFrame(drawStars);
+    }
+  }
+  drawStars();
+
+  // Generate floating particles
+  const pc = document.getElementById('festaParticles');
+  const colors = ['#a855f7','#c084fc','#FFD700','#ffffff'];
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement('div');
+    p.className = 'festa-particle';
+    p.style.cssText = `left:${Math.random()*100}%;--d:${3+Math.random()*5}s;--delay:${Math.random()*4}s;background:${colors[Math.floor(Math.random()*colors.length)]};width:${4+Math.random()*5}px;height:${4+Math.random()*5}px;border-radius:${Math.random()>0.5?'50%':'3px'};`;
+    pc.appendChild(p);
+  }
+
+  // Auto-close after 9s
+  setTimeout(closeFesta, 9000);
+  } catch(e) { closeFesta(); }
+})();
+
+function closeFesta() {
+  const el = document.getElementById('festaOverlay');
+  if (!el || el.style.display === 'none') return;
+  el.classList.add('fade-out');
+  setTimeout(() => { el.style.display = 'none'; }, 900);
+}
+
+
+function collapseStories() {
+  const grid = document.getElementById('storiesGrid');
+  const btn = document.getElementById('storiesBtn');
+  if (!grid || !btn) return;
+  Array.from(grid.querySelectorAll('.story-card')).slice(3).forEach(c => c.remove());
+  const moreLabel = currentLang === 'en' ? 'Show all stories ↓' : 'Показати всі історії ↓';
+  btn.textContent = moreLabel;
+  btn.dataset.expanded = 'false';
+  document.getElementById('storiesCollapseFloat').style.display = 'none';
+  document.getElementById('stories').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+
+// ===== LOVE BTS =====
+function sendLove() {
+  const container = document.getElementById('loveHeartsContainer');
+  container.innerHTML = '';
+  const btn = document.getElementById('loveBtnMain');
+  const rect = btn.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const emojis = ['💜','💜','💜','✨','⭐','💫','🌟'];
+
+  for (let i = 0; i < 34; i++) {
+    const h = document.createElement('div');
+    h.className = 'fly-heart';
+    h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    const sx = (Math.random() - 0.5) * window.innerWidth * 0.85;
+    h.style.cssText = `left:${cx + sx}px;top:${cy}px;font-size:${1+Math.random()*1.2}rem;--d:${1.8+Math.random()*1.4}s;--delay:${Math.random()*0.5}s;--r:${(Math.random()-0.5)*50}deg;`;
+    container.appendChild(h);
+  }
+  setTimeout(() => {
+    generateBadge();
+    const wrap = document.getElementById('loveBadgeWrap');
+    wrap.style.display = 'block';
+    wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    container.innerHTML = '';
+  }, 2000);
+}
+
+function generateBadge() {
+  const canvas = document.getElementById('loveBadgeCanvas');
+  const W = 600, H = 340;
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  const isEN = currentLang === 'en';
+
+  // Background
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0,'#0d0620'); bg.addColorStop(0.5,'#1a0a3a'); bg.addColorStop(1,'#050a18');
+  ctx.fillStyle = bg; ctx.roundRect(0,0,W,H,20); ctx.fill();
+
+  // Glow
+  const glow = ctx.createRadialGradient(W*0.35,H*0.5,0,W*0.35,H*0.5,220);
+  glow.addColorStop(0,'rgba(168,85,247,0.22)'); glow.addColorStop(1,'transparent');
+  ctx.fillStyle = glow; ctx.fillRect(0,0,W,H);
+
+  // Stars
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  [[60,40],[120,80],[500,30],[540,90],[480,260],[80,280],[350,20],[200,310]].forEach(([x,y]) => {
+    ctx.beginPath(); ctx.arc(x,y,1.2,0,Math.PI*2); ctx.fill();
+  });
+
+  // Top line
+  const tl = ctx.createLinearGradient(40,0,W-40,0);
+  tl.addColorStop(0,'transparent'); tl.addColorStop(0.5,'rgba(168,85,247,0.7)'); tl.addColorStop(1,'transparent');
+  ctx.strokeStyle=tl; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(40,1); ctx.lineTo(W-40,1); ctx.stroke();
+
+  // Big bg hearts
+  [90,120,150].forEach((sz,i) => {
+    ctx.globalAlpha = 0.12 - i*0.03;
+    ctx.font = `${sz}px serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('💜', W*0.79+i*15, H*0.65+i*12);
+  });
+  ctx.globalAlpha = 1;
+
+  // MAY label
+  ctx.font = '600 11px sans-serif';
+  ctx.fillStyle = 'rgba(168,85,247,0.7)';
+  ctx.textAlign = 'left';
+  ctx.fillText('MAY PROJECT · FESTA 2026', 44, 46);
+
+  // Small hearts row
+  ctx.font = '32px serif'; ctx.fillText('💜 💜 💜', 160, 105);
+
+  // Main title
+  const grad = ctx.createLinearGradient(44,0,460,0);
+  grad.addColorStop(0,'#c084fc'); grad.addColorStop(0.5,'#FFD700'); grad.addColorStop(1,'#fff5a0');
+  ctx.fillStyle = grad;
+  ctx.font = 'bold 42px sans-serif';
+  ctx.fillText('I PURPLE YOU', 44, 158);
+  ctx.fillText('BTS 💜', 44, 208);
+
+  // Sub
+  ctx.font = '13px sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,0.38)';
+  ctx.fillText('Happy 13th Anniversary · June 2026', 44, 240);
+
+  // Army
+  ctx.font = 'bold 11px sans-serif';
+  ctx.fillStyle = 'rgba(255,215,0,0.5)';
+  ctx.fillText('★ FOREVER ARMY ★', 44, 268);
+
+  // Bottom line
+  const bl = ctx.createLinearGradient(40,0,W-40,0);
+  bl.addColorStop(0,'transparent'); bl.addColorStop(0.5,'rgba(255,215,0,0.3)'); bl.addColorStop(1,'transparent');
+  ctx.strokeStyle=bl; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(40,H-1); ctx.lineTo(W-40,H-1); ctx.stroke();
+}
+
+function downloadBadge() {
+  const canvas = document.getElementById('loveBadgeCanvas');
+  const a = document.createElement('a');
+  a.download = 'army-badge-bts-festa-2026.png';
+  a.href = canvas.toDataURL('image/png');
+  a.click();
+}
+
 </script>
 <!-- LETTER DRAWER -->
 <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
@@ -1097,6 +3164,9 @@ document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click
   </div>
   <div class="drawer-letters" id="drawerLetters"></div>
 </div>
+
+
+<button id="storiesCollapseFloat" onclick="collapseStories()">↑ Згорнути</button>
 
 </body>
 </html>
