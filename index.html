@@ -3148,27 +3148,25 @@ function generateBadge() {
 function downloadBadge() {
   const canvas = document.getElementById('loveBadgeCanvas');
   const dataURL = canvas.toDataURL('image/png');
-  const isUA = currentLang !== 'en';
-
-  // Detect Instagram in-app browser
   const isIAB = /Instagram|FBAN|FBAV/i.test(navigator.userAgent || '');
 
   if (isIAB) {
-    window.open(dataURL, '_blank');
+    // Instagram blocks all download methods — show image inline instead
+    let existing = document.getElementById('badgeInlineImg');
+    if (existing) { existing.remove(); return; }
+    const img = document.createElement('img');
+    img.id = 'badgeInlineImg';
+    img.src = dataURL;
+    img.style.cssText = 'display:block;max-width:100%;border-radius:12px;margin-top:1rem;box-shadow:0 8px 40px rgba(168,85,247,0.3);';
+    canvas.parentNode.insertBefore(img, canvas.nextSibling);
+    img.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   }
 
-  // All other browsers — Blob download
-  canvas.toBlob(blob => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'army-badge-bts-festa-2026.png';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  }, 'image/png');
+  const a = document.createElement('a');
+  a.href = dataURL;
+  a.download = 'army-badge-bts-festa-2026.png';
+  a.click();
 }
 
 </script>
