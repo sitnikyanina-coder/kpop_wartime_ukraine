@@ -5,6 +5,22 @@
   <meta name="theme-color" content="#050816">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>K-Pop as a Safe Space — MAY Project</title>
+<meta name="description" content="MAY · Media About You — культурний проєкт про те, як K-pop став безпечним простором для українців під час повномасштабної війни. Реальні історії, статистика, та рух на підтримку України серед K-pop фанатів.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://sitnikyanina-coder.github.io/kpop_wartime_ukraine/">
+
+<!-- Open Graph (Facebook, Instagram, Telegram preview) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="K-Pop as a Safe Space — MAY Project">
+<meta property="og:description" content="Культурний проєкт про те, як K-pop став безпечним простором для українців під час повномасштабної війни.">
+<meta property="og:url" content="https://sitnikyanina-coder.github.io/kpop_wartime_ukraine/">
+<meta property="og:locale" content="uk_UA">
+
+<!-- Twitter/X Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="K-Pop as a Safe Space — MAY Project">
+<meta name="twitter:description" content="Культурний проєкт про те, як K-pop став безпечним простором для українців під час повномасштабної війни.">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700&family=Unbounded:wght@300;400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -483,6 +499,7 @@
     color: rgba(255,215,0,0.6);
     letter-spacing: 0.05em;
   }
+  .letter-author {
     display: flex; align-items: center; gap: 0.8rem;
     padding-top: 0.8rem;
     border-top: 1px solid rgba(255,215,0,0.08);
@@ -899,7 +916,7 @@
   .track-story-text { font-size: 0.85rem; color: var(--muted); line-height: 1.7; font-style: italic; }
 
 
-  /* ===== BTS FESTA INTRO ===== */
+  /* ===== INTRO OVERLAY (war days counter) ===== */
   #festaOverlay {
     position: fixed; inset: 0; z-index: 9999;
     background: #050a18;
@@ -961,13 +978,12 @@
   }
   .festa-title {
     font-family: 'Unbounded', sans-serif;
-    font-size: clamp(2.8rem, 10vw, 5.5rem);
+    font-size: clamp(4.5rem, 19vw, 11rem);
     font-weight: 900; line-height: 1;
-    background: linear-gradient(135deg, #a855f7 0%, #c084fc 40%, #FFD700 70%, #fff5a0 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #FFD700;
     margin-bottom: 0.5rem;
     animation: festaIn 1.2s 0.1s cubic-bezier(0.34,1.56,0.64,1) both;
+    font-variant-numeric: tabular-nums;
   }
   .festa-year {
     font-family: 'Unbounded', sans-serif;
@@ -976,17 +992,30 @@
     letter-spacing: 0.15em;
     animation: festaIn 1.2s 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
   }
+  .festa-divider {
+    width: 48px; height: 2px;
+    background: rgba(255,215,0,0.5);
+    margin: 1.6rem auto;
+    animation: festaIn 1.2s 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
   .festa-hearts {
-    font-size: clamp(1.5rem, 4vw, 2.2rem);
-    margin: 1.5rem 0;
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
+    font-weight: 400;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.02em;
+    margin: 1.4rem 0;
     animation: festaIn 1.2s 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
-    letter-spacing: 0.5rem;
   }
   .festa-sub {
-    font-size: clamp(0.75rem, 2.5vw, 0.95rem);
-    color: rgba(255,255,255,0.45);
-    line-height: 1.8;
-    animation: festaIn 1.2s 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(0.85rem, 2.8vw, 1.1rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #FFD700;
+    line-height: 1.9;
+    margin-top: 1rem;
+    animation: festaIn 1.2s 0.55s cubic-bezier(0.34,1.56,0.64,1) both;
   }
   .festa-skip {
     position: absolute; bottom: 2.5rem; right: 2.5rem;
@@ -1042,20 +1071,34 @@
   }
 
 
-  .love-section { background: linear-gradient(180deg, var(--dark) 0%, #0a0818 100%); text-align:center; }
+  .love-section { background: linear-gradient(180deg, var(--dark) 0%, #08101e 100%); text-align:center; }
   .love-main-btn {
     display: inline-flex; align-items: center; gap: 0.8rem;
     font-family: 'Unbounded', sans-serif; font-size: 0.85rem; font-weight: 700;
     letter-spacing: 0.06em; color: #fff;
-    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    background: linear-gradient(135deg, #1f5fa8, #4098d7);
     border: none; border-radius: 3rem; padding: 1.1rem 2.5rem;
     cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 24px rgba(168,85,247,0.4);
+    box-shadow: 0 4px 24px rgba(64,152,215,0.4);
   }
-  .love-main-btn:hover { transform: scale(1.05); box-shadow: 0 8px 32px rgba(168,85,247,0.55); }
-  .love-main-btn:active { transform: scale(0.97); }
+  .love-main-btn:hover:not(:disabled) { transform: scale(1.05); box-shadow: 0 8px 32px rgba(64,152,215,0.55); }
+  .love-main-btn:active:not(:disabled) { transform: scale(0.97); }
+  .love-main-btn:disabled { opacity: 0.35; cursor: not-allowed; box-shadow: none; }
   .love-btn-heart { font-size: 1.4rem; animation: heartbeat 1.4s ease-in-out infinite; }
   @keyframes heartbeat { 0%,100%{transform:scale(1)} 50%{transform:scale(1.25)} }
+  .fanid-form { max-width:420px; margin:0 auto 1.5rem; display:flex; flex-direction:column; gap:0.9rem; text-align:left; }
+  .fanid-field-label {
+    font-family: 'Unbounded', sans-serif; font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.08em; color: rgba(255,215,0,0.6); margin-bottom: 0.4rem; display:block;
+  }
+  .love-text-input {
+    width: 100%; padding: 0.85rem 1.1rem; border-radius: 0.8rem;
+    border: 1px solid rgba(255,215,0,0.25); background: rgba(255,255,255,0.03);
+    color: var(--text); font-size: 0.9rem; outline: none; font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  .love-text-input:focus { border-color: rgba(255,215,0,0.5); }
+  .love-text-input::placeholder { color: rgba(255,255,255,0.28); }
   .love-download-btn {
     font-family: 'Unbounded', sans-serif; font-size: 0.7rem; font-weight: 700;
     letter-spacing: 0.08em; color: var(--gold);
@@ -1079,24 +1122,21 @@
   <link rel="shortcut icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48dGV4dCB5PSIuOWVtIiBmb250LXNpemU9IjkwIj7wn5KcPC90ZXh0Pjwvc3ZnPg==" type="image/svg+xml">
 </head>
 <body>
-<!-- BTS FESTA INTRO -->
+<!-- WAR DAYS COUNTER INTRO -->
 <div id="festaOverlay" onclick="closeFesta()">
   <canvas class="festa-stars" id="festaCanvas"></canvas>
   <div class="festa-particles" id="festaParticles"></div>
 
   <div class="festa-content">
-    <div class="festa-label">💜 June · BTS FESTA · 2026</div>
-    <div class="festa-title">Happy 13th</div>
-    <div class="festa-year">ANNIVERSARY</div>
-    <div class="festa-hearts">💜 💜 💜</div>
-    <div class="festa-sub">
-      13.06.2013 — 13.06.2026<br>
-      Thirteen years of music, love & light.<br>
-      <span style="color:#a855f7">I Purple You 💜</span>
-    </div>
+    <div class="festa-label">🇺🇦 Ukraine · Full-Scale War</div>
+    <div class="festa-title" id="warDayNumber">—</div>
+    <div class="festa-year">DAYS OF FULL-SCALE WAR</div>
+    <div class="festa-divider"></div>
+    <div class="festa-hearts">Since <span style="color:#FFD700">February 24, 2022</span> — Russia's full-scale invasion of Ukraine.</div>
+    <div class="festa-sub">THE WAR IS NOT OVER.</div>
   </div>
 
-  <button class="festa-skip" onclick="closeFesta()">пропустити →</button>
+  <button class="festa-skip" onclick="closeFesta()">Skip →</button>
   <div class="festa-progress"></div>
 </div>
 
@@ -1210,9 +1250,9 @@
       <span style="color:var(--gold)" data-ua="для мене — це..." data-en="for me is...">для мене — це...</span>
     </h2>
     <div class="phrase-outer" style="position:relative; max-width:700px; margin:0 auto;">
-      <button class="phrase-nav-btn phrase-side-btn phrase-side-prev" id="phrasePrev" onclick="goToPhrase((phraseIndex - 1 + currentPhrases.length) % currentPhrases.length)" aria-label="Попередня">←</button>
+      <button class="phrase-nav-btn phrase-side-btn phrase-side-prev" id="phrasePrev" onclick="goToPhrase((phraseIndex - 1 + currentPhrases.length) % currentPhrases.length)" data-ua-aria="Попередня" data-en-aria="Previous" aria-label="Попередня">←</button>
       <div class="phrases-carousel" id="phrasesCarousel"></div>
-      <button class="phrase-nav-btn phrase-side-btn phrase-side-next" id="phraseNext" onclick="goToPhrase((phraseIndex + 1) % currentPhrases.length)" aria-label="Наступна">→</button>
+      <button class="phrase-nav-btn phrase-side-btn phrase-side-next" id="phraseNext" onclick="goToPhrase((phraseIndex + 1) % currentPhrases.length)" data-ua-aria="Наступна" data-en-aria="Next" aria-label="Наступна">→</button>
       <div class="phrase-nav" style="justify-content:center; margin-top:1rem;">
         <div class="phrase-dots" id="phraseDots"></div>
       </div>
@@ -1328,6 +1368,69 @@
 
 <div class="divider"></div>
 
+<!-- ===== K-POP FAN ID SECTION ===== -->
+<section class="love-section" id="love">
+  <div class="container" style="text-align:center; max-width:680px;">
+    <div class="section-label" data-ua="Voice of Ukraine" data-en="Voice for Ukraine">Voice of Ukraine</div>
+    <h2 class="section-title" style="margin-bottom:0.6rem;">
+      <span data-ua="K-Pop Fan ID" data-en="K-Pop Fan ID">K-Pop Fan ID</span>
+      <br>
+      <span style="color:var(--gold)" data-ua="Voice of Ukraine 🇺🇦" data-en="Voice for Ukraine 🇺🇦">Voice of Ukraine 🇺🇦</span>
+    </h2>
+    <p style="color:var(--muted);font-size:0.88rem;line-height:1.7;margin-bottom:2rem;"
+       data-ua="Введи нікнейм, свій фандом чи гурт і пісню, яка підтримувала тебе під час війни — і отримай власний Fan ID у форматі для сторіс."
+       data-en="Enter your nickname, your fandom or bias group, and the track that means freedom to you — and get your own Fan ID, ready for your story.">
+      Введи нікнейм, свій фандом чи гурт і пісню, яка підтримувала тебе під час війни — і отримай власний Fan ID у форматі для сторіс.
+    </p>
+
+    <div class="fanid-form">
+      <div>
+        <label class="fanid-field-label" data-ua="Нікнейм / імʼя" data-en="Nickname / name">Нікнейм / імʼя</label>
+        <input type="text" id="fanidName" class="love-text-input" maxlength="30"
+          data-ua-placeholder="напр. Miyoung" data-en-placeholder="e.g. Miyoung"
+          placeholder="напр. Miyoung"
+          oninput="checkFanIdReady()" />
+      </div>
+      <div>
+        <label class="fanid-field-label" data-ua="Гурт / артист чи фандом" data-en="Bias group / artist or fandom">Гурт / артист чи фандом</label>
+        <input type="text" id="fanidGroup" class="love-text-input" list="fanidArtistList" maxlength="30"
+          data-ua-placeholder="напр. ARMY / BTS" data-en-placeholder="e.g. ARMY / BTS"
+          placeholder="напр. ARMY / BTS" />
+        <datalist id="fanidArtistList"></datalist>
+      </div>
+      <div>
+        <label class="fanid-field-label" data-ua="Трек-сейв" data-en="Freedom Anthem">Трек-сейв</label>
+        <input type="text" id="fanidTrack" class="love-text-input" maxlength="50"
+          data-ua-placeholder="напр. BTS — Not Today" data-en-placeholder="e.g. BTS — Not Today"
+          placeholder="напр. BTS — Not Today"
+          oninput="checkFanIdReady()" />
+      </div>
+    </div>
+
+    <button id="loveBtnMain" onclick="submitFanId()" class="love-main-btn" disabled>
+      <span class="love-btn-heart">🇺🇦</span>
+      <span class="love-btn-text" data-ua="Отримати Fan ID" data-en="Get your Fan ID">Отримати Fan ID</span>
+    </button>
+
+    <div id="loveBadgeWrap" style="display:none;margin-top:2.5rem;">
+      <canvas id="loveBadgeCanvas" style="border-radius:1.2rem;max-width:280px;width:100%;box-shadow:0 8px 40px rgba(64,152,215,0.3);"></canvas>
+      <div style="margin-top:1.2rem;">
+        <button onclick="downloadBadge()" class="love-download-btn">
+          <span data-ua="⬇ Завантажити" data-en="⬇ Download">⬇ Завантажити</span>
+        </button>
+      </div>
+      <p style="color:var(--muted);font-size:0.75rem;margin-top:1rem;line-height:1.6;"
+         data-ua="Постав у сторіс в Інстаграмі або збережи на пам'ять 🇺🇦"
+         data-en="Post it to your Instagram story or save it 🇺🇦">
+        Постав у сторіс в Інстаграмі або збережи на пам'ять 🇺🇦
+      </p>
+    </div>
+    <div id="loveHeartsContainer" style="position:fixed;inset:0;pointer-events:none;z-index:500;"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <section class="thanks-section" id="thanks">
   <div class="container">
     <div class="section-label" style="justify-content:center;" data-ua="Подяка артистам" data-en="Thank You, Artists">Подяка артистам</div>
@@ -1341,42 +1444,6 @@
     <div class="artists-marquee-wrap">
       <div class="artists-marquee" id="artistsMarquee"></div>
     </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ===== LOVE BTS SECTION ===== -->
-<section class="love-section" id="love">
-  <div class="container" style="text-align:center; max-width:680px;">
-    <div class="section-label" data-ua="Місяць Феста" data-en="Festa Month">Місяць Феста</div>
-    <h2 class="section-title" style="margin-bottom:0.6rem;">
-      <span data-ua="Надішли любов" data-en="Send your love">Надішли любов</span>
-      <span style="color:var(--gold)"> BTS 💜</span>
-    </h2>
-    <p style="color:var(--muted);font-size:0.88rem;line-height:1.7;margin-bottom:2.5rem;"
-       data-ua="Натисни серце — і отримай свій особистий бейдж ARMY, який можна зберегти."
-       data-en="Tap the heart — and get your personal ARMY badge to keep.">
-      Натисни серце — і отримай свій особистий бейдж ARMY, який можна зберегти.
-    </p>
-    <button id="loveBtnMain" onclick="sendLove()" class="love-main-btn">
-      <span class="love-btn-heart">💜</span>
-      <span class="love-btn-text" data-ua="Надіслати любов до BTS" data-en="Send love to BTS">Надіслати любов до BTS</span>
-    </button>
-    <div id="loveBadgeWrap" style="display:none;margin-top:2.5rem;">
-      <canvas id="loveBadgeCanvas" style="border-radius:1.2rem;max-width:100%;box-shadow:0 8px 40px rgba(168,85,247,0.3);"></canvas>
-      <div style="margin-top:1.2rem;">
-        <button onclick="downloadBadge()" class="love-download-btn">
-          <span data-ua="⬇ Завантажити" data-en="⬇ Download">⬇ Завантажити</span>
-        </button>
-      </div>
-      <p style="color:var(--muted);font-size:0.75rem;margin-top:1rem;line-height:1.6;"
-         data-ua="Збережи на пам'ять або поділись у сторіс 💜"
-         data-en="Save it as a memory or share in your stories 💜">
-        Збережи на пам'ять або поділись у сторіс 💜
-      </p>
-    </div>
-    <div id="loveHeartsContainer" style="position:fixed;inset:0;pointer-events:none;z-index:500;"></div>
   </div>
 </section>
 
@@ -1483,136 +1550,136 @@ const ARTIST_META = {
 };
 const LETTERS_DATA = {
   "(G)I-DLE": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "NEVERLAND 💜", text: "Дякую за той період життя, який я провела з вами." },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "NEVERLAND 💜", text: "Кожному окреме повідомлення з подякою 💜" },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "NEVERLAND 💜", text: "Дякую за той період життя, який я провела з вами.", en: "Thank you for the time in my life that I spent with you." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "NEVERLAND 💜", text: "Кожному окреме повідомлення з подякою 💜", en: "A personal thank-you message for each of you 💜" },
   ],
   "G-Dragon": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об'єднують багатьох людей." },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об'єднують багатьох людей.", en: "Thank you for continuing to create music that brings so many people together." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую.", en: "Thank you." },
   ],
   "Dreamcatcher": [
   ],
   "MAMAMOO": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "MooMoo 🌻", text: "Дуже дякую вам за вашу музику, яка допомогла пережити багато ситуацій у моєму житті. Ви з'явились саме тоді, коли мені були дуже потрібні. Навіть без знання мови, я розуміла вас за допомогою музики — з першого ж прослуховування торкнулося всієї глибини мого серця." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "MooMoo 🌻", text: "Дуже дякую вам за вашу музику, яка допомогла пережити багато ситуацій у моєму житті. Ви з'явились саме тоді, коли мені були дуже потрібні. Навіть без знання мови, я розуміла вас за допомогою музики — з першого ж прослуховування торкнулося всієї глибини мого серця.", en: "Thank you so much for your music, which helped me get through so many situations in my life. You appeared exactly when I needed you most. Even without knowing the language, I understood you through the music — from the very first listen it touched the depths of my heart." },
   ],
   "ZEROBASEONE": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ZEROSE 🌟", text: "Дякую за те, що були поруч у моменти, коли здавалося, сил вже немає. Ваша музика ставала місцем, де можна сховатися від поганих думок та подій, що відбуваються навколо." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ZEROSE 🌟", text: "Дякую за те, що були поруч у моменти, коли здавалося, сил вже немає. Ваша музика ставала місцем, де можна сховатися від поганих думок та подій, що відбуваються навколо.", en: "Thank you for being there in moments when it felt like there was no strength left. Your music became a place to hide from bad thoughts and everything happening around me." },
   ],
   "P1Harmony": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "P1ece 💙", text: "Дякую за те, що були поруч у моменти, коли здавалося, сил вже немає. Ваша музика ставала місцем, де можна сховатися від поганих думок та подій, що відбуваються навколо." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "P1ece 💙", text: "Дякую за те, що були поруч у моменти, коли здавалося, сил вже немає. Ваша музика ставала місцем, де можна сховатися від поганих думок та подій, що відбуваються навколо.", en: "Thank you for being there in moments when it felt like there was no strength left. Your music became a place to hide from bad thoughts and everything happening around me." },
   ],
   "NMIXX": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "NSWER 🎵", text: "Дякую за те, що були поруч у моменти, коли здавалося, сил вже немає. Ваша музика ставала місцем, де можна сховатися від поганих думок та подій, що відбуваються навколо." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "NSWER 🎵", text: "Дякую за те, що були поруч у моменти, коли здавалося, сил вже немає. Ваша музика ставала місцем, де можна сховатися від поганих думок та подій, що відбуваються навколо.", en: "Thank you for being there in moments when it felt like there was no strength left. Your music became a place to hide from bad thoughts and everything happening around me." },
   ],
   "DAY6": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "My Day ☀️", text: "Дякую за все!" },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "My Day ☀️", text: "Дякую за все!", en: "Thank you for everything!" },
   ],
   "ONEUS": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "To Moon 🌙", text: "Дякую за все!" },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "To Moon 🌙", text: "Дякую за все!", en: "Thank you for everything!" },
   ],
   "B.I": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!" },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!", en: "Thank you for everything!" },
   ],
   "Bobby": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!" },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!", en: "Thank you for everything!" },
   ],
   "Dawn": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!" },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!", en: "Thank you for everything!" },
   ],
   "Woodz": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!" },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!", en: "Thank you for everything!" },
   ],
   "Holland": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!" },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!", en: "Thank you for everything!" },
   ],
   "Epik High": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!" },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Дякую за все!", en: "Thank you for everything!" },
   ],
   "JUSTB": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ONLY B 💛", text: "Дякую за те, що були поруч у моменти, коли здавалося, сил вже немає. Ваша музика ставала місцем, де можна сховатися від поганих думок та подій, що відбуваються навколо." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ONLY B 💛", text: "Дякую за те, що були поруч у моменти, коли здавалося, сил вже немає. Ваша музика ставала місцем, де можна сховатися від поганих думок та подій, що відбуваються навколо.", en: "Thank you for being there in moments when it felt like there was no strength left. Your music became a place to hide from bad thoughts and everything happening around me." },
   ],
   "안예은": [
   ],
   "인순이": [
   ],
   "Kiss of Life": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "Kissy 💋", text: "Кожному окреме повідомлення з подякою 💜" },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "Kissy 💋", text: "Кожному окреме повідомлення з подякою 💜", en: "A personal thank-you message for each of you 💜" },
   ],
   "BIBI": [
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Кожному окреме повідомлення з подякою 💜" },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "з любов'ю 💛", text: "Кожному окреме повідомлення з подякою 💜", en: "A personal thank-you message for each of you 💜" },
   ],
   "BTS": [
-    { name: "Юлія", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую БТС, що ви прийшли в моє життя, наповнили його сенсом, мріями і жагою до життя!" },
-    { name: "з любов'ю", city: "", since: "ARMY 💜", fandom: "ARMY 💜", text: "Сім хлопців, які подарували мені мир посеред хаосу війни. Дякую BTS за те, що стали моїм безпечним прихистком, моєю тихою гаванню та джерелом незламної віри у краще майбутнє. Пишаюся тим, що йду з вами пліч-о-пліч уже стільки років. Борахе! 💜" },
-    { name: "з любов'ю", city: "", since: "ARMY 💜", fandom: "ARMY 💜", text: "Дякую, завдяки вам я бачу світло в своєму житті." },
-    { name: "Olena", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую що з'явилися саме тоді, коли душа моя кликала вас 🙏🦋💜" },
-    { name: "Анастасія", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую за те, що з'явилися в моєму житті тоді, коли були мені так потрібні. Навіть коли я цього не усвідомлювала. Вже через час, переглядаючи старі дорами, шоу та контент, чула музику і тільки потім усвідомлювала, що ви були поруч — просто я не помічала. Ваша музика виявилася поряд у момент кризи особистості та віри у себе. Усі ті слова, що вкладали у текст, дійшли до мене. Це доповнило мене, дало нові захоплення, знання, бажання та можливості. Дякую за те, що відчинили двері в новий для мене світ." },
-    { name: "Врина", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую за ваші пісні, вони мені дають сили жити." },
-    { name: "Олена", city: "", since: "ARMY з 2017", fandom: "ARMY 💜", text: "Подякувала б за те, що вони просто є — і саме тому я ніколи не відчуваю себе самотньою. Також важливо подякувати фандому АРМІ, який пов'язаний між собою любов'ю до BTS і проводить різноманітні івенти, фестивалі, фан-кафе. Я спробувала багато нового та знайшла круте ком'юніті однодумців саме завдяки бантанам — це важливо у такий час." },
-    { name: "Вікторія", city: "", since: "Вчитель", fandom: "ARMY 💜", text: "Дякую за те що з'явилися в моєму житті тоді, коли здавалося що мій мозок і психіка не витримають більше; за мотиваційні слова і за те що ви є такі які є." },
-    { name: "з любов'ю", city: "", since: "ARMY 💜", fandom: "ARMY 💜", text: "Дуже дякую вам за вашу музику, яка допомогла пережити багато ситуацій у моєму житті. Ви з'явились саме тоді, коли були дуже потрібні. Навіть без знання мови я розуміла вас за допомогою музики — з першого ж прослуховування мене пробрав мороз по шкірі і торкнулося всієї глибини мого серця." },
-    { name: "Олександра", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую, що поруч, розділяєте з нами частинку вашого життя та даруєте нам неймовірні пісні та дорами." },
-    { name: "Ліза", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую що були у моєму житті в найважчі його моменти 💜" },
-    { name: "Kalipsa94", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую за важку працю! Ваша музика надає мені сил, щоб насолоджуватися життям, не дивлячись ні на що." },
-    { name: "з любов'ю", city: "", since: "ARMY 💜", fandom: "ARMY 💜", text: "Я хочу від щирого серця подякувати гурту BTS та особливо Jimin. Чімін — дуже щира й світла людина. Його голос, його пісні та його підтримка по-справжньому допомагають у складні моменти. Пісні BTS неймовірно сильні та надихаючі. Коли стає дуже важко, достатньо увімкнути їхню пісню — і всередині з'являється тепло та надія. Я дуже хочу, щоб кожна людина, навіть якщо вона не є фанатом, одного разу почула хоча б одну їхню пісню. Дякую всім учасникам BTS за їхні прекрасні, підтримуючі та мотивуючі пісні. Я щиро вам вдячна. 💜" },
-    { name: "Марія", city: "", since: "Виконавча директорка", fandom: "ARMY 💜", text: "Хотіла б подякувати бантанам, що в їх текстах можу знайти відповіді на всі питання. Окремо б виділила Юнгі та Намджуна. Від першого отримала чарівного пенделя аби не здаватись, від другого — життєву мудрість і хованку від панічних атак." },
-    { name: "Марта", city: "", since: "Full-stack розробниця", fandom: "ARMY 💜", text: "Якби я могла сказати вам це особисто, я б просто подивилася вам в очі і сказала: дякую за те, що стали моїм домом і врятували мене, навіть не підозрюючи про це. Коли мій реальний світ руйнувався, а я ховалася в укритті з ноутбуком, намагаючись вчитися під звуки сирен, ваша музика була моїм єдиним безпечним простором. Чонгуку, твоя щирість і твій голос багато разів відчувалися як рука, що тримає мою в суцільній темряві. Завдяки вам я зберегла здатність мріяти. Думка про те, що одного дня я буду стояти на вашому концерті й співати разом із вами, є моєю найбільшою мотивацією рухатися вперед. Дякую за кожну пісню, яка допомогла мені вижити і не зламатися." },
-    { name: "Ksen.i710", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую що стали для мене прикладом не зламатись, а рухатись вперед." },
-    { name: "Альона", city: "", since: "Громадська організація", fandom: "ARMY 💜", text: "Для БТС: дякую, що встояли, що досягли цього місця попри все. Пишаюся вашою невтомною працею." },
-    { name: "Марі", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Ваші пісні — то сонце, що світить з темряви." },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об\'єднують багатьох людей." },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую за той період життя, який я провела з вами." }
+    { name: "Юлія", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую БТС, що ви прийшли в моє життя, наповнили його сенсом, мріями і жагою до життя!", en: "Thank you BTS for coming into my life, filling it with meaning, dreams, and a thirst for life!" },
+    { name: "з любов'ю", city: "", since: "ARMY 💜", fandom: "ARMY 💜", text: "Сім хлопців, які подарували мені мир посеред хаосу війни. Дякую BTS за те, що стали моїм безпечним прихистком, моєю тихою гаванню та джерелом незламної віри у краще майбутнє. Пишаюся тим, що йду з вами пліч-о-пліч уже стільки років. Борахе! 💜", en: "Seven guys who gave me peace amid the chaos of war. Thank you BTS for becoming my safe shelter, my quiet harbor, and a source of unbreakable faith in a better future. I'm proud to have walked beside you for so many years. Borahae! 💜" },
+    { name: "з любов'ю", city: "", since: "ARMY 💜", fandom: "ARMY 💜", text: "Дякую, завдяки вам я бачу світло в своєму житті.", en: "Thank you — because of you I see light in my life." },
+    { name: "Olena", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую що з'явилися саме тоді, коли душа моя кликала вас 🙏🦋💜", en: "Thank you for appearing exactly when my soul was calling out to you 🙏🦋💜" },
+    { name: "Анастасія", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую за те, що з'явилися в моєму житті тоді, коли були мені так потрібні. Навіть коли я цього не усвідомлювала. Вже через час, переглядаючи старі дорами, шоу та контент, чула музику і тільки потім усвідомлювала, що ви були поруч — просто я не помічала. Ваша музика виявилася поряд у момент кризи особистості та віри у себе. Усі ті слова, що вкладали у текст, дійшли до мене. Це доповнило мене, дало нові захоплення, знання, бажання та можливості. Дякую за те, що відчинили двері в новий для мене світ.", en: "Thank you for coming into my life exactly when I needed you most — even when I didn't realize it at the time. It was only later, rewatching old doramas, shows, and content, that I'd hear the music and only then realize you'd been there all along — I just hadn't noticed. Your music was right there during a crisis of identity and self-belief. Every word you put into your lyrics reached me. It completed me, gave me new passions, knowledge, desires, and possibilities. Thank you for opening the door to a new world for me." },
+    { name: "Врина", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую за ваші пісні, вони мені дають сили жити.", en: "Thank you for your songs — they give me the strength to live." },
+    { name: "Олена", city: "", since: "ARMY з 2017", fandom: "ARMY 💜", text: "Подякувала б за те, що вони просто є — і саме тому я ніколи не відчуваю себе самотньою. Також важливо подякувати фандому АРМІ, який пов'язаний між собою любов'ю до BTS і проводить різноманітні івенти, фестивалі, фан-кафе. Я спробувала багато нового та знайшла круте ком'юніті однодумців саме завдяки бантанам — це важливо у такий час.", en: "I'd thank them simply for existing — and that's exactly why I never feel alone. It's also important to thank the ARMY fandom, bound together by love for BTS, who organize all kinds of events, festivals, and fan cafés. Thanks to Bangtan I've tried so many new things and found an amazing community of like-minded people — that matters so much in times like these." },
+    { name: "Вікторія", city: "", since: "Вчитель", fandom: "ARMY 💜", text: "Дякую за те що з'явилися в моєму житті тоді, коли здавалося що мій мозок і психіка не витримають більше; за мотиваційні слова і за те що ви є такі які є.", en: "Thank you for coming into my life when it felt like my mind couldn't take any more; for your motivating words, and for simply being who you are." },
+    { name: "з любов'ю", city: "", since: "ARMY 💜", fandom: "ARMY 💜", text: "Дуже дякую вам за вашу музику, яка допомогла пережити багато ситуацій у моєму житті. Ви з'явились саме тоді, коли були дуже потрібні. Навіть без знання мови я розуміла вас за допомогою музики — з першого ж прослуховування мене пробрав мороз по шкірі і торкнулося всієї глибини мого серця.", en: "Thank you so much for your music, which helped me get through so many situations in my life. You appeared exactly when I needed you most. Even without knowing the language, I understood you through the music — from the very first listen, it gave me chills and touched the depths of my heart." },
+    { name: "Олександра", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую, що поруч, розділяєте з нами частинку вашого життя та даруєте нам неймовірні пісні та дорами.", en: "Thank you for being here and sharing a piece of your life with us." },
+    { name: "Ліза", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую що були у моєму житті в найважчі його моменти 💜", en: "Thank you for being part of my life in its hardest moments 💜" },
+    { name: "Kalipsa94", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую за важку працю! Ваша музика надає мені сил, щоб насолоджуватися життям, не дивлячись ні на що.", en: "Thank you for your hard work! Your music gives me strength to enjoy life no matter what." },
+    { name: "з любов'ю", city: "", since: "ARMY 💜", fandom: "ARMY 💜", text: "Я хочу від щирого серця подякувати гурту BTS та особливо Jimin. Чімін — дуже щира й світла людина. Його голос, його пісні та його підтримка по-справжньому допомагають у складні моменти. Пісні BTS неймовірно сильні та надихаючі. Коли стає дуже важко, достатньо увімкнути їхню пісню — і всередині з'являється тепло та надія. Я дуже хочу, щоб кожна людина, навіть якщо вона не є фанатом, одного разу почула хоча б одну їхню пісню. Дякую всім учасникам BTS за їхні прекрасні, підтримуючі та мотивуючі пісні. Я щиро вам вдячна. 💜", en: "I want to thank BTS from the bottom of my heart, and especially Jimin. Jimin is such a sincere and radiant person. His voice, his songs, and his support truly help in hard moments. BTS's songs are incredibly powerful and inspiring. When things get really hard, all it takes is playing one of their songs — and warmth and hope appear inside. I really wish that everyone, even those who aren't fans, could hear at least one of their songs someday. Thank you to every BTS member for your beautiful, supportive, and motivating music. I'm sincerely grateful to you. 💜" },
+    { name: "Марія", city: "", since: "Виконавча директорка", fandom: "ARMY 💜", text: "Хотіла б подякувати бантанам, що в їх текстах можу знайти відповіді на всі питання. Окремо б виділила Юнгі та Намджуна. Від першого отримала чарівного пенделя аби не здаватись, від другого — життєву мудрість і хованку від панічних атак.", en: "I'd like to thank Bangtan for lyrics where I can find answers to every question. I'd especially highlight Yoongi and Namjoon. From the former I got a magical kick in the right direction not to give up; from the latter, life wisdom and a hiding place from panic attacks." },
+    { name: "Марта", city: "", since: "Full-stack розробниця", fandom: "ARMY 💜", text: "Якби я могла сказати вам це особисто, я б просто подивилася вам в очі і сказала: дякую за те, що стали моїм домом і врятували мене, навіть не підозрюючи про це. Коли мій реальний світ руйнувався, а я ховалася в укритті з ноутбуком, намагаючись вчитися під звуки сирен, ваша музика була моїм єдиним безпечним простором. Чонгуку, твоя щирість і твій голос багато разів відчувалися як рука, що тримає мою в суцільній темряві. Завдяки вам я зберегла здатність мріяти. Думка про те, що одного дня я буду стояти на вашому концерті й співати разом із вами, є моєю найбільшою мотивацією рухатися вперед. Дякую за кожну пісню, яка допомогла мені вижити і не зламатися.", en: "If I could tell you this in person, I'd simply look you in the eyes and say: thank you for becoming my home and saving me, without even knowing it. When my real world was falling apart and I was hiding in a shelter with my laptop, trying to study through the sound of sirens, your music was my only safe space. Jungkook, your sincerity and your voice felt, so many times, like a hand holding mine through complete darkness. Because of you I kept the ability to dream. The thought that one day I'll stand at your concert and sing along with you is my biggest motivation to keep moving forward. Thank you for every song that helped me survive and not break." },
+    { name: "Ksen.i710", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую що стали для мене прикладом не зламатись, а рухатись вперед.", en: "Thank you for showing me that it's possible not to break, but to keep moving forward." },
+    { name: "Альона", city: "", since: "Громадська організація", fandom: "ARMY 💜", text: "Для БТС: дякую, що встояли, що досягли цього місця попри все. Пишаюся вашою невтомною працею.", en: "To BTS: thank you for holding on, for reaching this place against all odds. I'm proud of your tireless work." },
+    { name: "Марі", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Ваші пісні — то сонце, що світить з темряви.", en: "Your songs are like sunlight shining out of the darkness." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об\'єднують багатьох людей.", en: "Thank you for continuing to create music that brings so many people together." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ARMY 💜", text: "Дякую за той період життя, який я провела з вами.", en: "Thank you for the time in my life that I spent with you." }
   ],
   "BLACKPINK": [
-    { name: "Еліна", city: "", since: "з любов'ю", fandom: "BLINK 🖤💗", text: "Дякую всім, хто небайдужий — це цінно! А інші — відкрийте очі, будь ласка..." },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "BLINK 🖤💗", text: "Дякую за той період життя, який я провела з вами." },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "BLINK 🖤💗", text: "Дуже дякую вам за вашу музику, яка допомогла пережити багато ситуацій у моєму житті. Ви з\'явились саме тоді, коли мені були дуже потрібні. Навіть без знання мови, я розуміла вас за допомогою музики — з першого ж прослуховування торкнулося всієї глибини мого серця." },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "BLINK 🖤💗", text: "Кожному окреме повідомлення з подякою 💜" }
+    { name: "Еліна", city: "", since: "з любов'ю", fandom: "BLINK 🖤💗", text: "Дякую всім, хто небайдужий — це цінно! А інші — відкрийте очі, будь ласка...", en: "Thank you to everyone who cares — it matters so much! And to others — please, open your eyes..." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "BLINK 🖤💗", text: "Дякую за той період життя, який я провела з вами.", en: "Thank you for the time in my life that I spent with you." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "BLINK 🖤💗", text: "Дуже дякую вам за вашу музику, яка допомогла пережити багато ситуацій у моєму житті. Ви з\'явились саме тоді, коли мені були дуже потрібні. Навіть без знання мови, я розуміла вас за допомогою музики — з першого ж прослуховування торкнулося всієї глибини мого серця.", en: "Thank you so much for your music, which helped me get through so many situations in my life. You appeared exactly when I needed you most. Even without knowing the language, I understood you through the music — from the very first listen it touched the depths of my heart." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "BLINK 🖤💗", text: "Кожному окреме повідомлення з подякою 💜", en: "A personal thank-you message for each of you 💜" }
   ],
   "SEVENTEEN": [
-    { name: "Еліна", city: "", since: "з любов'ю", fandom: "CARATs 💎", text: "Дякую всім, хто небайдужий — це цінно!" },
-    { name: "Дарина", city: "", since: "з любов'ю", fandom: "CARATs 💎", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об'єднують багатьох людей." },
+    { name: "Еліна", city: "", since: "з любов'ю", fandom: "CARATs 💎", text: "Дякую всім, хто небайдужий — це цінно!", en: "Thank you to everyone who cares — it matters so much!" },
+    { name: "Дарина", city: "", since: "з любов'ю", fandom: "CARATs 💎", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об'єднують багатьох людей.", en: "Thank you for continuing to create music that brings so many people together." },
   ],
   "Stray Kids": [
-    { name: "Мей", city: "", since: "з любов'ю", fandom: "STAY 💗", text: "Дякую за той період життя, який я провела з вами." },
-    { name: "Анастасія", city: "", since: "з любов'ю", fandom: "STAY 💗", text: "Дякую за те, що з'явилися в моєму житті тоді, коли були мені так потрібні. Навіть коли я цього не усвідомлювала." },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "STAY 💗", text: "Дякую, за творчість, за ком\'юніті. Дякую, що не склали рук і зробили все можливе, щоб опинитися в моїх рекомендаціях:)" },
+    { name: "Мей", city: "", since: "з любов'ю", fandom: "STAY 💗", text: "Дякую за той період життя, який я провела з вами.", en: "Thank you for the time in my life that I spent with you." },
+    { name: "Анастасія", city: "", since: "з любов'ю", fandom: "STAY 💗", text: "Дякую за те, що з'явилися в моєму житті тоді, коли були мені так потрібні. Навіть коли я цього не усвідомлювала.", en: "Thank you for coming into my life exactly when I needed you most. Even when I didn't realize it at the time." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "STAY 💗", text: "Дякую, за творчість, за ком\'юніті. Дякую, що не склали рук і зробили все можливе, щоб опинитися в моїх рекомендаціях:)", en: "Thank you for your art, for the community. Thank you for not giving up and doing everything you could to end up in my recommendations :)" },
   ],
   "ENHYPEN": [
-    { name: "Анастасія", city: "", since: "з любов'ю", fandom: "ENGENE 🖤🤍", text: "Дякую за те, що з'явилися в моєму житті тоді, коли були мені так потрібні. Навіть коли я цього не усвідомлювала." },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ENGENE 🤍", text: "Дякую за той період життя, який я провела з вами." }
+    { name: "Анастасія", city: "", since: "з любов'ю", fandom: "ENGENE 🖤🤍", text: "Дякую за те, що з'явилися в моєму житті тоді, коли були мені так потрібні. Навіть коли я цього не усвідомлювала.", en: "Thank you for coming into my life exactly when I needed you most. Even when I didn't realize it at the time." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ENGENE 🤍", text: "Дякую за той період життя, який я провела з вами.", en: "Thank you for the time in my life that I spent with you." }
   ],
   "ATEEZ": [
-    { name: "Вікторія", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Дякую, що з'явилися в моєму житті — ви буквально рятуєте мене кожен день і даєте сил не здаватися." },
-    { name: "Софія", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Дякую за творчість, за ком'юніті. Дякую, що не склали рук і зробили все можливе, щоб опинитися в моїх рекомендаціях :)" },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Дякую що з\'явилися в моєму житті — я вас дуже люблю, ви буквально рятуєте мене кожен день і даєте сил не здаватися." },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Дякую." },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Кожному окреме повідомлення з подякою 💜" }
+    { name: "Вікторія", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Дякую, що з'явилися в моєму житті — ви буквально рятуєте мене кожен день і даєте сил не здаватися.", en: "Thank you for coming into my life — you literally save me every day and give me strength not to give up." },
+    { name: "Софія", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Дякую за творчість, за ком'юніті. Дякую, що не склали рук і зробили все можливе, щоб опинитися в моїх рекомендаціях :)", en: "Thank you for your art, for the community. Thank you for not giving up and doing everything you could to end up in my recommendations :)" },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Дякую що з\'явилися в моєму житті — я вас дуже люблю, ви буквально рятуєте мене кожен день і даєте сил не здаватися.", en: "Thank you for coming into my life — I love you so much, you literally save me every day and give me strength not to give up." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Дякую.", en: "Thank you." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ATINY 🏴‍☠️", text: "Кожному окреме повідомлення з подякою 💜", en: "A personal thank-you message for each of you 💜" }
   ],
   "TXT": [
-    { name: "Kalipsa94", city: "", since: "з любов'ю", fandom: "MOA 🌙", text: "Дякую за важку працю! Ваша музика надає мені сил, щоб насолоджуватися життям, не зважаючи ні на що." },
+    { name: "Kalipsa94", city: "", since: "з любов'ю", fandom: "MOA 🌙", text: "Дякую за важку працю! Ваша музика надає мені сил, щоб насолоджуватися життям, не зважаючи ні на що.", en: "Thank you for your hard work! Your music gives me strength to enjoy life no matter what." },
   ],
   "ITZY": [
-    { name: "Poleaxe", city: "", since: "з любов'ю", fandom: "MIDZY 💜", text: "Дякую за все!" },
-    { name: "Мей", city: "", since: "з любов'ю", fandom: "MIDZY 💜", text: "Дякую за той період життя, який я провела з вами." },
+    { name: "Poleaxe", city: "", since: "з любов'ю", fandom: "MIDZY 💜", text: "Дякую за все!", en: "Thank you for everything!" },
+    { name: "Мей", city: "", since: "з любов'ю", fandom: "MIDZY 💜", text: "Дякую за той період життя, який я провела з вами.", en: "Thank you for the time in my life that I spent with you." },
   ],
   "GOT7": [
-    { name: "Катерина", city: "", since: "з любов'ю", fandom: "Ahgase 🐦", text: "Ваша творчість є важливою в моєму житті. Бажаю, щоб і ваше життя було насиченим та легким." },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "Ahgase 🐦", text: "Дякую, що ви є — ваша творчість є важливою в моєму житті. Бажаю, щоб і ваше життя було насиченим та легким." },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "Ahgase 🐦", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об\'єднують багатьох людей." }
+    { name: "Катерина", city: "", since: "з любов'ю", fandom: "Ahgase 🐦", text: "Ваша творчість є важливою в моєму житті. Бажаю, щоб і ваше життя було насиченим та легким.", en: "Your art matters deeply in my life. I wish you a life full of joy and ease." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "Ahgase 🐦", text: "Дякую, що ви є — ваша творчість є важливою в моєму житті. Бажаю, щоб і ваше життя було насиченим та легким.", en: "Thank you for existing — your art matters deeply in my life. I wish you a life full of joy and ease." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "Ahgase 🐦", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об\'єднують багатьох людей.", en: "Thank you for continuing to create music that brings so many people together." }
   ],
   "BIGBANG": [
-    { name: "Дарина", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об'єднують багатьох людей." },
-    { name: "Яся", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую за те, що в найтемніші часи ви поруч." },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую." }
+    { name: "Дарина", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую, що продовжуєте займатись творчістю і створювати пісні, які об'єднують багатьох людей.", en: "Thank you for continuing to create music that brings so many people together." },
+    { name: "Яся", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую за те, що в найтемніші часи ви поруч.", en: "Thank you for being there in the darkest times." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "VIP 👑", text: "Дякую.", en: "Thank you." }
   ],
   "aespa": [
-    { name: "Еліна", city: "", since: "з любов'ю", fandom: "MY 🦋", text: "Дякую всім, хто небайдужий — це цінно!" },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "MY 🦋", text: "Кожному окреме повідомлення з подякою 💜" }
+    { name: "Еліна", city: "", since: "з любов'ю", fandom: "MY 🦋", text: "Дякую всім, хто небайдужий — це цінно!", en: "Thank you to everyone who cares — it matters so much!" },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "MY 🦋", text: "Кожному окреме повідомлення з подякою 💜", en: "A personal thank-you message for each of you 💜" }
   ],
   "TWICE": [
-    { name: "Таня", city: "", since: "з любов'ю", fandom: "ONCE 🍭", text: "Дякую за музику та підтримку — кожна ваша пісня залишає окремий теплий слід у серці." },
-    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ONCE 🍭", text: "Кожному окреме повідомлення з подякою 💜" }
+    { name: "Таня", city: "", since: "з любов'ю", fandom: "ONCE 🍭", text: "Дякую за музику та підтримку — кожна ваша пісня залишає окремий теплий слід у серці.", en: "Thank you for the music and the support — every song of yours leaves its own warm mark on my heart." },
+    { name: "з любов'ю", city: "", since: "з любов'ю", fandom: "ONCE 🍭", text: "Кожному окреме повідомлення з подякою 💜", en: "A personal thank-you message for each of you 💜" }
   ],
 };
 
@@ -1771,6 +1838,14 @@ function setLang(lang) {
       else el.innerHTML = val;
     }
   });
+  document.querySelectorAll('[data-ua-placeholder][data-en-placeholder]').forEach(el => {
+    const val = el.getAttribute('data-' + lang + '-placeholder');
+    if (val) el.placeholder = val;
+  });
+  document.querySelectorAll('[data-ua-aria][data-en-aria]').forEach(el => {
+    const val = el.getAttribute('data-' + lang + '-aria');
+    if (val) el.setAttribute('aria-label', val);
+  });
   if (lang === 'en') {
     renderStats(SITE_DATA_EN.stats);
     renderChart('chart1', 'chart1Title', SITE_DATA_EN.charts.how_kpop_helps);
@@ -1778,6 +1853,8 @@ function setLang(lang) {
     renderStories(SITE_DATA_EN.stories);
     renderPhrases(PHRASES_EN);
     renderQuotes();
+    renderCulture();
+    renderTalismans();
     document.getElementById('footerCopy').innerHTML = `Cultural project <span class="ua-flag"></span> Ukraine · 2026<br>Instagram: <a href="https://instagram.com/mediaboutyou" style="color:var(--gold);text-decoration:none">@mediaboutyou</a> · Published with participants' consent`;
   } else {
     renderStats(SITE_DATA.stats);
@@ -1786,6 +1863,8 @@ function setLang(lang) {
     renderStories(SITE_DATA.stories);
     renderPhrases(PHRASES_UA);
     renderQuotes();
+    renderCulture();
+    renderTalismans();
     document.getElementById('footerCopy').innerHTML = `Культурний проєкт <span class="ua-flag"></span> України · 2026<br>Instagram: <a href="https://instagram.com/mediaboutyou" style="color:var(--gold);text-decoration:none">@mediaboutyou</a> · Інтерв'ю публікуються з дозволу учасників`;
   }
   document.querySelectorAll('.stats-grid').forEach(el => obs.observe(el));
@@ -2600,12 +2679,28 @@ const QUOTES_DATA = [
 function renderQuotes() {
   const grid = document.getElementById('quotesGrid');
   if (!grid) return;
-  grid.innerHTML = QUOTES_DATA.map((q, i) => `
+  const isEN = currentLang === 'en';
+  const isHangul = s => /[가-힣]/.test(s || '');
+
+  grid.innerHTML = QUOTES_DATA.map((q, i) => {
+    let main, sub;
+    if (isEN) {
+      // English mode: always show English (translation if original wasn't already English/Korean)
+      // or the Korean original — never the Ukrainian text/translation.
+      const usedTranslation = !!q.en && q.en !== q.text;
+      main = q.en || q.text;
+      sub = (usedTranslation && isHangul(q.text)) ? q.text : null;
+    } else {
+      main = q.text;
+      sub = q.translation || null;
+    }
+    return `
     <div class="quote-item" style="animation-delay:${i * 0.06}s">
-      <div class="quote-bubble">${q.text}</div>
-      ${q.translation ? `<div class="quote-translation">${q.translation}</div>` : ''}
+      <div class="quote-bubble">${main}</div>
+      ${sub ? `<div class="quote-translation">${sub}</div>` : ''}
       <div class="quote-item-artist">— ${q.artist}</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
   // auto-scroll to bottom gently after render
   setTimeout(() => { grid.scrollTop = 0; }, 100);
 }
@@ -2810,6 +2905,11 @@ async function init() {
   renderTalismans();
   document.querySelectorAll('.stats-grid').forEach(el => obs.observe(el));
   initGalaxy(GALAXY_ARTISTS);
+
+  const artistList = document.getElementById('fanidArtistList');
+  if (artistList) {
+    artistList.innerHTML = SITE_DATA.artists.map(a => `<option value="${a}"></option>`).join('');
+  }
 }
 
 init();
@@ -2971,10 +3071,16 @@ function closeTracksModal() {
 }
 
 
-// ===== BTS FESTA INTRO =====
+// ===== WAR DAYS COUNTER INTRO =====
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFesta(); });
 (function() {
   try {
+  // Calculate days since the full-scale invasion began (24.02.2022), always kept live
+  const warStart = new Date('2022-02-24T00:00:00');
+  const daysSince = Math.max(0, Math.floor((new Date() - warStart) / 86400000));
+  const numEl = document.getElementById('warDayNumber');
+  if (numEl) numEl.textContent = String(daysSince);
+
   if (sessionStorage.getItem('festaShown')) {
     document.getElementById('festaOverlay').style.display = 'none';
     return;
@@ -3000,7 +3106,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFesta()
       const alpha = (Math.sin(t / s.d + s.phase) + 1) / 2 * 0.8 + 0.1;
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(168, 85, 247, ${alpha})`;
+      ctx.fillStyle = `rgba(64, 152, 215, ${alpha})`;
       ctx.fill();
     });
     t += 0.05;
@@ -3012,7 +3118,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFesta()
 
   // Generate floating particles
   const pc = document.getElementById('festaParticles');
-  const colors = ['#a855f7','#c084fc','#FFD700','#ffffff'];
+  const colors = ['#4098d7','#FFD700','#ffffff','#6ab6f0'];
   for (let i = 0; i < 25; i++) {
     const p = document.createElement('div');
     p.className = 'festa-particle';
@@ -3046,17 +3152,33 @@ function collapseStories() {
 }
 
 
-// ===== LOVE BTS =====
-function sendLove() {
+// ===== K-POP FAN ID =====
+function getWarDaysCount() {
+  const warStart = new Date('2022-02-24T00:00:00');
+  return Math.max(0, Math.floor((new Date() - warStart) / 86400000));
+}
+
+function checkFanIdReady() {
+  const name = document.getElementById('fanidName').value.trim();
+  const track = document.getElementById('fanidTrack').value.trim();
+  document.getElementById('loveBtnMain').disabled = !(name && track);
+}
+
+function submitFanId() {
+  const name = document.getElementById('fanidName').value.trim();
+  const group = document.getElementById('fanidGroup').value.trim();
+  const track = document.getElementById('fanidTrack').value.trim();
+  if (!name || !track) return;
+
   const container = document.getElementById('loveHeartsContainer');
   container.innerHTML = '';
   const btn = document.getElementById('loveBtnMain');
   const rect = btn.getBoundingClientRect();
   const cx = rect.left + rect.width / 2;
   const cy = rect.top + rect.height / 2;
-  const emojis = ['💜','💜','💜','✨','⭐','💫','🌟'];
+  const emojis = ['🇺🇦','⭐','✨','💛','💙'];
 
-  for (let i = 0; i < 34; i++) {
+  for (let i = 0; i < 30; i++) {
     const h = document.createElement('div');
     h.className = 'fly-heart';
     h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
@@ -3065,84 +3187,194 @@ function sendLove() {
     container.appendChild(h);
   }
   setTimeout(() => {
-    generateBadge();
+    generateBadge(name, group, track);
     const wrap = document.getElementById('loveBadgeWrap');
     wrap.style.display = 'block';
     wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
     container.innerHTML = '';
-  }, 2000);
+  }, 1600);
 }
 
-function generateBadge() {
+function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight) {
+  const words = text.split(' ');
+  let line = '';
+  const lines = [];
+  for (let n = 0; n < words.length; n++) {
+    const testLine = line + words[n] + ' ';
+    if (ctx.measureText(testLine).width > maxWidth && n > 0) {
+      lines.push(line.trim());
+      line = words[n] + ' ';
+    } else {
+      line = testLine;
+    }
+  }
+  lines.push(line.trim());
+  lines.forEach((l, i) => ctx.fillText(l, x, y + i * lineHeight));
+  return lines.length;
+}
+
+function measureWrapLines(ctx, text, maxWidth) {
+  const words = text.split(' ');
+  let line = '';
+  let count = 1;
+  for (let n = 0; n < words.length; n++) {
+    const testLine = line + words[n] + ' ';
+    if (ctx.measureText(testLine).width > maxWidth && n > 0) {
+      count++;
+      line = words[n] + ' ';
+    } else {
+      line = testLine;
+    }
+  }
+  return count;
+}
+
+function lookupFandom(groupInput) {
+  if (!groupInput || typeof FANDOM_MAP === 'undefined') return null;
+  const key = Object.keys(FANDOM_MAP).find(k => k.toLowerCase() === groupInput.trim().toLowerCase());
+  return key ? { artist: key, fandom: FANDOM_MAP[key] } : null;
+}
+
+function generateBadge(name, group, track) {
   const canvas = document.getElementById('loveBadgeCanvas');
-  const W = 600, H = 340;
+  const W = 1080, H = 1920;
   canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext('2d');
   const isEN = currentLang === 'en';
+  const days = getWarDaysCount();
+
+  const match = lookupFandom(group);
+  const fandomDisplay = match
+    ? `${match.fandom} · ${match.artist}`
+    : (group || (isEN ? 'K-pop fan' : 'K-pop фан'));
 
   // Background
-  const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0,'#0d0620'); bg.addColorStop(0.5,'#1a0a3a'); bg.addColorStop(1,'#050a18');
-  ctx.fillStyle = bg; ctx.roundRect(0,0,W,H,20); ctx.fill();
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0,'#050a18'); bg.addColorStop(0.5,'#0a1830'); bg.addColorStop(1,'#050a18');
+  ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
 
   // Glow
-  const glow = ctx.createRadialGradient(W*0.35,H*0.5,0,W*0.35,H*0.5,220);
-  glow.addColorStop(0,'rgba(168,85,247,0.22)'); glow.addColorStop(1,'transparent');
+  const glow = ctx.createRadialGradient(W*0.5,H*0.28,0,W*0.5,H*0.28,700);
+  glow.addColorStop(0,'rgba(64,152,215,0.28)'); glow.addColorStop(1,'transparent');
   ctx.fillStyle = glow; ctx.fillRect(0,0,W,H);
 
   // Stars
-  ctx.fillStyle = 'rgba(255,255,255,0.7)';
-  [[60,40],[120,80],[500,30],[540,90],[480,260],[80,280],[350,20],[200,310]].forEach(([x,y]) => {
-    ctx.beginPath(); ctx.arc(x,y,1.2,0,Math.PI*2); ctx.fill();
-  });
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  for (let i = 0; i < 50; i++) {
+    const sx = Math.random()*W, sy = Math.random()*H, sr = Math.random()*1.8+0.4;
+    ctx.beginPath(); ctx.arc(sx,sy,sr,0,Math.PI*2); ctx.fill();
+  }
 
-  // Top line
-  const tl = ctx.createLinearGradient(40,0,W-40,0);
-  tl.addColorStop(0,'transparent'); tl.addColorStop(0.5,'rgba(168,85,247,0.7)'); tl.addColorStop(1,'transparent');
-  ctx.strokeStyle=tl; ctx.lineWidth=1.5;
-  ctx.beginPath(); ctx.moveTo(40,1); ctx.lineTo(W-40,1); ctx.stroke();
+  ctx.textAlign = 'center';
 
-  // Big bg hearts
-  [90,120,150].forEach((sz,i) => {
-    ctx.globalAlpha = 0.12 - i*0.03;
-    ctx.font = `${sz}px serif`;
-    ctx.textAlign = 'center';
-    ctx.fillText('💜', W*0.79+i*15, H*0.65+i*12);
-  });
-  ctx.globalAlpha = 1;
+  // Top label
+  ctx.font = '600 24px sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.fillText('MAY PROJECT · UKRAINE', W/2, 120);
 
-  // MAY label
-  ctx.font = '600 11px sans-serif';
-  ctx.fillStyle = 'rgba(168,85,247,0.7)';
+  // Title
+  ctx.font = 'bold 62px sans-serif';
+  ctx.fillStyle = '#FFD700';
+  ctx.fillText('K-POP FAN ID', W/2, 210);
+  ctx.font = '600 30px sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,0.6)';
+  ctx.fillText(isEN ? 'VOICE FOR UKRAINE 🇺🇦' : 'VOICE OF UKRAINE 🇺🇦', W/2, 260);
+
+  // ===== ID card panel (height computed from actual content) =====
+  const cardX = 90, cardY = 340, cardW = W - 180;
+  ctx.font = 'bold 44px sans-serif'; // same font used to draw field values, for accurate measuring
+  const nameLines = measureWrapLines(ctx, name, cardW - 120);
+  const fandomLines = measureWrapLines(ctx, fandomDisplay, cardW - 120);
+  const trackLines = measureWrapLines(ctx, track, cardW - 120);
+  const extraWrapHeight = (nameLines - 1 + fandomLines - 1 + trackLines - 1) * 50;
+  const cardH = 860 + extraWrapHeight;
+
+  ctx.fillStyle = 'rgba(255,255,255,0.045)';
+  ctx.strokeStyle = 'rgba(255,215,0,0.3)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.roundRect(cardX, cardY, cardW, cardH, 28);
+  ctx.fill(); ctx.stroke();
+
+  // Holographic diagonal stripe
+  ctx.save();
+  ctx.beginPath();
+  ctx.roundRect(cardX, cardY, cardW, cardH, 28);
+  ctx.clip();
+  const holo = ctx.createLinearGradient(cardX, cardY, cardX + cardW * 0.7, cardY + cardH);
+  holo.addColorStop(0, 'rgba(255,215,0,0)');
+  holo.addColorStop(0.45, 'rgba(255,215,0,0.16)');
+  holo.addColorStop(0.5, 'rgba(64,152,215,0.22)');
+  holo.addColorStop(0.55, 'rgba(255,255,255,0.1)');
+  holo.addColorStop(1, 'rgba(64,152,215,0)');
+  ctx.fillStyle = holo;
+  ctx.fillRect(cardX, cardY, cardW, cardH);
+  ctx.restore();
+
+  // ID chip (top-left, decorative)
+  const chipGrad = ctx.createLinearGradient(cardX+50, cardY+50, cardX+128, cardY+104);
+  chipGrad.addColorStop(0, '#FFD700'); chipGrad.addColorStop(1, '#a8790a');
+  ctx.fillStyle = chipGrad;
+  ctx.beginPath();
+  ctx.roundRect(cardX+50, cardY+50, 78, 54, 8);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(0,0,0,0.25)'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(cardX+50, cardY+77); ctx.lineTo(cardX+128, cardY+77); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cardX+89, cardY+50); ctx.lineTo(cardX+89, cardY+104); ctx.stroke();
+
+  // War-day marker (top-right) — meaningful instead of a random serial
+  ctx.textAlign = 'right';
+  ctx.font = '600 30px monospace';
+  ctx.fillStyle = 'rgba(255,215,0,0.6)';
+  ctx.fillText(`DAY ${days}`, cardX + cardW - 50, cardY + 84);
+
+  // Flag inside card
+  ctx.textAlign = 'center';
+  ctx.font = '84px sans-serif';
+  ctx.fillText('🇺🇦', W/2, cardY + 220);
+
+  // Fields
+  const fieldX = cardX + 60;
+  let fy = cardY + 320;
   ctx.textAlign = 'left';
-  ctx.fillText('MAY PROJECT · FESTA 2026', 44, 46);
 
-  // Small hearts row
+  function drawField(label, value, y) {
+    ctx.font = '600 24px sans-serif';
+    ctx.fillStyle = 'rgba(255,215,0,0.55)';
+    ctx.fillText(label, fieldX, y);
+    ctx.font = 'bold 44px sans-serif';
+    ctx.fillStyle = '#ffffff';
+    const lines = wrapCanvasText(ctx, value, fieldX, y + 52, cardW - 120, 50);
+    const endY = y + 52 + (lines - 1) * 50 + 26;
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(fieldX, endY); ctx.lineTo(cardX + cardW - 60, endY); ctx.stroke();
+    return endY;
+  }
 
+  let lastY = drawField(isEN ? 'NAME' : 'ІМ’Я', name, fy);
+  lastY = drawField(isEN ? 'FANDOM' : 'ФАНДОМ', fandomDisplay, lastY + 46);
+  drawField(isEN ? 'FREEDOM ANTHEM' : 'ТРЕК-СЕЙВ', track, lastY + 46);
 
-  // Main title
-  const grad = ctx.createLinearGradient(44,0,460,0);
-  grad.addColorStop(0,'#c084fc'); grad.addColorStop(0.5,'#FFD700'); grad.addColorStop(1,'#fff5a0');
-  ctx.fillStyle = grad;
-  ctx.font = 'bold 42px sans-serif';
-  ctx.fillText('I PURPLE YOU', 44, 158);
-  ctx.fillText('BTS 💜', 44, 208);
+  ctx.textAlign = 'center';
 
-  // Sub
-  ctx.font = '13px sans-serif';
-  ctx.fillStyle = 'rgba(255,255,255,0.38)';
-  ctx.fillText('Happy 13th Anniversary · June 2026', 44, 240);
+  // Fixed hashtag tagline below card
+  const taglineY = cardY + cardH + 130;
+  ctx.font = 'bold 56px sans-serif';
+  ctx.fillStyle = '#FFD700';
+  ctx.fillText('#STANDWITHUKRAINE', W/2, taglineY);
+  ctx.font = '40px sans-serif';
+  ctx.fillText('🇺🇦', W/2, taglineY + 72);
 
-  // Army
-  ctx.font = 'bold 11px sans-serif';
-  ctx.fillStyle = 'rgba(255,215,0,0.5)';
-  ctx.fillText('★ ARMY FOREVER ★', 44, 268);
+  // Day counter + branding
+  const dayY = taglineY + 190;
+  ctx.font = '600 26px sans-serif';
+  ctx.fillStyle = 'rgba(255,215,0,0.55)';
+  ctx.fillText(isEN ? `Day ${days} of the war` : `${days}-й день війни`, W/2, dayY);
 
-  // Bottom line
-  const bl = ctx.createLinearGradient(40,0,W-40,0);
-  bl.addColorStop(0,'transparent'); bl.addColorStop(0.5,'rgba(255,215,0,0.3)'); bl.addColorStop(1,'transparent');
-  ctx.strokeStyle=bl; ctx.lineWidth=1;
-  ctx.beginPath(); ctx.moveTo(40,H-1); ctx.lineTo(W-40,H-1); ctx.stroke();
+  ctx.font = '22px sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,0.3)';
+  ctx.fillText('mediaboutyou', W/2, dayY + 44);
 }
 
 function downloadBadge() {
@@ -3157,9 +3389,9 @@ function downloadBadge() {
     popup.id = 'badgePopup';
     popup.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;padding:1rem;';
     popup.innerHTML = `
-      <div style="position:relative;max-width:520px;width:100%;">
-        <button onclick="document.getElementById('badgePopup').remove()" style="position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:#1a0a3a;border:1px solid rgba(255,215,0,0.3);color:#FFD700;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1;">✕</button>
-        <img src="${dataURL}" style="width:100%;border-radius:12px;box-shadow:0 8px 40px rgba(168,85,247,0.4);display:block;"/>
+      <div style="position:relative;max-width:360px;width:100%;">
+        <button onclick="document.getElementById('badgePopup').remove()" style="position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:#0a1830;border:1px solid rgba(255,215,0,0.3);color:#FFD700;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1;">✕</button>
+        <img src="${dataURL}" style="width:100%;border-radius:12px;box-shadow:0 8px 40px rgba(64,152,215,0.4);display:block;"/>
       </div>`;
     popup.addEventListener('click', e => { if (e.target === popup) popup.remove(); });
     document.body.appendChild(popup);
@@ -3168,7 +3400,7 @@ function downloadBadge() {
 
   const a = document.createElement('a');
   a.href = dataURL;
-  a.download = 'army-badge-bts-festa-2026.png';
+  a.download = 'kpop-fan-id-voice-of-ukraine.png';
   a.click();
 }
 
@@ -3187,7 +3419,7 @@ function downloadBadge() {
 </div>
 
 
-<button id="storiesCollapseFloat" onclick="collapseStories()">↑ Згорнути</button>
+<button id="storiesCollapseFloat" onclick="collapseStories()" data-ua="↑ Згорнути" data-en="↑ Show less">↑ Згорнути</button>
 
 </body>
 </html>
