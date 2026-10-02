@@ -39,18 +39,18 @@
   .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 6rem 2rem 2rem; overflow: hidden; }
   .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,91,187,0.35) 0%, transparent 65%), radial-gradient(ellipse 60% 40% at 80% 80%, rgba(255,215,0,0.12) 0%, transparent 60%), radial-gradient(ellipse 40% 50% at 10% 60%, rgba(0,58,122,0.3) 0%, transparent 60%), var(--night); z-index: 0; }
   .glyph { position: absolute; font-family: 'Noto Serif KR', serif; color: rgba(255,215,0,0.06); pointer-events: none; user-select: none; animation: floatUp linear infinite; }
-  .glyph:nth-child(1)  { font-size: 8rem;  left: 5%;   top: 10%; animation-duration: 18s; animation-delay: -3s; }
-  .glyph:nth-child(2)  { font-size: 5rem;  left: 20%;  top: 70%; animation-duration: 22s; animation-delay: -8s; }
-  .glyph:nth-child(3)  { font-size: 11rem; right: 8%;  top: 5%;  animation-duration: 25s; animation-delay: -12s; }
-  .glyph:nth-child(4)  { font-size: 6rem;  right: 25%; top: 60%; animation-duration: 20s; animation-delay: -5s; }
-  .glyph:nth-child(5)  { font-size: 9rem;  left: 40%;  top: 80%; animation-duration: 28s; animation-delay: -15s; }
-  .glyph:nth-child(6)  { font-size: 7rem;  left: 75%;  top: 25%; animation-duration: 21s; animation-delay: -7s; }
-  .glyph:nth-child(7)  { font-size: 4rem;  left: 55%;  top: 55%; animation-duration: 19s; animation-delay: -10s; }
-  .glyph:nth-child(8)  { font-size: 6rem;  left: 12%;  top: 45%; animation-duration: 24s; animation-delay: -2s; }
-  .glyph:nth-child(9)  { font-size: 3.5rem;right: 15%; top: 75%; animation-duration: 17s; animation-delay: -14s; }
-  .glyph:nth-child(10) { font-size: 5.5rem;left: 65%;  top: 90%; animation-duration: 26s; animation-delay: -6s; }
-  .glyph:nth-child(11) { font-size: 8rem;  left: 30%;  top: 15%; animation-duration: 23s; animation-delay: -9s; }
-  .glyph:nth-child(12) { font-size: 4.5rem;right: 40%; top: 40%; animation-duration: 20s; animation-delay: -16s; }
+  .glyph:nth-child(1)  { font-size: 7rem;  left: 4%;   top: 5%;  animation-duration: 18s; animation-delay: -3s; }
+  .glyph:nth-child(2)  { font-size: 5rem;  right: 6%;  top: 13%; animation-duration: 22s; animation-delay: -8s; }
+  .glyph:nth-child(3)  { font-size: 6rem;  left: 8%;   top: 21%; animation-duration: 25s; animation-delay: -12s; }
+  .glyph:nth-child(4)  { font-size: 6rem;  right: 5%;  top: 29%; animation-duration: 20s; animation-delay: -5s; }
+  .glyph:nth-child(5)  { font-size: 7rem;  left: 6%;   top: 37%; animation-duration: 28s; animation-delay: -15s; }
+  .glyph:nth-child(6)  { font-size: 6rem;  right: 9%;  top: 45%; animation-duration: 21s; animation-delay: -7s; }
+  .glyph:nth-child(7)  { font-size: 4rem;  left: 5%;   top: 53%; animation-duration: 19s; animation-delay: -10s; }
+  .glyph:nth-child(8)  { font-size: 5rem;  right: 7%;  top: 61%; animation-duration: 24s; animation-delay: -2s; }
+  .glyph:nth-child(9)  { font-size: 3.5rem;left: 9%;   top: 69%; animation-duration: 17s; animation-delay: -14s; }
+  .glyph:nth-child(10) { font-size: 5rem;  right: 4%;  top: 77%; animation-duration: 26s; animation-delay: -6s; }
+  .glyph:nth-child(11) { font-size: 6rem;  left: 7%;   top: 85%; animation-duration: 23s; animation-delay: -9s; }
+  .glyph:nth-child(12) { font-size: 4.5rem;right: 8%;  top: 93%; animation-duration: 20s; animation-delay: -16s; }
   @keyframes floatUp { 0% { transform: translateY(0) rotate(0deg); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-120vh) rotate(15deg); opacity: 0; } }
   .stars { position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,0.4) 0%, transparent 100%), radial-gradient(1px 1px at 35% 45%, rgba(255,215,0,0.5) 0%, transparent 100%), radial-gradient(1px 1px at 55% 15%, rgba(255,255,255,0.3) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 45% 55%, rgba(255,215,0,0.6) 0%, transparent 100%); }
   .hero-content { position: relative; z-index: 2; max-width: 860px; }
@@ -878,6 +878,11 @@
     .stories-grid { grid-template-columns: 1fr !important; }
     .culture-grid { grid-template-columns: 1fr !important; }
     .join-layout { grid-template-columns: 1fr !important; }
+    .glyph { font-size: clamp(1.1rem, 4vw, 1.8rem) !important; opacity: 0.45 !important; }
+  }
+  @media (max-width: 480px) {
+    /* fewer glyphs on small phones so they never crowd or overlap */
+    .glyph:nth-child(9), .glyph:nth-child(10), .glyph:nth-child(11), .glyph:nth-child(12) { display: none !important; }
   }
   @media (max-width: 480px) {
     .stats-grid { grid-template-columns: 1fr 1fr !important; gap: 0.7rem !important; }
@@ -3077,7 +3082,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFesta()
   try {
   // Calculate days since the full-scale invasion began (24.02.2022), always kept live
   const warStart = new Date('2022-02-24T00:00:00');
-  const daysSince = Math.max(0, Math.floor((new Date() - warStart) / 86400000));
+  // +1 because Feb 24, 2022 itself is counted as Day 1 of the war, not Day 0
+  const daysSince = Math.max(1, Math.floor((new Date() - warStart) / 86400000) + 1);
   const numEl = document.getElementById('warDayNumber');
   if (numEl) numEl.textContent = String(daysSince);
 
@@ -3155,7 +3161,8 @@ function collapseStories() {
 // ===== K-POP FAN ID =====
 function getWarDaysCount() {
   const warStart = new Date('2022-02-24T00:00:00');
-  return Math.max(0, Math.floor((new Date() - warStart) / 86400000));
+  // +1 because Feb 24, 2022 itself is counted as Day 1 of the war, not Day 0
+  return Math.max(1, Math.floor((new Date() - warStart) / 86400000) + 1);
 }
 
 function checkFanIdReady() {
@@ -3377,31 +3384,59 @@ function generateBadge(name, group, track) {
   ctx.fillText('mediaboutyou', W/2, dayY + 44);
 }
 
-function downloadBadge() {
-  const canvas = document.getElementById('loveBadgeCanvas');
-  const dataURL = canvas.toDataURL('image/png');
-  const isIAB = /Instagram|FBAN|FBAV/i.test(navigator.userAgent || '');
+function showBadgePopup(dataURL) {
+  let existing = document.getElementById('badgePopup');
+  if (existing) existing.remove();
+  const popup = document.createElement('div');
+  popup.id = 'badgePopup';
+  popup.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;padding:1rem;';
+  const isEN = currentLang === 'en';
+  const hint = isEN ? 'Press and hold the image to save it' : 'Натисни і потримай зображення, щоб зберегти';
+  popup.innerHTML = `
+    <div style="position:relative;max-width:360px;width:100%;text-align:center;">
+      <button onclick="document.getElementById('badgePopup').remove()" style="position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:#0a1830;border:1px solid rgba(255,215,0,0.3);color:#FFD700;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1;">✕</button>
+      <img src="${dataURL}" style="width:100%;border-radius:12px;box-shadow:0 8px 40px rgba(64,152,215,0.4);display:block;"/>
+      <p style="color:rgba(255,255,255,0.6);font-size:0.78rem;margin-top:1rem;">${hint}</p>
+    </div>`;
+  popup.addEventListener('click', e => { if (e.target === popup) popup.remove(); });
+  document.body.appendChild(popup);
+}
 
-  if (isIAB) {
-    let existing = document.getElementById('badgePopup');
-    if (existing) existing.remove();
-    const popup = document.createElement('div');
-    popup.id = 'badgePopup';
-    popup.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;padding:1rem;';
-    popup.innerHTML = `
-      <div style="position:relative;max-width:360px;width:100%;">
-        <button onclick="document.getElementById('badgePopup').remove()" style="position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:#0a1830;border:1px solid rgba(255,215,0,0.3);color:#FFD700;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1;">✕</button>
-        <img src="${dataURL}" style="width:100%;border-radius:12px;box-shadow:0 8px 40px rgba(64,152,215,0.4);display:block;"/>
-      </div>`;
-    popup.addEventListener('click', e => { if (e.target === popup) popup.remove(); });
-    document.body.appendChild(popup);
+async function downloadBadge() {
+  const canvas = document.getElementById('loveBadgeCanvas');
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent || '');
+
+  // On phones, try the native share sheet first — this is the most reliable
+  // way to save an image on both iOS Safari and Android Chrome.
+  if (isMobile && navigator.share && navigator.canShare) {
+    try {
+      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+      const file = new File([blob], 'kpop-fan-id-voice-of-ukraine.png', { type: 'image/png' });
+      if (navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file] });
+        return;
+      }
+    } catch (err) {
+      if (err && err.name === 'AbortError') return; // user closed the share sheet themselves
+      // otherwise fall through to the popup fallback below
+    }
+  }
+
+  const dataURL = canvas.toDataURL('image/png');
+
+  // Mobile browsers (incl. Instagram's in-app browser) often ignore the
+  // <a download> attribute for data URLs — show a long-press-to-save image instead.
+  if (isMobile) {
+    showBadgePopup(dataURL);
     return;
   }
 
   const a = document.createElement('a');
   a.href = dataURL;
   a.download = 'kpop-fan-id-voice-of-ukraine.png';
+  document.body.appendChild(a);
   a.click();
+  document.body.removeChild(a);
 }
 
 </script>
