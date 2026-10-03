@@ -3391,7 +3391,7 @@ function showBadgePopup(dataURL) {
   popup.id = 'badgePopup';
   popup.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;padding:1rem;';
   const isEN = currentLang === 'en';
-  const hint = isEN ? 'Press and hold the image to save it' : 'Натисни і потримай зображення, щоб зберегти';
+  const hint = isEN ? 'Take a screenshot and post it to your story' : 'Зроби скрін та закинь в сторіс';
   popup.innerHTML = `
     <div style="position:relative;max-width:360px;width:100%;text-align:center;">
       <button onclick="document.getElementById('badgePopup').remove()" style="position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:#0a1830;border:1px solid rgba(255,215,0,0.3);color:#FFD700;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1;">✕</button>
@@ -3402,35 +3402,66 @@ function showBadgePopup(dataURL) {
   document.body.appendChild(popup);
 }
 
-async function downloadBadge() {
-  const canvas = document.getElementById('loveBadgeCanvas');
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent || '');
+function dataURLtoBlob(dataURL) {
+  const parts = dataURL.split(',');
+  const mimeMatch = parts[0].match(/:(.*?);/);
+  const mime = mimeMatch ? mimeMatch[1] : 'image/png';
+  const binary = atob(parts[1]);
+  const arr = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) arr[i] = binary.charCodeAt(i);
+  return new Blob([arr], { type: mime });
+}
 
-  // On phones, try the native share sheet first — this is the most reliable
-  // way to save an image on both iOS Safari and Android Chrome.
-  if (isMobile && navigator.share && navigator.canShare) {
+function downloadBadge() {
+  const canvas = document.getElementById('loveBadgeCanvas');
+  const dataURL = canvas.toDataURL('image/png');
+  const ua = navigator.userAgent || '';
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
+  const isAndroid = /Android/i.test(ua);
+
+  // Android: a real blob download saves straight to the phone's Downloads
+  // folder in one tap — no extra screen or confirmation needed.
+  if (isAndroid) {
     try {
-      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-      const file = new File([blob], 'kpop-fan-id-voice-of-ukraine.png', { type: 'image/png' });
-      if (navigator.canShare({ files: [file] })) {
-        await navigator.share({ files: [file] });
-        return;
-      }
-    } catch (err) {
-      if (err && err.name === 'AbortError') return; // user closed the share sheet themselves
-      // otherwise fall through to the popup fallback below
+      const blob = dataURLtoBlob(dataURL);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'kpop-fan-id-voice-of-ukraine.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+      return;
+    } catch (e) {
+      showBadgePopup(dataURL);
+      return;
     }
   }
 
-  const dataURL = canvas.toDataURL('image/png');
-
-  // Mobile browsers (incl. Instagram's in-app browser) often ignore the
-  // <a download> attribute for data URLs — show a long-press-to-save image instead.
-  if (isMobile) {
+  // iOS does not allow any website to silently save an image to Photos —
+  // the native share sheet (with a "Save Image" option) is the closest
+  // thing to one tap that Apple allows. Must be called synchronously,
+  // right inside the click handler, or iOS silently refuses it.
+  if (isIOS) {
+    if (navigator.share) {
+      try {
+        const blob = dataURLtoBlob(dataURL);
+        const file = new File([blob], 'kpop-fan-id-voice-of-ukraine.png', { type: 'image/png' });
+        const canShareFiles = !navigator.canShare || navigator.canShare({ files: [file] });
+        if (canShareFiles) {
+          navigator.share({ files: [file] }).catch(err => {
+            if (!err || err.name !== 'AbortError') showBadgePopup(dataURL);
+          });
+          return;
+        }
+      } catch (e) { /* fall through to popup below */ }
+    }
     showBadgePopup(dataURL);
     return;
   }
 
+  // Desktop
   const a = document.createElement('a');
   a.href = dataURL;
   a.download = 'kpop-fan-id-voice-of-ukraine.png';
