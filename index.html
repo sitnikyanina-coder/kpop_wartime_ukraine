@@ -11,6 +11,7 @@
 
 <!-- Open Graph (Facebook, Instagram, Telegram preview) -->
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="MAY · Media About You">
 <meta property="og:title" content="K-Pop as a Safe Space — MAY Project">
 <meta property="og:description" content="Культурний проєкт про те, як K-pop став безпечним простором для українців під час повномасштабної війни.">
 <meta property="og:url" content="https://sitnikyanina-coder.github.io/kpop_wartime_ukraine/">
@@ -3384,22 +3385,112 @@ function generateBadge(name, group, track) {
   ctx.fillText('mediaboutyou', W/2, dayY + 44);
 }
 
-function showBadgePopup(dataURL) {
-  let existing = document.getElementById('badgePopup');
-  if (existing) existing.remove();
+// Older phones (iOS 15 and earlier, outdated Android WebViews) have no
+// ctx.roundRect — without this the badge would fail to draw at all.
+if (window.CanvasRenderingContext2D && !CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+    r = Math.min(typeof r === 'number' ? r : 0, w / 2, h / 2);
+    this.moveTo(x + r, y);
+    this.arcTo(x + w, y, x + w, y + h, r);
+    this.arcTo(x + w, y + h, x, y + h, r);
+    this.arcTo(x, y + h, x, y, r);
+    this.arcTo(x, y, x + w, y, r);
+    this.closePath();
+    return this;
+  };
+}
+
+// Where is the site being viewed? Links opened from Instagram, Telegram,
+// Facebook, TikTok etc. load inside the app's built-in browser, which
+// silently ignores file downloads — the button must not rely on them there.
+function getBadgeEnv() {
+  const ua = navigator.userAgent || '';
+  const isAndroid = /Android/i.test(ua);
+  const isIOS = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+  const namedApp = /Instagram|FBAN|FBAV|FB_IAB|FBIOS|Messenger|Barcelona|musical_ly|Bytedance|TikTok|Telegram|Viber|Line\/|Snapchat|Pinterest|LinkedInApp|Twitter|MicroMessenger/i.test(ua);
+  const androidWebView = isAndroid && /;\s*wv\)/.test(ua);
+  const iosWebView = /iPhone|iPad|iPod/i.test(ua) && /AppleWebKit/i.test(ua) && !/Safari\//i.test(ua);
+  const telegramObj = typeof window.TelegramWebview !== 'undefined' || typeof window.TelegramWebviewProxy !== 'undefined';
+  return { isAndroid, isIOS, isInApp: namedApp || androidWebView || iosWebView || telegramObj };
+}
+
+function closeBadgePopup() {
+  const p = document.getElementById('badgePopup');
+  if (p) p.remove();
+}
+
+// Full-screen badge. This is the one path that works in every browser and
+// every in-app browser: the picture is on screen, ready for a screenshot.
+function showBadgePopup(dataURL, env) {
+  closeBadgePopup();
+  const toast = document.getElementById('badgeToast');
+  if (toast) toast.remove();
+  env = env || getBadgeEnv();
+  const isEN = currentLang === 'en';
+
   const popup = document.createElement('div');
   popup.id = 'badgePopup';
-  popup.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;padding:1rem;';
-  const isEN = currentLang === 'en';
-  const hint = isEN ? 'Take a screenshot and post it to your story' : 'Зроби скрін та закинь в сторіс';
-  popup.innerHTML = `
-    <div style="position:relative;max-width:360px;width:100%;text-align:center;">
-      <button onclick="document.getElementById('badgePopup').remove()" style="position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:#0a1830;border:1px solid rgba(255,215,0,0.3);color:#FFD700;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1;">✕</button>
-      <img src="${dataURL}" style="width:100%;border-radius:12px;box-shadow:0 8px 40px rgba(64,152,215,0.4);display:block;"/>
-      <p style="color:rgba(255,255,255,0.6);font-size:0.78rem;margin-top:1rem;">${hint}</p>
-    </div>`;
-  popup.addEventListener('click', e => { if (e.target === popup) popup.remove(); });
+  popup.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#030610;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.8rem;padding:0.9rem;box-sizing:border-box;';
+
+  const close = document.createElement('button');
+  close.type = 'button';
+  close.textContent = '✕';
+  close.setAttribute('aria-label', isEN ? 'Close' : 'Закрити');
+  close.style.cssText = 'position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:50%;background:#0a1830;border:1px solid rgba(255,215,0,0.3);color:#FFD700;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1;';
+  close.onclick = closeBadgePopup;
+
+  const img = document.createElement('img');
+  img.src = dataURL;
+  img.alt = 'K-pop Fan ID';
+  img.style.cssText = 'display:block;max-width:100%;max-height:76vh;width:auto;height:auto;border-radius:12px;box-shadow:0 8px 40px rgba(64,152,215,0.4);';
+
+  const hint = document.createElement('p');
+  hint.textContent = isEN ? 'Take a screenshot and post it to your story' : 'Зроби скрін та закинь в сторіс';
+  hint.style.cssText = 'margin:0;color:#FFD700;font-size:0.9rem;font-weight:600;text-align:center;line-height:1.4;';
+
+  popup.appendChild(close);
+  popup.appendChild(img);
+  popup.appendChild(hint);
+
+  if (env.isInApp) {
+    const browser = env.isIOS ? 'Safari' : 'Chrome';
+    const extra = document.createElement('p');
+    extra.textContent = isEN
+      ? 'To save it as a file, open this site in ' + browser + ' (menu ⋯ → “Open in browser”).'
+      : 'Щоб зберегти файлом — відкрий сайт у ' + browser + ' (меню ⋯ → «Відкрити в браузері»).';
+    extra.style.cssText = 'margin:0;color:rgba(255,255,255,0.55);font-size:0.72rem;text-align:center;line-height:1.5;max-width:320px;';
+    popup.appendChild(extra);
+  }
+
+  popup.addEventListener('click', e => { if (e.target === popup) closeBadgePopup(); });
   document.body.appendChild(popup);
+}
+
+// Small confirmation after a real download, with a way out if the file
+// did not actually arrive (a browser can drop a download without any error).
+function showBadgeToast(dataURL, env) {
+  let toast = document.getElementById('badgeToast');
+  if (toast) toast.remove();
+  const isEN = currentLang === 'en';
+  toast = document.createElement('div');
+  toast.id = 'badgeToast';
+  toast.style.cssText = 'position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);z-index:9998;width:max-content;max-width:calc(100vw - 32px);box-sizing:border-box;background:#0a1830;border:1px solid rgba(255,215,0,0.35);border-radius:14px;padding:12px 16px;color:#fff;font-size:0.8rem;line-height:1.5;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,0.55);';
+
+  const msg = document.createElement('div');
+  msg.textContent = isEN
+    ? '⬇ Download started — look in Downloads / your gallery'
+    : '⬇ Завантаження почалось — шукай у «Завантаженнях» / галереї';
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.textContent = isEN ? 'Didn’t save? Show the picture' : 'Не зберіглось? Показати картинку';
+  btn.style.cssText = 'margin-top:6px;background:none;border:none;padding:4px 6px;color:#FFD700;font-size:0.8rem;font-weight:600;text-decoration:underline;cursor:pointer;font-family:inherit;';
+  btn.onclick = () => showBadgePopup(dataURL, env);
+
+  toast.appendChild(msg);
+  toast.appendChild(btn);
+  document.body.appendChild(toast);
+  setTimeout(() => { if (toast.parentNode) toast.remove(); }, 9000);
 }
 
 function dataURLtoBlob(dataURL) {
@@ -3414,57 +3505,59 @@ function dataURLtoBlob(dataURL) {
 
 function downloadBadge() {
   const canvas = document.getElementById('loveBadgeCanvas');
+  const fileName = 'kpop-fan-id-voice-of-ukraine.png';
   const dataURL = canvas.toDataURL('image/png');
-  const ua = navigator.userAgent || '';
-  const isIOS = /iPhone|iPad|iPod/i.test(ua);
-  const isAndroid = /Android/i.test(ua);
+  const env = getBadgeEnv();
 
-  // Android: a real blob download saves straight to the phone's Downloads
-  // folder in one tap — no extra screen or confirmation needed.
-  if (isAndroid) {
+  // In-app browsers on Android (Instagram, Telegram, Facebook, TikTok…):
+  // a download is silently thrown away there, so pressing the button used
+  // to do nothing at all. Show the badge full screen instead.
+  if (env.isAndroid && env.isInApp) {
+    showBadgePopup(dataURL, env);
+    return;
+  }
+
+  // Android, real browser (Chrome, Samsung Internet, Firefox…): one-tap
+  // download straight to the phone, plus a toast with a fallback.
+  if (env.isAndroid) {
     try {
-      const blob = dataURLtoBlob(dataURL);
-      const url = URL.createObjectURL(blob);
+      const url = URL.createObjectURL(dataURLtoBlob(dataURL));
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'kpop-fan-id-voice-of-ukraine.png';
+      a.download = fileName;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      setTimeout(() => URL.revokeObjectURL(url), 10000);
-      return;
+      // Keep the blob alive long enough for a slow "allow download?" prompt.
+      setTimeout(() => URL.revokeObjectURL(url), 120000);
+      showBadgeToast(dataURL, env);
     } catch (e) {
-      showBadgePopup(dataURL);
-      return;
+      showBadgePopup(dataURL, env);
     }
+    return;
   }
 
-  // iOS does not allow any website to silently save an image to Photos —
-  // the native share sheet (with a "Save Image" option) is the closest
-  // thing to one tap that Apple allows. Must be called synchronously,
-  // right inside the click handler, or iOS silently refuses it.
-  if (isIOS) {
+  // iPhone / iPad: no website may save to Photos by itself. The badge goes
+  // full screen (always works), and the native share sheet opens on top of
+  // it where the browser supports it. share() must run synchronously inside
+  // the tap, otherwise iOS refuses it.
+  if (env.isIOS) {
+    showBadgePopup(dataURL, env);
     if (navigator.share) {
       try {
-        const blob = dataURLtoBlob(dataURL);
-        const file = new File([blob], 'kpop-fan-id-voice-of-ukraine.png', { type: 'image/png' });
-        const canShareFiles = !navigator.canShare || navigator.canShare({ files: [file] });
-        if (canShareFiles) {
-          navigator.share({ files: [file] }).catch(err => {
-            if (!err || err.name !== 'AbortError') showBadgePopup(dataURL);
-          });
-          return;
+        const file = new File([dataURLtoBlob(dataURL)], fileName, { type: 'image/png' });
+        if (!navigator.canShare || navigator.canShare({ files: [file] })) {
+          navigator.share({ files: [file] }).then(closeBadgePopup).catch(() => {});
         }
-      } catch (e) { /* fall through to popup below */ }
+      } catch (e) { /* the full-screen badge is already showing */ }
     }
-    showBadgePopup(dataURL);
     return;
   }
 
   // Desktop
   const a = document.createElement('a');
   a.href = dataURL;
-  a.download = 'kpop-fan-id-voice-of-ukraine.png';
+  a.download = fileName;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
